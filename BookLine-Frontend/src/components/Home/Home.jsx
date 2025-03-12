@@ -1,6 +1,7 @@
 import React from "react";
 import NavBar from "../Navbar/Navbar";
 import Filter from '../Buttons/Filter/Filter';
+import Sort from '../Buttons/Sort/Sort';
 const Home = ()=>{
 
     return (
@@ -10,6 +11,7 @@ const Home = ()=>{
         
               {/* Componente Filter */}
               <Filter />
+              <Sort/>
         
               {/* Contenuto della pagina */}
               <div className="page-content">

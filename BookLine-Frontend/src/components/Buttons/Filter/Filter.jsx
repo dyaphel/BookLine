@@ -1,5 +1,4 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import './Filter.css'; // Import the CSS file for styling
 
 const Filter = () => {
