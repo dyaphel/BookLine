@@ -1,0 +1,31 @@
+/* Contenitore per il pulsante Filter */
+.filter-container {
+    position: absolute; /* Posiziona il contenitore in modo assoluto */
+    top: 20%; /* Distanza dal bordo superiore */
+    left: 0; /* Allinea a sinistra senza margine */
+    border: 1px solid lightcoral;
+    margin-left: 10%;
+    border-radius: 10px;
+  }
+  
+  /* Stile del pulsante */
+  .button-filter {
+    background-color: transparent;
+    border: none;
+    color: lightsalmon;
+    font-size: 1.5rem;
+    font-weight: 500;
+    padding: 10px 20px;
+    border-radius: 9px; /* Bordi arrotondati */
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .button-filter:hover {
+    background-color: lightsalmon; /* Cambia colore di sfondo al passaggio del mouse */
+    color: white; /* Cambia colore del testo al passaggio del mouse */
+  }
+  
+  .button-filter:active {
+    transform: scale(0.95); /* Effetto di ridimensionamento al click */
+  }
