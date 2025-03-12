@@ -1,0 +1,82 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed; /* Fissa la navbar in alto */
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px 0px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Ombra per un effetto di profondità */
+    background-color: transparent;
+  }
+  
+
+.nav-title {
+    margin-left: 5%;
+    font-size: 24px;
+    font-weight: bold;
+    color: rgb(255, 255, 255); /* Colore del titolo */
+  }
+  
+  /* Barra di ricerca al centro */
+  .nav-center {
+    flex: 1; /* Occupa lo spazio rimanente */
+    display: flex;
+    justify-content: center;
+    margin: 0 10%; /* Margine per separare il titolo e i pulsanti */
+
+  }
+  
+  .search-bar {
+    width: 120%;
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    border-radius: 20px; /* Bordi arrotondati */
+    font-size: 16px;
+    outline: none; /* Rimuove il bordo predefinito al focus */
+    transition: border-color 0.3s ease;
+  }
+  
+  .search-bar:focus {
+    border-color: lightsalmon; /* Cambia colore del bordo al focus */
+  }
+
+
+
+  /* Left Section (Home Button) */
+  .nav-left {
+    text-align: left;
+  }
+  
+  /* Right Section (Calendar and To-Do Buttons) */
+  .nav-right {
+    text-align: right;
+  }
+
+  .nav-button-register,
+  .nav-button {
+    background-color: transparent;
+    border: none;
+    color: lightsalmon;
+    font-size: 18px;
+    font-weight: 500;
+    padding:    10px 20px;
+    margin-right: 50px;
+    border-radius: 20px; /* Rounded corners */
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  
+  .nav-button-register:hover,
+  .nav-button:hover {
+    background-color: lightsalmon; /* Light gray background on hover */
+    color: white; /* Blue text on hover */
+  }
+  
+  .nav-button-register:active,
+  .nav-button:active {
+    transform: scale(0.95); /* Slightly shrink on click */
+  }
+
