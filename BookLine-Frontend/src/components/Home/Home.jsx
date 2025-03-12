@@ -27,6 +27,36 @@ const Home = () => {
       title: 'Book Title 3',
       author: 'Author Name 3',
     },
+    {
+      cover: 'https://marketplace.canva.com/EAFPHUaBrFc/1/0/1003w/canva-black-and-white-modern-alone-story-book-cover-QHBKwQnsgzs.jpg',
+      title: 'Book Title 1',
+      author: 'Author Name 1',
+    },
+    {
+      cover: 'https://marketplace.canva.com/EAFf0E5urqk/1/0/1003w/canva-blue-and-green-surreal-fiction-book-cover-53S3IzrNxvY.jpg', // Placeholder image URL
+      title: 'Book Title 2',
+      author: 'Author Name 2',
+    },
+    {
+      cover: 'https://static01.nyt.com/images/2022/12/08/books/review/08NotableBookCovers-PROMO/08NotableBookCovers-PROMO-superJumbo.jpg', // Placeholder image URL
+      title: 'Book Title 3',
+      author: 'Author Name 3',
+    },
+    {
+      cover: 'https://marketplace.canva.com/EAFPHUaBrFc/1/0/1003w/canva-black-and-white-modern-alone-story-book-cover-QHBKwQnsgzs.jpg',
+      title: 'Book Title 1',
+      author: 'Author Name 1',
+    },
+    {
+      cover: 'https://marketplace.canva.com/EAFf0E5urqk/1/0/1003w/canva-blue-and-green-surreal-fiction-book-cover-53S3IzrNxvY.jpg', // Placeholder image URL
+      title: 'Book Title 2',
+      author: 'Author Name 2',
+    },
+    {
+      cover: 'https://static01.nyt.com/images/2022/12/08/books/review/08NotableBookCovers-PROMO/08NotableBookCovers-PROMO-superJumbo.jpg', // Placeholder image URL
+      title: 'Book Title 3',
+      author: 'Author Name 3',
+    },
   ];
 
 

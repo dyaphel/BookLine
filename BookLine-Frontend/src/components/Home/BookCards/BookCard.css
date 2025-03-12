@@ -5,7 +5,8 @@
     padding: 20px; /* Padding inside the card */
     text-align: center; /* Center-align content */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    width: 200px; /* Fixed width for the card */
+    height: auto;
+    width: auto;
     margin: 10px; /* Margin between cards */
   }
   
@@ -16,11 +17,19 @@
   
   .book-cover-container {
     margin-bottom: 15px; /* Space between cover and text */
+    width: 100%; /* Fixed width for the cover container */
+    height: 320px; /* Fixed height for the cover container */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; /* Ensure the image doesn't overflow */
+    border-radius: 10px; /* Rounded corners for the cover container */
   }
-  
+
   .book-cover {
     width: 100%; /* Cover takes full width of the container */
-    height: auto; /* Maintain aspect ratio */
+    height: 100%; /* Maintain aspect ratio */
+    object-fit: cover; /* Ensure the image covers the container without distortion */
     border-radius: 10px; /* Rounded corners for the cover */
   }
   

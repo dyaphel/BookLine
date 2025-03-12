@@ -1,6 +1,34 @@
+
+.home {
+  padding: 20px; /* Padding around the content */
+  text-align: center; /* Center-align content */
+}
+
+.page-content {
+  padding-top: 60px; /* Add padding to avoid overlap with the navbar */
+}
+
+.book-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 5 columns with equal width */
+  gap: 20px; /* Space between cards */
+  padding: 0 20px; /* Add padding to the sides */
+}
+
+@media (max-width: 1200px) {
   .book-list {
-    display: flex;
-    flex-wrap: wrap; /* Allow cards to wrap to the next line */
-    justify-content: center; /* Center-align cards */
-    gap: 20px; /* Space between cards */
+    grid-template-columns: repeat(3, 1fr); /* 4 columns for smaller screens */
   }
+}
+
+@media (max-width: 900px) {
+  .book-list {
+    grid-template-columns: repeat(2, 1fr); /* 3 columns for even smaller screens */
+  }
+}
+
+@media (max-width: 600px) {
+  .book-list {
+    grid-template-columns: repeat(1, 1fr); /* 2 columns for mobile screens */
+  }
+}
