@@ -1,0 +1,41 @@
+/* BookCard.css */
+.book-card {
+    background-color: rgba(255, 255, 255, 0.1); /* Transparent background */
+    border-radius: 15px; /* Rounded corners */
+    padding: 20px; /* Padding inside the card */
+    text-align: center; /* Center-align content */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 200px; /* Fixed width for the card */
+    margin: 10px; /* Margin between cards */
+  }
+  
+  .book-card:hover {
+    transform: translateY(-5px); /* Slight lift on hover */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Shadow on hover */
+  }
+  
+  .book-cover-container {
+    margin-bottom: 15px; /* Space between cover and text */
+  }
+  
+  .book-cover {
+    width: 100%; /* Cover takes full width of the container */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 10px; /* Rounded corners for the cover */
+  }
+  
+  .book-details {
+    color: white; /* Text color */
+  }
+  
+  .book-title {
+    font-size: 18px; /* Title font size */
+    margin: 0 0 5px 0; /* Space between title and author */
+    font-weight: 600; /* Bold title */
+  }
+  
+  .book-author {
+    font-size: 14px; /* Author font size */
+    margin: 0; /* Remove default margin */
+    color: rgba(255, 255, 255, 0.7); /* Lighter color for author */
+  }
