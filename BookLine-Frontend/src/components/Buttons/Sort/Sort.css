@@ -26,6 +26,3 @@
     color: white; /* Cambia colore del testo al passaggio del mouse */
   }
   
-  .button-sort:active {
-    transform: scale(0.95); /* Effetto di ridimensionamento al click */
-  }

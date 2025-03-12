@@ -1,82 +1,151 @@
+/* Navbar.css */
 .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: fixed; /* Fissa la navbar in alto */
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 10px 0px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Ombra per un effetto di profondità */
-    background-color: transparent;
-  }
-  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed; /* Fissa la navbar in alto */
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px 0px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Ombra per un effetto di profondità */
+  background-color: transparent;
+}
 
 .nav-title {
-    margin-left: 5%;
-    font-size: 24px;
-    font-weight: bold;
-    color: rgb(255, 255, 255); /* Colore del titolo */
-  }
-  
-  /* Barra di ricerca al centro */
-  .nav-center {
-    flex: 1; /* Occupa lo spazio rimanente */
-    display: flex;
-    justify-content: center;
-    margin: 0 10%; /* Margine per separare il titolo e i pulsanti */
+  margin-left: 5%;
+  font-size: 24px;
+  font-weight: bold;
+  color: rgb(255, 255, 255); /* Colore del titolo */
+}
 
-  }
-  
+/* Barra di ricerca al centro */
+.nav-center {
+  flex: 1; /* Occupa lo spazio rimanente */
+  display: flex;
+  justify-content: center;
+  margin: 0 10%; /* Margine per separare il titolo e i pulsanti */
+}
+
+.search-bar-container {
+  position: relative;
+  width: 100%; /* Adjust width to fit the container */
+  max-width: 500px; /* Limit maximum width for better responsiveness */
+}
+
+.search-bar {
+  width: 100%;
+  padding: 10px 20px 10px 80px; /* Add left padding for the icon */
+  border: 1px solid #ccc;
+  border-radius: 15px; /* More rounded corners */
+  font-size: 16px;
+  outline: none; /* Rimuove il bordo predefinito al focus */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  background-color: rgb(25, 25, 25); /* Transparent background */
+}
+
+.search-bar:focus {
+  border-color: lightsalmon; /* Cambia colore del bordo al focus */
+  box-shadow: 0 0 8px rgba(255, 160, 122, 0.6); /* Add a glow effect on focus */
+}
+
+/* Filter Icon */
+.filter-icon {
+  position: absolute;
+  left: 15px; /* Position inside the search bar */
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0px; /* Padding around the icon */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.filter-icon:hover {
+  transform: translateY(-50%) scale(1.1); /* Slightly enlarge on hover */
+}
+
+.filter-icon:active {
+  transform: translateY(-50%) scale(0.9); /* Slightly shrink on click */
+}
+
+.filter-icon::after {
+  content: '';
+  position: absolute;
+  right: -15px; /* Position the line to the right of the icon */
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px; /* Line thickness */
+  height: 70%; /* Line height */
+  background-color: #ccc; /* Line color */
+}
+
+.filter-icon-img {
+  width: 30px; /* Adjust icon size */
+  height: 30px; /* Adjust icon size */
+  transition: opacity 0.2s ease;
+}
+
+.filter-icon-img:hover {
+  opacity: 0.8; /* Slightly fade on hover */
+}
+
+/* Left Section (Home Button) */
+.nav-left {
+  text-align: left;
+}
+
+/* Right Section (Calendar and To-Do Buttons) */
+.nav-right {
+  text-align: right;
+}
+
+.nav-button {
+  background-color: transparent;
+  border: none;
+  color: lightsalmon;
+  font-size: 18px;
+  font-weight: 500;
+  padding: 10px 20px;
+  margin-right: 50px;
+  border-radius: 10px; /* More rounded corners */
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.nav-button-register {
+  background-color: transparent;
+  border: none;
+  color: lightsalmon;
+  font-size: 18px;
+  font-weight: 500;
+  border-radius: 10px; /* More rounded corners */
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-right: 10px;
+  margin-left: 2px;
+}
+
+.nav-button-register:hover,
+.nav-button:hover {
+  background-color: lightsalmon; /* Light gray background on hover */
+  color: white; /* Blue text on hover */
+}
+
+.nav-button-register:active,
+.nav-button:active {
+  transform: scale(0.95); /* Slightly shrink on click */
+}
+
+/* Responsive Adjustments for Smaller Screens */
+@media (max-width: 860px) {
+
   .search-bar {
-    width: 120%;
-    padding: 10px 20px;
-    border: 1px solid #ccc;
-    border-radius: 20px; /* Bordi arrotondati */
-    font-size: 16px;
-    outline: none; /* Rimuove il bordo predefinito al focus */
-    transition: border-color 0.3s ease;
+    width: 80%;
   }
   
-  .search-bar:focus {
-    border-color: lightsalmon; /* Cambia colore del bordo al focus */
-  }
-
-
-
-  /* Left Section (Home Button) */
-  .nav-left {
-    text-align: left;
-  }
-  
-  /* Right Section (Calendar and To-Do Buttons) */
-  .nav-right {
-    text-align: right;
-  }
-
-  .nav-button-register,
-  .nav-button {
-    background-color: transparent;
-    border: none;
-    color: lightsalmon;
-    font-size: 18px;
-    font-weight: 500;
-    padding:    10px 20px;
-    margin-right: 50px;
-    border-radius: 20px; /* Rounded corners */
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-
-  
-  .nav-button-register:hover,
-  .nav-button:hover {
-    background-color: lightsalmon; /* Light gray background on hover */
-    color: white; /* Blue text on hover */
-  }
-  
-  .nav-button-register:active,
-  .nav-button:active {
-    transform: scale(0.95); /* Slightly shrink on click */
-  }
-
+ }

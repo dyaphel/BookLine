@@ -1,25 +1,43 @@
-import React from "react";
+// Home.js
+import React, { useState } from "react";
 import NavBar from "../Navbar/Navbar";
-import Filter from '../Buttons/Filter/Filter';
-import Sort from '../Buttons/Sort/Sort';
-const Home = ()=>{
+import Filter from '../Navbar/Filter/Filter';
+import './Home.css'; // Import the CSS file for styling
 
-    return (
-            <div>
-              {/* Navbar */}
-              <NavBar />
-        
-              {/* Componente Filter */}
-              <Filter />
-              <Sort/>
-        
-              {/* Contenuto della pagina */}
-              <div className="page-content">
-                <h1>Benvenuto nella Home</h1>
-                <p>Questo è il contenuto della tua pagina.</p>
-              </div>
-            </div>
-          );
+const Home = () => {
+  const [showFilter, setShowFilter] = useState(false);
+  const [filters, setFilters] = useState({ author: '', year: '', genre: '' });
 
+  const handleFilterClick = () => {
+    setShowFilter(!showFilter);
+  };
+
+  const handleFilterApply = (newFilters) => {
+    setFilters(newFilters);
+    setShowFilter(false);
+    // Here you can filter the books based on the newFilters
+    console.log('Filters applied:', newFilters);
+  };
+
+  return (
+    <div>
+      {/* Navbar */}
+      <NavBar onFilterClick={handleFilterClick} />
+
+      {/* Filter Modal */}
+      {showFilter && (
+        <div className="filter-overlay">
+          <Filter onFilterApply={handleFilterApply} />
+        </div>
+      )}
+
+      {/* Page Content */}
+      <div className="page-content">
+        <h1>Welcome to the Home</h1>
+        <p>This is your page content.</p>
+      </div>
+    </div>
+  );
 };
+
 export default Home;
