@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  frontend:
+    build: .
+    ports:
+      - "5173:5173"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+
+# Explanation:
+
+# build: .: Builds the Docker image using the Dockerfile in the current directory.
+
+# ports: "5173:5173": Maps port 5173 on your local machine to port 5173 in the container.
+
+# volumes: - .:/app: Syncs your local files with the container (for hot-reloading).
+
+# volumes: - /app/node_modules: Ensures the container’s node_modules folder is used (not your local one).
+
+# environment: - NODE_ENV=development: Sets the environment variable for development.
