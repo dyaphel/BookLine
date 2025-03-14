@@ -57,7 +57,7 @@
 /* Filter Icon */
 .filter-icon {
   position: absolute;
-  right: -8%; /* Move the icon to the right side */
+  right: -10%; /* Move the icon to the right side */
   top: 50%;
   transform: translateY(-50%);
   background: none;
@@ -65,8 +65,6 @@
   cursor: pointer;
   padding: 0px; /* Padding around the icon */
   display: flex;
-  align-items: center;
-  justify-content: center;
   transition: transform 0.2s ease;
 }
 
@@ -97,7 +95,7 @@
 }
 
 .filter-icon-img {
-  width: 34px; /* Adjust icon size */
+  width: 33px; /* Adjust icon size */
   height: 32px; /* Adjust icon size */
   transition: transform 0.2s ease; /* Add transition for smooth scaling */
 }
@@ -156,10 +154,10 @@
 @media (max-width: 860px) {
 
   .search-bar {
-    width: 80%;
+    width: 90%;
   }
   .filter-icon {
-    right: -5%; /* Move the icon to the right side */
+    right: -20%; /* Move the icon to the right side */
   }
   
  }
