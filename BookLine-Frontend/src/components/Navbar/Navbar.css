@@ -140,10 +140,23 @@
 @media (max-width: 860px) {
 
   .my-search {
-    width: 140%;
-  }
-  .my-filter {
-    right: -30%; /* Move the icon to the right side */
+    width: 120%;
+    background-color: rgb(25, 25, 25); /* Transparent background */
   }
   
+  .my-filter {
+    right: -50%; /* Move the icon to the right side */
+  }
+  
+
+  .my-nav-button {
+    margin-right: 20px;
+    margin-left: 15px;
+   
+  }
+  
+  .my-nav-button-register {
+    margin-left: 10px;
+  
+  }
  }
