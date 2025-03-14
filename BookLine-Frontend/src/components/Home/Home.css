@@ -1,4 +1,4 @@
-
+/* Home.css */
 .home {
   padding: 20px; /* Padding around the content */
   text-align: center; /* Center-align content */
@@ -10,25 +10,26 @@
 
 .book-list {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 5 columns with equal width */
+  grid-template-columns: repeat(4, 1fr); /* 4 columns with equal width */
   gap: 20px; /* Space between cards */
   padding: 0 20px; /* Add padding to the sides */
+  justify-content: center; /* Center the grid items */
 }
 
 @media (max-width: 1200px) {
   .book-list {
-    grid-template-columns: repeat(3, 1fr); /* 4 columns for smaller screens */
+    grid-template-columns: repeat(3, 1fr); /* 3 columns for smaller screens */
   }
 }
 
 @media (max-width: 900px) {
   .book-list {
-    grid-template-columns: repeat(2, 1fr); /* 3 columns for even smaller screens */
+    grid-template-columns: repeat(2, 1fr); /* 2 columns for even smaller screens */
   }
 }
 
 @media (max-width: 600px) {
   .book-list {
-    grid-template-columns: repeat(1, 1fr); /* 2 columns for mobile screens */
+    grid-template-columns: repeat(1, 1fr); /* 1 column for mobile screens */
   }
 }
