@@ -73,6 +73,7 @@ const Home = () => {
 
   return (
     <div>
+     
       {/* Navbar */}
       <NavBar onFilterClick={handleFilterClick} />
 
@@ -85,7 +86,7 @@ const Home = () => {
 
       {/* Page Content */}
       <div className="page-content">
-      <h1>Book Catalog</h1>
+      <h1 className="BookCatalog-title">Book Catalog</h1>
       <div className="book-list">
         {books.map((book, index) => (
           <BookCard
