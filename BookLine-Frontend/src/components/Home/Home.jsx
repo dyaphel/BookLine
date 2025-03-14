@@ -73,6 +73,7 @@ const Home = () => {
 
   return (
     <div>
+     
       {/* Navbar */}
       <NavBar onFilterClick={handleFilterClick} />
 

@@ -1,5 +1,5 @@
 /* Navbar.css */
-.navbar {
+.my-navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -7,7 +7,7 @@
   top: 0;
   left: 0;
   width: 100%;
-  padding: 10px 0px;
+  padding: 20px 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Ombra per un effetto di profondità */
   background-color: #1e1e1e;
   border-bottom-left-radius:10px;
@@ -16,29 +16,25 @@
 
 }
 
-.nav-title {
-  margin-top: 2%;
-  margin-left: 5%;
-  font-size: 24px;
-  font-weight: bold;
-  color: rgb(255, 255, 255); /* Colore del titolo */
-}
+
 
 /* Barra di ricerca al centro */
-.nav-center {
+.my-nav-center {
   flex: 1; /* Occupa lo spazio rimanente */
   display: flex;
   justify-content: center;
   margin: 0 10%; /* Margine per separare il titolo e i pulsanti */
 }
 
-.search-bar-container {
+.my-search-container {
+  justify-content: center;
   position: relative;
   width: 100%; /* Adjust width to fit the container */
   max-width: 500px; /* Limit maximum width for better responsiveness */
+
 }
 
-.search-bar {
+.my-search {
   width: 100%;
   padding: 10px 40px 10px 40px; /* Adjust padding for the icon on the right */
   border: 1px solid #ccc;
@@ -49,18 +45,17 @@
   background-color: rgb(25, 25, 25); /* Transparent background */
 }
 
-.search-bar:focus {
+.my-search:focus {
   border-color: lightsalmon; /* Cambia colore del bordo al focus */
   box-shadow: 0 0 8px rgba(255, 160, 122, 0.6); /* Add a glow effect on focus */
 }
 
 /* Filter Icon */
-.filter-icon {
-  position: absolute;
-  right: -10%; /* Move the icon to the right side */
+.my-filter {
+  position: absolute; 
+  right: -15%; /* Move the icon to the right side */
   top: 50%;
   transform: translateY(-50%);
-  background: none;
   border: none;
   cursor: pointer;
   padding: 0px; /* Padding around the icon */
@@ -68,96 +63,87 @@
   transition: transform 0.2s ease;
 }
 
-/* Vertical line on the left of the filter icon */
-.filter-icon::before {
-  content: '';
-  position: absolute;
-  left: -15px; /* Position the line to the left of the icon */
-  top: 50%;
-  transform: translateY(-50%); /* Center the line vertically */
-  width: 1px; /* Line thickness */
-  height: 70%; /* Line height */
-  background-color: #ccc; /* Line color */
-}
+
 
 /* Hover effect for the filter icon */
-.filter-icon:hover .filter-icon-img {
+.my-filter:hover .my-filter-image {
   transform: scale(1.1); /* Slightly enlarge the icon on hover */
 }
 
 /* Ensure the vertical line doesn't scale on hover */
-.filter-icon:hover::before {
+.my-filter:hover::before {
   transform: translateY(-50%); /* Reset transform for the line */
 }
 
-.filter-icon:active .filter-icon-img {
+.my-filter:active .my-filter-image {
   transform: scale(0.9); /* Slightly shrink the icon on click */
 }
 
-.filter-icon-img {
-  width: 33px; /* Adjust icon size */
-  height: 32px; /* Adjust icon size */
+.my-filter-image {
+  width: 40px; /* Adjust icon size */
+  height: 42px; /* Adjust icon size */
   transition: transform 0.2s ease; /* Add transition for smooth scaling */
 }
-.filter-icon-img:hover {
+.my-filter-image:hover {
   opacity: 0.8; /* Slightly fade on hover */
 }
 
 /* Left Section (Home Button) */
-.nav-left {
+.my-nav-left {
   text-align: left;
 }
 
 /* Right Section (Calendar and To-Do Buttons) */
-.nav-right {
+.my-nav-right {
   text-align: right;
 }
 
-.nav-button {
+.my-nav-button {
   background-color: transparent;
   border: none;
   color: lightsalmon;
-  font-size: 18px;
+  font-size: 1.2rem;
   font-weight: 500;
   padding: 10px 20px;
-  margin-right: 50px;
+  margin-right: 80px;
+  margin-left: 25px;
   border-radius: 10px; /* More rounded corners */
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
-.nav-button-register {
+.my-nav-button-register {
   background-color: transparent;
   border: none;
   color: lightsalmon;
-  font-size: 18px;
+  font-size: 1.2rem;
   font-weight: 500;
   border-radius: 10px; /* More rounded corners */
   cursor: pointer;
   transition: all 0.3s ease;
-  margin-right: 10px;
-  margin-left: 2px;
+  margin-left: -20px;
+
 }
 
-.nav-button-register:hover,
-.nav-button:hover {
+.my-nav-button-register:hover,
+.my-nav-button:hover {
   background-color: lightsalmon; /* Light gray background on hover */
   color: white; /* Blue text on hover */
 }
 
-.nav-button-register:active,
-.nav-button:active {
+.my-nav-button-register:active,
+.my-nav-button:active {
   transform: scale(0.95); /* Slightly shrink on click */
 }
 
 /* Responsive Adjustments for Smaller Screens */
 @media (max-width: 860px) {
 
-  .search-bar {
-    width: 90%;
+  .my-search {
+    width: 140%;
   }
-  .filter-icon {
-    right: -20%; /* Move the icon to the right side */
+  .my-filter {
+    right: -30%; /* Move the icon to the right side */
   }
   
  }
