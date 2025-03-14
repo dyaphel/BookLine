@@ -40,7 +40,7 @@
 
 .search-bar {
   width: 100%;
-  padding: 10px 20px 10px 80px; /* Add left padding for the icon */
+  padding: 10px 40px 10px 20px; /* Adjust padding for the icon on the right */
   border: 1px solid #ccc;
   border-radius: 15px; /* More rounded corners */
   font-size: 16px;
@@ -57,7 +57,7 @@
 /* Filter Icon */
 .filter-icon {
   position: absolute;
-  left: 15px; /* Position inside the search bar */
+  right: -8%; /* Move the icon to the right side */
   top: 50%;
   transform: translateY(-50%);
   background: none;
@@ -70,8 +70,8 @@
   transition: transform 0.2s ease;
 }
 
-.filter-icon:hover {
-  transform: translateY(-50%) scale(1.1); /* Slightly enlarge on hover */
+.filter-icon::after {
+  display: none; /* Remove the vertical line */
 }
 
 .filter-icon:active {
