@@ -11,6 +11,9 @@ const BookInformation = ()=>{
         
         <div>
         HI WELCOME TO THE INFORMATION PAGE
+        i now have modified it :
+        <p> Im editing it again </p>
+        <p> Im editing it again using the docker polling </p>
        </div>
        </>
 
