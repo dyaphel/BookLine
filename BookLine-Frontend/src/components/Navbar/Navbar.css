@@ -76,27 +76,31 @@
   position: absolute;
   left: -15px; /* Position the line to the left of the icon */
   top: 50%;
-  transform: translateY(-50%);
+  transform: translateY(-50%); /* Center the line vertically */
   width: 1px; /* Line thickness */
   height: 70%; /* Line height */
   background-color: #ccc; /* Line color */
-  transform: translateY(-50%) scale(1.1); /* Slightly enlarge on hover */
 }
 
-.filter-icon:hover {
-  transform: translateY(-50%) scale(1.1); /* Slightly enlarge on hover */
+/* Hover effect for the filter icon */
+.filter-icon:hover .filter-icon-img {
+  transform: scale(1.1); /* Slightly enlarge the icon on hover */
 }
 
-.filter-icon:active {
-  transform: translateY(-50%) scale(0.9); /* Slightly shrink on click */
+/* Ensure the vertical line doesn't scale on hover */
+.filter-icon:hover::before {
+  transform: translateY(-50%); /* Reset transform for the line */
+}
+
+.filter-icon:active .filter-icon-img {
+  transform: scale(0.9); /* Slightly shrink the icon on click */
 }
 
 .filter-icon-img {
   width: 34px; /* Adjust icon size */
   height: 32px; /* Adjust icon size */
-  transition: opacity 0.2s ease;
+  transition: transform 0.2s ease; /* Add transition for smooth scaling */
 }
-
 .filter-icon-img:hover {
   opacity: 0.8; /* Slightly fade on hover */
 }
