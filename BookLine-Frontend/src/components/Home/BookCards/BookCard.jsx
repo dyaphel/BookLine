@@ -2,9 +2,9 @@
 import React from 'react';
 import './BookCard.css'; // Import the CSS file for styling
 
-const BookCard = ({ cover, title, author }) => {
+const BookCard = ({ cover, title, author, onClick }) => {
   return (
-    <div className="book-card">
+    <div className="book-card" onClick={onClick}>
       <div className="book-cover-container">
         <img src={cover} alt={title} className="book-cover" />
       </div>

@@ -1,5 +1,6 @@
 // Home.js
 import React, { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import NavBar from "../Navbar/Navbar";
 import Filter from '../Navbar/Filter/Filter';
 import BookCard  from "./BookCards/BookCard";
@@ -8,7 +9,7 @@ import './Home.css'; // Import the CSS file for styling
 const Home = () => {
   const [showFilter, setShowFilter] = useState(false);
   const [filters, setFilters] = useState({ author: '', year: '', genre: '' });
-
+  const navigate = useNavigate();
 
 
   const books = [
@@ -87,13 +88,15 @@ const Home = () => {
       {/* Page Content */}
       <div className="page-content">
       <h1 className="BookCatalog-title">Book Catalog</h1>
-      <div className="book-list">
+      <div className="book-list" >
         {books.map((book, index) => (
+          
           <BookCard
             key={index}
             cover={book.cover}
             title={book.title}
             author={book.author}
+            onClick={() => navigate('/bookinformation')}
           />
         ))}
       </div>
