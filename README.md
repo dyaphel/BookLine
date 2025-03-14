@@ -1,22 +1,25 @@
 # BookLine
 Lab. advanced programming - project
 
-## 🛠️ Setup and Installation
+## 🛠️ Setup and Installation whit docker 🐋
 
 1. **Clone the repository**:
    ```bash
    git clone https://github.com/dyaphel/BookLine.git
    Install dependencies:
-2. **Install dependencies**:
+   
+2. **Navigate to the project directory**:
      ```bash
-    cd BookLine
-    npm install
-4. **Run the development server**:
+      cd BookLine/Bookline-frontend
+4. **Build and start the Docker container**:
    ```bash
-   npm run dev
+     docker-compose up --build
 
 5. Open your browser and navigate to **http://localhost:5173** to view the project
 
+6. **Stop the Docker container**:
+    ```bash
+   docker-compose down
 # 🚀 Git Workflow Rules  
 
 To ensure smooth collaboration, follow these rules when working on this repository.  
