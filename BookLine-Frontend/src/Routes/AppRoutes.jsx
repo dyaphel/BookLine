@@ -1,7 +1,7 @@
 import React from "react";
-import BookInformation from '../components/BookInformation/BookInformation';
 import { BrowserRouter as Router,Routes, Route, Navigate } from 'react-router-dom';
 
+import BookInformation from "../components/BookInformation/BookInformation";
 import Login from '../components/Login/Login';
 import Home from '../components/Home/Home';
 
@@ -16,8 +16,8 @@ const AppRoutes = () => {
                 <Route path="/home" element = {<Home/>} />
 
                 {/*PROTECTED ROUTES*/}
-                <Route path='/book-information' element={<BookInformation/>}/>
-                </Routes>
+                <Route path="/bookinformation" element={<BookInformation/>}/>
+             </Routes>
         </Router>
     );
 };
