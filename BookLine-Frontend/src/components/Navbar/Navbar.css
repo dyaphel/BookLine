@@ -40,10 +40,10 @@
 
 .search-bar {
   width: 100%;
-  padding: 10px 40px 10px 20px; /* Adjust padding for the icon on the right */
+  padding: 10px 40px 10px 40px; /* Adjust padding for the icon on the right */
   border: 1px solid #ccc;
-  border-radius: 15px; /* More rounded corners */
-  font-size: 16px;
+  border-radius: 10px; /* More rounded corners */
+  font-size: 1.1rem;
   outline: none; /* Rimuove il bordo predefinito al focus */
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
   background-color: rgb(25, 25, 25); /* Transparent background */
@@ -70,28 +70,30 @@
   transition: transform 0.2s ease;
 }
 
-.filter-icon::after {
-  display: none; /* Remove the vertical line */
+/* Vertical line on the left of the filter icon */
+.filter-icon::before {
+  content: '';
+  position: absolute;
+  left: -15px; /* Position the line to the left of the icon */
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px; /* Line thickness */
+  height: 70%; /* Line height */
+  background-color: #ccc; /* Line color */
+  transform: translateY(-50%) scale(1.1); /* Slightly enlarge on hover */
+}
+
+.filter-icon:hover {
+  transform: translateY(-50%) scale(1.1); /* Slightly enlarge on hover */
 }
 
 .filter-icon:active {
   transform: translateY(-50%) scale(0.9); /* Slightly shrink on click */
 }
 
-.filter-icon::after {
-  content: '';
-  position: absolute;
-  right: -15px; /* Position the line to the right of the icon */
-  top: 50%;
-  transform: translateY(-50%);
-  width: 1px; /* Line thickness */
-  height: 70%; /* Line height */
-  background-color: #ccc; /* Line color */
-}
-
 .filter-icon-img {
-  width: 30px; /* Adjust icon size */
-  height: 30px; /* Adjust icon size */
+  width: 34px; /* Adjust icon size */
+  height: 32px; /* Adjust icon size */
   transition: opacity 0.2s ease;
 }
 
@@ -151,6 +153,9 @@
 
   .search-bar {
     width: 80%;
+  }
+  .filter-icon {
+    right: -5%; /* Move the icon to the right side */
   }
   
  }
