@@ -11,7 +11,6 @@ COPY ./media /app/media
 COPY ./bookline /app/bookline
 
 RUN pip install --no-cache-dir -r requirements.txt
-RUN pip install Pillow
 
 # Expose port for Django
 EXPOSE 8000

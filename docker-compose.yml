@@ -42,9 +42,8 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - pgdata:/var/lib/postgresql/data
-      - ./init-db:/docker-entrypoint-initdb.d  # Load initial dataset
-
+      - db_data:/var/lib/postgresql/data
+      
   pgadmin:
     build: ./pgadmin
     image: dpage/pgadmin4
@@ -55,11 +54,12 @@ services:
       PGADMIN_DEFAULT_PASSWORD: admin
       PGADMIN_LISTEN_PORT: 80
     volumes:
-      - ./pgadmin:/var/lib/pgadmin
+      - pgadmin-data:/var/lib/pgadmin
     ports:
       - "5050:80"
     depends_on:
       - db
 
 volumes:
-  pgdata:
+  db_data:
+  pgadmin-data:
