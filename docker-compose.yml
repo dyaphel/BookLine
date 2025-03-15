@@ -3,6 +3,7 @@ version: "3.8"
 services:
   backend:
     build: ./backend
+    command: /bin/bash -c "python manage.py migrate && python manage.py createsuperuser --noinput && python manage.py runserver 0.0.0.0:8000"
     container_name: bookline_backend
     volumes:
       - ./backend:/app
@@ -11,7 +12,7 @@ services:
     environment:
       - DJANGO_SUPERUSER_USERNAME=admin
       - DJANGO_SUPERUSER_PASSWORD=admin
-      - DJANGO_SUPERUSER_EMAIL=admin@example.com
+      - DJANGO_SUPERUSER_EMAIL=admin@user.com
       - DJANGO_SETTINGS_MODULE=backend.settings
       - DATABASE_URL=postgres://bookline_user:password@db:5432/bookline_db
     ports:
@@ -43,7 +44,7 @@ services:
       - "5432:5432"
     volumes:
       - db_data:/var/lib/postgresql/data
-      
+
   pgadmin:
     build: ./pgadmin
     image: dpage/pgadmin4
