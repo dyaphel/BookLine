@@ -10,7 +10,7 @@ services:
     environment:
       - DJANGO_SUPERUSER_USERNAME=admin
       - DJANGO_SUPERUSER_PASSWORD=admin
-      - DJANGO_SUPERUSER_EMAIL=admin@example.com
+      - DJANGO_SUPERUSER_EMAIL=admin@user.com
       - DJANGO_SETTINGS_MODULE=backend.settings
       - DATABASE_URL=postgres://bookline_user:password@db:5432/bookline_db
     ports:
