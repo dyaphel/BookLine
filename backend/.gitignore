@@ -1,0 +1,4 @@
+# Python cache data
+__pycache__/
+*.pyc
+*.pyo
