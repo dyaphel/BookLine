@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   backend:
     build: ./backend
@@ -7,7 +5,8 @@ services:
     volumes:
       - ./backend:/app
     depends_on:
-      - db
+       db:
+        condition: service_healthy #added this condition
     environment:
       - DJANGO_SUPERUSER_USERNAME=admin
       - DJANGO_SUPERUSER_PASSWORD=admin
@@ -43,7 +42,12 @@ services:
       - "5432:5432"
     volumes:
       - db_data:/var/lib/postgresql/data
-      
+    #  added an health check for the db
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bookline_user -d bookline_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5 
   pgadmin:
     build: ./pgadmin
     image: dpage/pgadmin4
