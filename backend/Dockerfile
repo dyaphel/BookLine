@@ -1,10 +1,16 @@
 FROM python:3.10
 
-
 WORKDIR /app
 
 # Install system dependencies
-RUN apt-get update && apt-get install -y postgresql-client && rm -rf /var/lib/apt/lists/*
+# Install lsb-release to determine the Debian release codename
+RUN apt-get update && \
+    apt-get install -y wget gnupg2 lsb-release && \
+    sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list' && \
+    wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor -o /etc/apt/trusted.gpg.d/postgresql.gpg && \
+    apt-get update && \
+    apt-get install -y postgresql-client-17 && \
+    rm -rf /var/lib/apt/lists/*
 
 # Copy requirements and install Python dependencies
 COPY requirements.txt .
