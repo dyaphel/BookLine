@@ -7,19 +7,17 @@ Lab. advanced programming - project
    ```bash
    git clone https://github.com/dyaphel/BookLine.git
    Install dependencies:
-   
-2. **Navigate to the project directory**:
-     ```bash
-      cd BookLine/Bookline-frontend
-4. **Build and start the Docker container**:
+2. **Build and start the Docker container**:
    ```bash
      docker-compose up --build
-
-5. Open your browser and navigate to **http://localhost:5173** to view the project
-
-6. **Stop the Docker container**:
+   
+3. Open your browser and navigate to **http://localhost:5173** to view the frontend
+   to **http://127.0.0.1:8000** for Django
+   to **http://localhost:5050/** for Pgadmin
+   
+4. **Stop the Docker container**:
     ```bash
-   docker-compose down
+   docker-compose down -v
 # 🚀 Git Workflow Rules  
 
 To ensure smooth collaboration, follow these rules when working on this repository.  
@@ -75,5 +73,7 @@ Push the updated sub-development branch:
 ## ⚠️ Important Notes
 - Never push directly to main or development.
 - Always fetch before starting and during your programming session.
+- Always fetch the branch in which you want to do the merge.
 - Use meaningful commit messages.
 - Resolve conflicts in sub-development before pushing to development.
+- Do not add backend changes into frontend branches
