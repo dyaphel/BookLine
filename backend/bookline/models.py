@@ -1,3 +1,26 @@
+#per gestire meglio gli utenti >>>
+#---------------------------------------------------------------------------------------------------------------------------------
+# from django.contrib.auth.models import AbstractUser
+# from django.core.validators import EmailValidator
+
+# from django.db import models
+# class User(AbstractUser):
+#     email = models.EmailField(unique=True, blank=False, null=False,
+#             validators=[EmailValidator(message="Enter a valid email address.")]
+#             )
+#     profile_image = models.ImageField( null=True, blank=True)
+#     background_image = models.ImageField(null=True, blank=True)
+#     bio = models.TextField(blank=True, null=True)  # A short bio/description
+#     location = models.CharField(max_length=100, blank=True, null=True)  # User's location
+#     instagram  = models.URLField(blank=True, null=True)  # Personal website or social media link
+#     facebook  = models.URLField(blank=True, null=True)  # Personal website or social media link
+#     X  = models.URLField(blank=True, null=True)  # Personal website or social media link
+
+# def __str__(self):
+#     return self.username
+#---------------------------------------------------------------------------------------------------------------------------------
+
+
 from django.db import models
 
 class Book(models.Model):
