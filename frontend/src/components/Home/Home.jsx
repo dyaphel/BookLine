@@ -6,6 +6,7 @@ import NavBar from "../Navbar/Navbar";
 import Filter from '../Navbar/Filter/Filter';
 import BookCard  from "./BookCards/BookCard";
 import './Home.css'; // Import the CSS file for styling
+import { normalizeCoverUrl } from "../../Utils/urlCoverNormalizer"; // Import the utility function
 
 const Home = () => {
   const [showFilter, setShowFilter] = useState(false);
@@ -64,17 +65,20 @@ const Home = () => {
       <div className="page-content">
       <h1 className="BookCatalog-title">Book Catalog</h1>
       <div className="book-list" >
-        {books.map((book, index) => (
-          
-          <BookCard
-            key={index}
-            cover={book.cover}
-            title={book.title}
-            author={book.author}
-            onClick={() => navigate('/bookinformation')}
-          />
-          
-        ))}
+        {books.map((book, index) => {
+          const normalizedCoverUrl = normalizeCoverUrl(book.cover);
+          console.log(`Normalized URL for book ${index}:`, normalizedCoverUrl);
+
+          return (
+            <BookCard
+              key={index}
+              cover={normalizedCoverUrl}
+              title={book.title}
+              author={book.author}
+              onClick={() => navigate('/bookinformation')}
+            />
+          );
+        })}
       </div>
       </div>
     </div>
