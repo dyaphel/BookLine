@@ -3,6 +3,7 @@ import React from 'react';
 import './BookCard.css'; // Import the CSS file for styling
 
 const BookCard = ({ cover, title, author, onClick }) => {
+  console.log("Cover URL:", cover); // Log the cover URL
   return (
     <div className="book-card" onClick={onClick}>
       <div className="book-cover-container">
