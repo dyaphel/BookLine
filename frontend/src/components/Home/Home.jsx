@@ -91,7 +91,7 @@ const Home = () => {
                   cover={normalizedCoverUrl || "https://via.placeholder.com/150"} // Fallback image if cover is invalid
                   title={book.title}
                   author={book.author}
-                  onClick={() => navigate(`/bookinformation/${book.id}`)} // Pass book ID to the details page
+                  onClick={() => navigate(`/bookinformation/${book.isbn}`)} // Pass book ID to the details page
                 />
               );
             })}

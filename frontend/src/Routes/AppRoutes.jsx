@@ -16,7 +16,7 @@ const AppRoutes = () => {
                 <Route path="/home" element = {<Home/>} />
 
                 {/*PROTECTED ROUTES*/}
-                <Route path="/bookinformation" element={<BookInformation/>}/>
+                <Route path="/bookinformation/:isbn" element={<BookInformation/>}/>
              </Routes>
         </Router>
     );
