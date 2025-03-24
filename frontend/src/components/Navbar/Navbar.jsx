@@ -1,11 +1,21 @@
-// NavBar.js
-import React from 'react';
+import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import Title from '../../Utils/Title/BookLinetitle';
 import './Navbar.css'; // Import the CSS file for styling
 
-const NavBar = ({ onFilterClick }) => {
+const NavBar = ({ onFilterClick, onSearch }) => {
   const navigate = useNavigate(); // Initialize useNavigate
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const handleSearchSubmit = (event) => {
+    if (event.key === "Enter") {
+      onSearch(searchQuery); // Pass the search query to Home.js
+    }
+  };
 
   return (
     <div className="my-navbar">
@@ -21,6 +31,9 @@ const NavBar = ({ onFilterClick }) => {
             type="text"
             placeholder="Search..."
             className="my-search"
+            value={searchQuery}
+            onChange={handleSearchChange}
+            onKeyDown={handleSearchSubmit} // Trigger search on Enter key press
           />
           <button onClick={onFilterClick} className="my-filter">
             <img src="./Filter.png" alt="Filter" className="my-filter-image" />
