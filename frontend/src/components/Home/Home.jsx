@@ -36,6 +36,14 @@ const Home = () => {
     fetchBooks(filters);
   }, [filters]);
 
+   // Handle search submission
+   const handleSearch = (query) => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      q: query, // Update search query
+    }));
+  };
+
   // Handle filter button click
   const handleFilterClick = () => {
     setShowFilter(!showFilter);
@@ -65,7 +73,7 @@ const Home = () => {
   return (
     <div>
       {/* Navbar */}
-      <NavBar onFilterClick={handleFilterClick} />
+      <NavBar onFilterClick={handleFilterClick} onSearch={handleSearch}/>
 
       {/* Filter Modal */}
       {showFilter && (
