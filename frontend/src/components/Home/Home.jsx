@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios"; // Import Axios for API calls
 import NavBar from "../Navbar/Navbar";
@@ -107,7 +107,7 @@ const Home = () => {
               return (
                 <BookCard
                   key={index}
-                  cover={normalizedCoverUrl || "https://via.placeholder.com/150"} // Fallback image if cover is invalid
+                  cover={normalizedCoverUrl} // Fallback image if cover is invalid
                   title={book.title}
                   author={book.author}
                   onClick={() => navigate(`/bookinformation/${book.isbn}`)} // Pass book ID to the details page

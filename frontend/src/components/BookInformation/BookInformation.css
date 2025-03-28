@@ -1,0 +1,54 @@
+.book-details-container {
+    display: flex;
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 1rem;
+    gap: 2rem;
+  }
+  
+  .book-cover-container {
+    flex: 1;
+  }
+  
+  .book-cover {
+    max-width: 100%;
+    height: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .book-info {
+    flex: 2;
+  }
+  
+  .book-title {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .book-author {
+    font-size: 1.5rem;
+    color: #666;
+    margin-bottom: 1.5rem;
+  }
+  
+  .book-meta {
+    margin-bottom: 2rem;
+  }
+  
+  .book-meta p {
+    margin: 0.5rem 0;
+  }
+  
+  .book-description, .book-abstract {
+    margin-bottom: 1.5rem;
+  }
+  
+  .loading, .error, .not-found {
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.2rem;
+  }
+  
+  .error {
+    color: #d32f2f;
+  }
