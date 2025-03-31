@@ -58,7 +58,7 @@ const BookInformation = () => {
           />
         </div>
         
-        <div className="book-info">
+        
           <h1 className="book-title">{book.title}</h1>
           <h2 className="book-author">by {book.author}</h2>
           
@@ -78,7 +78,6 @@ const BookInformation = () => {
             <h3>Abstract</h3>
             <p>{book.abstract || 'No abstract available.'}</p>
           </div>
-        </div>
       </div>
     </>
   );
