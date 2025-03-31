@@ -47,6 +47,7 @@ const BookInformation = () => {
       </div>
       
       <div className="book-details-container">
+        {/* Book Cover Card (Left) */}
         <div className="book-cover-container">
           <img 
             src={coverUrl}
@@ -58,9 +59,10 @@ const BookInformation = () => {
           />
         </div>
         
-        
-          <h1 className="book-title">{book.title}</h1>
-          <h2 className="book-author">by {book.author}</h2>
+        {/* Book Info Card (Right) */}
+        <div className="book-info-card">
+          <h1 className="book-title-info">{book.title}</h1>
+          <h2 className="book-author-info">by {book.author}</h2>
           
           <div className="book-meta">
             <p><strong>Published:</strong> {new Date(book.published).toLocaleDateString()}</p>
@@ -78,9 +80,10 @@ const BookInformation = () => {
             <h3>Abstract</h3>
             <p>{book.abstract || 'No abstract available.'}</p>
           </div>
+        </div>
       </div>
     </>
   );
-};
+}
 
 export default BookInformation;
