@@ -1,0 +1,257 @@
+.book-details-container {
+  display: flex;
+  max-width: 1200px;
+  margin-top: 10%;
+  gap: 3rem;
+  
+}
+
+/* Book cover card (left side) */
+.book-cover-container {
+  flex: 0 0 400px;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 550px;
+  position: sticky;
+  margin-top: 50px;
+  background-color: transparent;
+}
+
+.book-cover {
+  max-width: 100%;
+  max-height: 500px;
+  width: auto;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  object-fit: contain;
+}
+
+/* Book info card (right side) */
+.book-info-card {
+  margin-top: -5%;
+  flex: 1;
+  background-color: rgba(255, 255, 255, 0.85);
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.book-title-info {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  color: lightcoral;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.book-author-info {
+  font-size: 1rem;
+  margin-bottom: 1px;
+  margin-top: -10px;
+  color: black;
+  font-weight: 500;
+  font-style: italic;
+}
+
+.book-meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  font-size: 1.1rem;
+  color: #444;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid lightsalmon;
+}
+
+.book-meta p {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.book-meta strong {
+  color: #333;
+  margin-bottom: 0.3rem;
+  font-weight: 600;
+}
+
+.book-description, 
+.book-abstract {
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 1.8rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  border-left: 4px solid lightsalmon;
+}
+
+.book-description h3, 
+.book-abstract h3 {
+  margin-top: 0;
+  margin-bottom: 1.2rem;
+  color: #333;
+  font-size: 1.5rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+}
+
+.book-description h3::before,
+.book-abstract h3::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 25px;
+  background: lightsalmon;
+  margin-right: 12px;
+  border-radius: 2px;
+}
+
+.book-description p, 
+.book-abstract p {
+  margin: 0;
+  line-height: 1.8;
+  color: #444;
+  text-align: justify;
+  hyphens: auto;
+  max-height: 300px;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+/* Scrollbar styling for long text */
+.book-description p::-webkit-scrollbar,
+.book-abstract p::-webkit-scrollbar {
+  width: 6px;
+}
+
+.book-description p::-webkit-scrollbar-thumb,
+.book-abstract p::-webkit-scrollbar-thumb {
+  background: lightsalmon;
+  border-radius: 3px;
+}
+
+/* Responsive design adjustments */
+@media (max-width: 992px) {
+  .book-details-container {
+    gap: 2rem;
+  }
+  
+  .book-cover-container {
+    min-height: 500px; /* Increased height */
+    padding: 2rem;
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .book-cover {
+    max-height: 450px; /* Increased to show more of the cover */
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    object-fit: contain;
+  }
+  .book-info-card {
+    padding: 1.5rem;
+    
+  }
+  .book-title {
+    font-size: 2.4rem;
+  }
+  .book-info-card {
+    margin-top: 2%;
+    
+  }
+  
+  .book-meta {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .book-details-container {
+    flex-direction: column;
+  }
+  
+  .book-cover-container {
+    max-width: 80%;
+    height: auto;
+    position: static;
+    margin-bottom: 2rem;
+    margin-top: 50px;
+    margin-left: 50px;
+  }
+  
+  .book-info-card {
+    padding: 2rem;
+  }
+  
+  .book-title {
+    font-size: 2rem;
+  }
+  
+  .book-author {
+    font-size: 1.3rem;
+  }
+  
+  .book-description p, 
+  .book-abstract p {
+    max-height: none;
+    overflow-y: visible;
+  }
+}
+
+@media (max-width: 480px) {
+  .book-cover-container,
+  .book-info-card {
+    padding: 1.5rem;
+  }
+  
+  .book-cover-container {
+    min-height: 400px; /* Increased from auto to 400px */
+    padding: 2rem; /* Slightly more padding */
+    margin-top: 30px; /* Adjusted top margin */
+  }
+  
+  .book-cover {
+    max-height: 380px; /* Set max-height for the image */
+  }
+  
+  .book-title {
+    font-size: 2rem; /* Slightly larger than 1.8rem */
+    margin-bottom: 0.8rem;
+  }
+  
+  .book-author {
+    font-size: 1.4rem; /* Slightly larger */
+    margin-bottom: 1.8rem;
+  }
+  
+  .book-meta {
+    grid-template-columns: 1fr;
+    gap: 1.2rem; /* More space between meta items */
+    padding-bottom: 2rem;
+  }
+  
+  .book-description, 
+  .book-abstract {
+    padding: 1.5rem; /* More padding */
+    margin-bottom: 1.5rem; /* More space between sections */
+  }
+  
+  .book-description h3,
+  .book-abstract h3 {
+    font-size: 1.4rem; /* Larger section headers */
+    margin-bottom: 1rem;
+  }
+}

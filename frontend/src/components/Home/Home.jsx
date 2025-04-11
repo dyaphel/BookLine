@@ -7,6 +7,17 @@ import BookCard from "./BookCards/BookCard";
 import './Home.css'; // Import the CSS file for styling
 import { normalizeCoverUrl } from "../../Utils/urlCoverNormalizer"; // Import the utility function
 
+
+// Debounce function to delay API calls while typing
+const debounce = (func, delay) => {
+  let timeout;
+  return (...args) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func(...args), delay);
+  };
+};
+
+
 const Home = () => {
   const [showFilter, setShowFilter] = useState(false);
   const [filters, setFilters] = useState({ author: '', year: '', genre: '' });
@@ -31,17 +42,17 @@ const Home = () => {
     }
   };
 
+
   // Fetch books when the component mounts or filters change
   useEffect(() => {
     fetchBooks(filters);
   }, [filters]);
 
-   // Handle search submission
-   const handleSearch = (query) => {
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      q: query, // Update search query
-    }));
+   
+  // Handle search input changes
+  const handleSearch = (query) => {
+    setFilters((prevFilters) => ({ ...prevFilters, q: query }));
+    debouncedFetchBooks({ ...filters, q: query });
   };
 
   // Handle filter button click
@@ -96,7 +107,7 @@ const Home = () => {
               return (
                 <BookCard
                   key={index}
-                  cover={normalizedCoverUrl || "https://via.placeholder.com/150"} // Fallback image if cover is invalid
+                  cover={normalizedCoverUrl} // Fallback image if cover is invalid
                   title={book.title}
                   author={book.author}
                   onClick={() => navigate(`/bookinformation/${book.isbn}`)} // Pass book ID to the details page
