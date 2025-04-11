@@ -17,7 +17,7 @@
   align-items: center;
   min-height: 550px;
   position: sticky;
-  margin-top: 50px;
+
   background-color: transparent;
 }
 
@@ -139,6 +139,22 @@
   border-radius: 3px;
 }
 
+.bookbutton{
+  display: flex;
+  padding-inline: 2rem;
+
+}
+.bookstatus{
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    padding-inline: 2rem;
+    font-size: 1.5rem;
+    margin-top: -8%;
+    font-style: italic;
+  }
+
+
 /* Responsive design adjustments */
 @media (max-width: 992px) {
   .book-details-container {
@@ -148,7 +164,7 @@
   .book-cover-container {
     min-height: 500px; /* Increased height */
     padding: 2rem;
-    margin-top: 30px;
+    margin-top: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -162,20 +178,29 @@
     object-fit: contain;
   }
   .book-info-card {
-    padding: 1.5rem;
+    padding: 1.2rem;
     
   }
   .book-title {
     font-size: 2.4rem;
   }
   .book-info-card {
-    margin-top: 2%;
-    
+    margin-top: -40px;
   }
   
   .book-meta {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  .bookbutton{
+    margin-bottom: 20px;
+  
+  }
+  .bookstatus{
+      margin-top: -150px;
+  }
+  
+
 }
 
 @media (max-width: 768px) {
@@ -209,6 +234,15 @@
     max-height: none;
     overflow-y: visible;
   }
+
+  .bookbutton{
+    margin-bottom: 20px;
+  
+  }
+  .bookstatus{
+      margin-top: -150px;
+  }
+  
 }
 
 @media (max-width: 480px) {
@@ -254,4 +288,13 @@
     font-size: 1.4rem; /* Larger section headers */
     margin-bottom: 1rem;
   }
+
+  .bookbutton{
+    margin-bottom: -20px;
+  
+  }
+  .bookstatus{
+      margin-top: 50%;
+  }
+  
 }

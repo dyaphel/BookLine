@@ -35,5 +35,7 @@ class Book(models.Model):
     genre = models.CharField(max_length=100, blank=True)
     language = models.CharField(max_length=50, blank=True)
 
+    # add the status : available, not available, reserved;
+    # queued user to the book;
     def __str__(self):
         return self.title

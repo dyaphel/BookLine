@@ -35,7 +35,7 @@ const NavBar = ({ onFilterClick, onSearch }) => {
             // onKeyDown={handleSearchSubmit} // Trigger search on Enter key press
           />
           <button onClick={onFilterClick} className="my-filter">
-            <img src="./Filter.png" alt="Filter" className="my-filter-image" />
+            <img src="../../public/Filter.png" alt="Filter" className="my-filter-image" />
           </button>
         </div>
       </div>
