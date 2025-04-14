@@ -4,6 +4,8 @@ import axios from "axios";
 import Title from "../../Utils/Title/BookLinetitle";
 import { normalizeCoverUrl } from "../../Utils/urlCoverNormalizer";
 import './BookInformation.css';
+import NavBar from "../Navbar/Navbar";
+import Reservation from "../Buttons/reservation/reservation";
 
 const BookInformation = () => {
   const { isbn } = useParams();
@@ -42,9 +44,9 @@ const BookInformation = () => {
 
   return (
     <>
-      <div className="my-navbar">
-        <Title />
-      </div>
+      
+        <NavBar/>
+      
       
       <div className="book-details-container">
         {/* Book Cover Card (Left) */}
@@ -58,7 +60,8 @@ const BookInformation = () => {
             }}
           />
         </div>
-        
+       
+   
         {/* Book Info Card (Right) */}
         <div className="book-info-card">
           <h1 className="book-title-info">{book.title}</h1>
@@ -82,6 +85,12 @@ const BookInformation = () => {
           </div>
         </div>
       </div>
+
+      <h3 className="bookstatus"> Status: </h3>
+
+      <div className="bookbutton">
+            <Reservation/>
+        </div>
     </>
   );
 }
