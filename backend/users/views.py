@@ -8,6 +8,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login  # Renamed import
+from django.contrib.auth.hashers import check_password
 from .models import CustomUser
 from .serializers import RegisterSerializer
 from .models import CustomUser
@@ -25,7 +26,7 @@ def get_csrf_token(request):
     token = get_token(request)
     return Response({'csrfToken': token})
 
-
+@csrf_exempt
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def register(request):
@@ -51,7 +52,7 @@ def register(request):
 def login_view(request):
     try:
         data = json.loads(request.body)
-        username_or_email = data.get('username')
+        username_or_email = data.get('username', '').strip()  # Strip spaces
         password = data.get('password')
 
         if not username_or_email or not password:
@@ -60,17 +61,23 @@ def login_view(request):
                 'message': 'Both username/email and password are required'
             }, status=400)
 
-        user = authenticate(request, username=username_or_email, password=password)
+        # Step 1: Try to find user by username
+        user = None
+        try:
+            user = CustomUser.objects.get(username=username_or_email)
+        except CustomUser.DoesNotExist:
+            pass  # Ignore if no user is found by username
 
-        # Try to authenticate with email if username doesn't work
+        # Step 2: If no user found by username, try to find user by email
         if user is None and '@' in username_or_email:
             try:
-                email_user = CustomUser.objects.get(email=username_or_email)
-                user = authenticate(request, username=email_user.username, password=password)
+                user = CustomUser.objects.get(email=username_or_email)
             except CustomUser.DoesNotExist:
-                pass
+                pass  # Ignore if no user is found by email
 
-        if user is not None:
+        # Step 3: If user is found, check the password
+        if user is not None and check_password(password, user.password):
+            # Password matches, log the user in
             auth_login(request, user)
             return JsonResponse({
                 'success': True,
@@ -81,13 +88,14 @@ def login_view(request):
                     'email': user.email
                 }
             })
-
-        return JsonResponse({
-            'success': False,
-            'message': 'Invalid credentials'
-        }, status=401)
+        else:
+            return JsonResponse({
+                'success': False,
+                'message': 'Invalid credentials'
+            }, status=401)
 
     except Exception as e:
+        print("Errore durante il login:", str(e))  # Log per il debug
         return JsonResponse({
             'success': False,
             'message': 'An error occurred during login'
