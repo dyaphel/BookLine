@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate,  Link } from 'react-router-dom';
 import Alert from '../../Utils/Alert/Alert';
 import "./Login.css";
 
@@ -11,8 +11,24 @@ const Login = () => {
     });
     const [loading, setLoading] = useState(false);
     const [alert, setAlert] = useState(null);
-    const navigate = useNavigate();
     const [csrfToken, setCsrfToken] = useState('');
+    const navigate = useNavigate();
+
+    // Fetch CSRF token when component mounts
+    useEffect(() => {
+        const fetchCsrfToken = async () => {
+            try {
+                const response = await axios.get(
+                    'http://localhost:8000/api/csrf/', 
+                    { withCredentials: true }
+                );
+                setCsrfToken(response.data.csrfToken);
+            } catch (err) {
+                console.error('Error fetching CSRF token:', err);
+            }
+        };
+        fetchCsrfToken();
+    }, []);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -21,15 +37,6 @@ const Login = () => {
             [name]: value
         }));
     };
-
-    useEffect(() => {
-        axios.get('http://localhost:8000/users/csrf/', {
-            withCredentials: true
-        }).then(response => {
-            setCsrfToken(response.data.csrfToken);
-        });
-    }, []);
-      
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -42,8 +49,8 @@ const Login = () => {
                 formData,
                 {
                     headers: {
-                        'X-CSRFToken': csrfToken,
                         'Content-Type': 'application/json',
+                        'X-CSRFToken': csrfToken
                     },
                     withCredentials: true
                 }
