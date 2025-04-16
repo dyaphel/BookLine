@@ -26,7 +26,8 @@ def get_csrf_token(request):
     token = get_token(request)
     return Response({'csrfToken': token})
 
-@csrf_exempt
+
+
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def register(request):
@@ -36,12 +37,18 @@ def register(request):
             status=status.HTTP_400_BAD_REQUEST
         )
     
+    # Assicurati che lo username sia tutto in minuscolo prima di passarlo al serializer
+    username = request.data.get('username').strip().lower()
+    request.data['username'] = username  # Modifica il dato per includere lo username in minuscolo
+
+    # Ora passa i dati modificati al serializer
     serializer = RegisterSerializer(data=request.data)
+    
     if serializer.is_valid():
         user = serializer.save()
         return Response({'message': 'User registered successfully'}, status=status.HTTP_201_CREATED)
     else:
-        # Log or print detailed errors to help troubleshoot
+        # Log o stampa degli errori per il debug
         print("Serializer errors:", serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -52,7 +59,7 @@ def register(request):
 def login_view(request):
     try:
         data = json.loads(request.body)
-        username_or_email = data.get('username', '').strip()  # Strip spaces
+        username_or_email = data.get('username', '').strip().lower() # Strip spaces
         password = data.get('password')
 
         if not username_or_email or not password:
