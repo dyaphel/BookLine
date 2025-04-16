@@ -6,10 +6,15 @@ class RegisterSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = CustomUser
-        fields = ['email', 'first_name', 'last_name', 'password', 'role']
+        fields = ['email', 'username', 'profile_image', 'first_name', 'last_name', 'password', 'role']
         extra_kwargs = {
-            'role': {'default': 'USER'}
-        }
+            'role': {'default': 'USER'},
+             'username': {'required': True, 'allow_blank': False}       
+            }
+    def validate_username(self, value):
+        if not value.strip():
+            raise serializers.ValidationError("Username cannot be empty.")
+        return value
 
     def create(self, validated_data):
         role = validated_data.pop('role', 'USER')

@@ -6,7 +6,7 @@ class CustomUserAdmin(UserAdmin):
     model = CustomUser
 
     # Fields to display in the admin list view
-    list_display = ['email', 'first_name', 'last_name', 'role', 'is_staff', 'is_active']
+    list_display = ['email',  'username','first_name', 'last_name', 'role', 'is_staff', 'is_active']
 
     # Fields to filter by in the sidebar
     list_filter = ['role', 'is_staff', 'is_superuser']

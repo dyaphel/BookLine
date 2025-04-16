@@ -8,6 +8,12 @@ from .serializers import RegisterSerializer
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def register(request):
+    if not request.data.get('username', '').strip():
+        return Response(
+            {'username': 'This field is required and cannot be empty.'},
+            status=status.HTTP_400_BAD_REQUEST
+        )
+    
     serializer = RegisterSerializer(data=request.data)
     if serializer.is_valid():
         user = serializer.save()

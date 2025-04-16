@@ -15,7 +15,9 @@ class CustomUserManager(BaseUserManager):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
         extra_fields.setdefault('role', CustomUser.Roles.ADMIN)
-        return self.create_user(email, password, **extra_fields)
+        extra_fields.setdefault('username', 'admin')  # Default username only here
+
+        return self.create_user(email, password=password, **extra_fields)
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     class Roles(models.TextChoices):
@@ -39,7 +41,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     objects = CustomUserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['first_name', 'last_name']
+    REQUIRED_FIELDS = ['username','first_name', 'last_name']
 
     def __str__(self):
         return f"{self.email} ({self.get_role_display()})"
