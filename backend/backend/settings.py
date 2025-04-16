@@ -88,7 +88,7 @@ DATABASES = {
         'NAME': 'bookline_db',
         'USER': 'bookline_user',
         'PASSWORD': 'password',
-        'HOST': 'db',
+        'HOST': 'db',  # Use this if you're using Docker
         'PORT': 5432,
     }
 }
@@ -142,7 +142,17 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 #CORS headers
-CORS_ALLOW_ALL_ORIGINS = True  # Or specify allowed origins
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",  # Your React dev server
+]
+
+CORS_EXPOSE_HEADERS = ['Content-Type', 'X-CSRFToken']
+CORS_ALLOW_CREDENTIALS = True
+
+# CSRF Settings
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:5173",
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
