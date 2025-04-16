@@ -1,20 +1,27 @@
-import json
-from django.http import JsonResponse
+
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework import status
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login  # Renamed import
 
 from django.views.decorators.csrf import csrf_exempt
 from .models import CustomUser
 from .serializers import RegisterSerializer
 from .models import CustomUser
+from django.middleware.csrf import get_token
 
 import logging
 logger = logging.getLogger(__name__)
 
+
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def get_csrf_token(request):
+    token = get_token(request)
+    return Response({'csrfToken': token})
 
 
 @api_view(['POST'])
@@ -37,7 +44,7 @@ def register(request):
 
 
 
-@csrf_exempt
+
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def login_view(request):  # Renamed function

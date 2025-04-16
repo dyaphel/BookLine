@@ -50,7 +50,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    #'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -142,18 +142,17 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 #CORS headers
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",  # Your React dev server
-]
-
-CORS_EXPOSE_HEADERS = ['Content-Type', 'X-CSRFToken']
+# CORS Settings
+CORS_ALLOWED_ORIGINS = ["http://localhost:5173"]
 CORS_ALLOW_CREDENTIALS = True
+CSRF_TRUSTED_ORIGINS = ["http://localhost:5173"]
 
 # CSRF Settings
-CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:5173",
-]
-
+CSRF_COOKIE_HTTPONLY = False  # Allow JavaScript to read the cookie
+CSRF_COOKIE_SAMESITE = 'Lax'   # Or 'None' if using HTTPS
+CSRF_USE_SESSIONS = False      # Store CSRF token in cookie
+CSRF_COOKIE_SECURE = False  # Only for development
+SESSION_COOKIE_SECURE = False  # Only for development
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
