@@ -1,0 +1,77 @@
+.book-card {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Ensures nothing spills outside the card */
+  padding-bottom: 15px; /* Padding only at bottom for text */
+}
+
+.book-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.book-cover-container {
+  width: 100%;
+  height: 380px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: transparent;
+  margin-bottom: 15px;
+}
+
+.book-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Changed back to cover for consistent look */
+  transition: transform 0.3s ease;
+  overflow: hidden;
+  border-color: transparent;
+
+}
+
+.book-card:hover .book-cover {
+  transform: scale(1.03); /* Slight zoom on hover */
+}
+
+.book-details {
+  color: white;
+  overflow: hidden;
+  padding: 0 15px;
+}
+
+.book-title {
+  font-size: 18px;
+  margin: 0 0 5px 0;
+  font-weight: 600;
+ 
+}
+
+.book-author {
+  font-size: 15px;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .book-cover-container {
+    height: 320px;
+  }
+}
+
+@media (max-width: 600px) {
+  .book-cover-container {
+    height: 400px;
+  }
+  
+  .book-details {
+    padding: 0 10px;
+  }
+}
