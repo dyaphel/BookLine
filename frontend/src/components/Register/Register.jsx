@@ -40,12 +40,18 @@ const RegisterPage = () => {
     const { confirm_password, ...dataToSend } = formData;
 
     try {
-      const token = localStorage.getItem('csrfToken');
+      const csrfResponse = await fetch('http://localhost:8000/users/csrf/', {
+        credentials: 'include'
+      });
+      const csrfData = await csrfResponse.json();
+      const csrfToken = csrfData.csrfToken;
+      localStorage.setItem('csrfToken', csrfToken);
+      
       const response = await fetch('http://localhost:8000/users/register/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'X-CSRFToken': token,
+          'X-CSRFToken':  csrfToken,
         },
         body: JSON.stringify(dataToSend),
       });
