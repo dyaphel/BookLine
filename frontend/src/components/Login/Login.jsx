@@ -28,7 +28,7 @@ const Login = () => {
         fetchCsrf();
     }, []);
 
-    
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({
@@ -43,7 +43,6 @@ const Login = () => {
         setAlert(null);
 
         try {
-            const token = localStorage.getItem('csrfToken');
             const response = await axios.post(
                 'http://localhost:8000/users/login/',
                 formData,
