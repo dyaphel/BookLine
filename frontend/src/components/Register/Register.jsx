@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Alert from '../../Utils/Alert/Alert';
+import {getCsrfToken} from '../../Utils/GetToken';
 import './Register.css';
 
 const RegisterPage = () => {
@@ -40,13 +41,7 @@ const RegisterPage = () => {
     const { confirm_password, ...dataToSend } = formData;
 
     try {
-      const csrfResponse = await fetch('http://localhost:8000/users/csrf/', {
-        credentials: 'include'
-      });
-      const csrfData = await csrfResponse.json();
-      const csrfToken = csrfData.csrfToken;
-      localStorage.setItem('csrfToken', csrfToken);
-      
+      const csrfToken = await getCsrfToken();
       const response = await fetch('http://localhost:8000/users/register/', {
         method: 'POST',
         headers: {

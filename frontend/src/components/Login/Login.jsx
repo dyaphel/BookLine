@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate,  Link } from 'react-router-dom';
 import Alert from '../../Utils/Alert/Alert';
+import { getCsrfToken } from '../../Utils/GetToken';
 import "./Login.css";
 
 const Login = () => {
@@ -18,16 +19,13 @@ const Login = () => {
     useEffect(() => {
         const fetchCsrfToken = async () => {
             try {
-                const response = await axios.get(
-                    'http://localhost:8000/users/csrf/', 
-                    { withCredentials: true }
-                );
-                setCsrfToken(response.data.csrfToken);
+                const token = await getCsrfToken();
+                setCsrfToken(token);
             } catch (err) {
                 console.error('Error fetching CSRF token:', err);
             }
         };
-        fetchCsrfToken();
+        fetchCsrf();
     }, []);
 
     const handleChange = (e) => {
