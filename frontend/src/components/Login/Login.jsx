@@ -17,10 +17,10 @@ const Login = () => {
 
     // Fetch CSRF token when component mounts
     useEffect(() => {
-        const fetchCsrfToken = async () => {
+        const fetchCsrf = async () => {
             try {
                 const token = await getCsrfToken();
-                setCsrfToken(token);
+                setCsrfToken(token); // Set it in state so it can be used later
             } catch (err) {
                 console.error('Error fetching CSRF token:', err);
             }
@@ -28,6 +28,7 @@ const Login = () => {
         fetchCsrf();
     }, []);
 
+    
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({
