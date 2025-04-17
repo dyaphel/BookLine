@@ -40,10 +40,12 @@ const RegisterPage = () => {
     const { confirm_password, ...dataToSend } = formData;
 
     try {
+      const token = localStorage.getItem('csrfToken');
       const response = await fetch('http://localhost:8000/users/register/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'X-CSRFToken': token,
         },
         body: JSON.stringify(dataToSend),
       });

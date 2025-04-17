@@ -19,7 +19,7 @@ const Login = () => {
         const fetchCsrfToken = async () => {
             try {
                 const response = await axios.get(
-                    'http://localhost:8000/api/csrf/', 
+                    'http://localhost:8000/users/csrf/', 
                     { withCredentials: true }
                 );
                 setCsrfToken(response.data.csrfToken);
@@ -44,6 +44,7 @@ const Login = () => {
         setAlert(null);
 
         try {
+            const token = localStorage.getItem('csrfToken');
             const response = await axios.post(
                 'http://localhost:8000/users/login/',
                 formData,
