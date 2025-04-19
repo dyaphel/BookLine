@@ -6,7 +6,6 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework import status
-from django.contrib.auth import authenticate
 from django.contrib.auth import logout
 from django.contrib.auth import login as auth_login  # Renamed import
 from django.contrib.auth.hashers import check_password
@@ -15,7 +14,8 @@ from .serializers import RegisterSerializer
 from .models import CustomUser
 from django.middleware.csrf import get_token
 from django.views.decorators.http import require_POST
-
+from django.views.decorators.csrf import ensure_csrf_cookie
+from rest_framework.decorators import api_view
 import logging
 logger = logging.getLogger(__name__)
 
@@ -111,7 +111,7 @@ def login_view(request):
     
 
 
-@csrf_exempt  # Temporarily disable CSRF for testing
+
 def check_auth(request):
     if request.method == 'GET':
         if request.user.is_authenticated:
@@ -122,19 +122,19 @@ def check_auth(request):
         return JsonResponse({'isAuthenticated': False})
     return JsonResponse({'error': 'Invalid method'}, status=405)
 
-@csrf_exempt  # For development only - remove in production
+
+@api_view(['POST'])
+@ensure_csrf_cookie
 def user_logout(request):
-    if request.method == 'POST':
-        if request.user.is_authenticated:
-            logout(request)
-            return JsonResponse({
-                'success': True,
-                'message': 'Logged out successfully'
-            })
-        return JsonResponse({
-            'success': False,
-            'message': 'User not authenticated'
-        }, status=401)
-    return JsonResponse({
-        'error': 'Only POST method allowed'
-    }, status=405)
+    if request.user.is_authenticated:
+        logout(request)
+        # Return a new CSRF token for subsequent requests
+        return Response({
+            'success': True,
+            'message': 'Logged out successfully',
+            'csrfToken': get_token(request)  # Return new token
+        })
+    return Response({
+        'success': False,
+        'message': 'User not authenticated'
+    }, status=status.HTTP_401_UNAUTHORIZED)

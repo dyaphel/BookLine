@@ -3,25 +3,23 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Title from '../../Utils/Title/BookLinetitle';
 import './Navbar.css';
-import { getCsrfToken } from '../../Utils/GetToken';
+import { getCsrfToken } from '../../Utils/GetToken'; // Import your existing CSRF utility
 
 const NavBar = ({ onFilterClick, onSearch }) => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState("");
-  const [csrfToken, setCsrfToken] = useState('');
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const initialize = async () => {
       try {
         setLoading(true);
-        // Get CSRF token first
+        // Use your existing CSRF utility
         const token = await getCsrfToken();
-        setCsrfToken(token);
         
-        // Then check auth status
+        // Check auth status with the token
         const authResponse = await axios.get('http://localhost:8000/users/check-auth/', {
           headers: {
             'X-CSRFToken': token
@@ -45,28 +43,40 @@ const NavBar = ({ onFilterClick, onSearch }) => {
 
   const handleLogout = async () => {
     try {
-      setLoading(true);
-      await axios.post(
-        'http://localhost:8000/users/logout/', 
-        {},
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': csrfToken
-          },
-          withCredentials: true
+        setLoading(true);
+        
+        // Get fresh CSRF token using your utility
+        const token = await getCsrfToken();
+        
+        // Make logout request
+        const response = await axios.post(
+            'http://localhost:8000/users/logout/',
+            {},
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': token
+                },
+                withCredentials: true
+            }
+        );
+
+        if (response.data.success) {
+            setIsLoggedIn(false);
+            setUsername("");
+            navigate('/login');
         }
-      );
-      
-      setIsLoggedIn(false);
-      setUsername("");
-      navigate('/login');
     } catch (error) {
-      console.error("Logout failed:", error.response?.data || error.message);
+        console.error("Detailed logout error:", {
+            status: error.response?.status,
+            data: error.response?.data,
+            config: error.config,
+            message: error.message
+        });
     } finally {
-      setLoading(false);
+        setLoading(false);
     }
-  };
+};
 
   const handleSearchChange = (e) => {
     const value = e.target.value;
