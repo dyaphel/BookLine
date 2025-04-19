@@ -3,161 +3,190 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: fixed; /* Fissa la navbar in alto */
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  padding: 20px 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Ombra per un effetto di profondità */
+  padding: 15px 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   background-color: #1e1e1e;
-  border-bottom-left-radius:10px;
-  border-bottom-right-radius:10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
   z-index: 10000;
-
-
+  gap: 15px; /* Space between elements */
 }
 
+/* Title/Logo - Left side */
+.my-nav-left {
+  flex: 0 0 auto;
+}
 
-
-/* Barra di ricerca al centro */
+/* Search Container - Center */
 .my-nav-center {
-  flex: 1; /* Occupa lo spazio rimanente */
-  display: flex;
-  justify-content: center;
-  margin: 0 10%; /* Margine per separare il titolo e i pulsanti */
+  flex: 1;
+  min-width: 0; /* Allows shrinking */
+  max-width: 600px;
+  margin: 0 15px;
 }
 
 .my-search-container {
-  justify-content: center;
+  margin-top: -10px;
+  display: flex;
   position: relative;
-  width: 100%; /* Adjust width to fit the container */
-  max-width: 500px; /* Limit maximum width for better responsiveness */
-
+  width: 100%;
+  height: auto;
 }
 
 .my-search {
   width: 100%;
-  padding: 10px 40px 10px 40px; /* Adjust padding for the icon on the right */
+  padding: 8px 15px;
   border: 1px solid #ccc;
-  border-radius: 10px; /* More rounded corners */
-  font-size: 1.1rem;
-  outline: none; /* Rimuove il bordo predefinito al focus */
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-  background-color: rgb(25, 25, 25); /* Transparent background */
-}
-
-.my-search:focus {
-  border-color: lightsalmon; /* Cambia colore del bordo al focus */
-  box-shadow: 0 0 8px rgba(255, 160, 122, 0.6); /* Add a glow effect on focus */
-}
-
-/* Filter Icon */
-.my-filter {
-  position: absolute; 
-  right: -15%; /* Move the icon to the right side */
-  top: 50%;
-  transform: translateY(-50%);
-  border: none;
-  cursor: pointer;
-  padding: 0px; /* Padding around the icon */
-  display: flex;
-  transition: transform 0.2s ease;
-}
-
-
-
-/* Hover effect for the filter icon */
-.my-filter:hover .my-filter-image {
-  transform: scale(1.1); /* Slightly enlarge the icon on hover */
-}
-
-/* Ensure the vertical line doesn't scale on hover */
-.my-filter:hover::before {
-  transform: translateY(-50%); /* Reset transform for the line */
-}
-
-.my-filter:active .my-filter-image {
-  transform: scale(0.9); /* Slightly shrink the icon on click */
-}
-
-.my-filter-image {
-  width: 40px; /* Adjust icon size */
-  height: 42px; /* Adjust icon size */
-  transition: transform 0.2s ease; /* Add transition for smooth scaling */
-}
-.my-filter-image:hover {
-  opacity: 0.8; /* Slightly fade on hover */
-}
-
-/* Left Section (Home Button) */
-.my-nav-left {
-  text-align: left;
-}
-
-/* Right Section (Calendar and To-Do Buttons) */
-.my-nav-right {
-  text-align: right;
-}
-
-.my-nav-button {
-  background-color: transparent;
-  border: none;
-  color: lightsalmon;
-  font-size: 1.2rem;
-  font-weight: 500;
-  padding: 10px 20px;
-  margin-right: 80px;
-  margin-left: 25px;
-  border-radius: 10px; /* More rounded corners */
-  cursor: pointer;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  background-color: rgb(25, 25, 25);
   transition: all 0.3s ease;
 }
 
+.my-search:focus {
+  border-color: lightsalmon;
+  box-shadow: 0 0 8px rgba(255, 160, 122, 0.6);
+}
+
+/* Filter Button */
+.my-filter {
+  position: absolute;
+  right: -40px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.my-filter-image {
+  width: 32px;
+  height: 32px;
+  transition: transform 0.2s ease;
+}
+
+/* Navigation Buttons - Right side */
+.my-nav-right {
+  flex: 0 0 auto;
+  display: flex;
+  gap: 10px;
+}
+
+.my-nav-button,
 .my-nav-button-register {
   background-color: transparent;
   border: none;
   color: lightsalmon;
-  font-size: 1.2rem;
+  font-size: 24px;
   font-weight: 500;
-  border-radius: 10px; /* More rounded corners */
+  padding: 8px 15px;
+  border-radius: 8px;
   cursor: pointer;
+  white-space: nowrap;
   transition: all 0.3s ease;
-  margin-left: -20px;
-
 }
 
-.my-nav-button-register:hover,
-.my-nav-button:hover {
-  background-color: lightsalmon; /* Light gray background on hover */
-  color: white; /* Blue text on hover */
+.my-nav-button:hover,
+.my-nav-button-register:hover {
+  background-color: lightsalmon;
+  color: white;
 }
 
-.my-nav-button-register:active,
-.my-nav-button:active {
-  transform: scale(0.95); /* Slightly shrink on click */
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+  .my-navbar {
+    padding: 12px 15px;
+    gap: 10px;
+  }
+  .my-search-container {
+    width: 90%;
 }
-
-/* Responsive Adjustments for Smaller Screens */
-@media (max-width: 1200px) {
-
   .my-search {
-    width: 100%;
-    background-color: rgb(25, 25, 25); /* Transparent background */
+    padding: 7px 12px;
+    font-size: 0.9rem;
   }
   
   .my-filter {
-    right: -20%; /* Move the icon to the right side */
+    right: -35px;
   }
   
-
-  .my-nav-button {
-    margin-right: 20px;
-    margin-left: 15px;
-   
+  .my-filter-image {
+    width: 28px;
+    height: 28px;
   }
   
+  .my-nav-button,
   .my-nav-button-register {
-    margin-left: 10px;
-  
+    padding: 7px 12px;
+    font-size: 0.9rem;
+    margin-top: -10px;
+    width: auto;
+    font-size: 18px;
   }
- }
+}
+
+@media (max-width: 768px) {
+  .my-navbar {
+    padding: 10px 12px;
+    gap: 8px;
+  }
+  
+.my-search-container {
+    width: 10%;
+}
+  .my-search {
+    padding: 6px 10px;
+    font-size: 0.85rem;
+    
+  }
+  
+  .my-filter {
+    right: -30px;
+  }
+  
+  .my-filter-image {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .my-nav-button,
+  .my-nav-button-register {
+    padding: 6px 10px;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .my-navbar {
+    padding: 8px 10px;
+  }
+  
+  .my-search {
+    padding: 5px 8px;
+    font-size: 0.8rem;
+    width: 90%;
+  }
+  
+  .my-nav-button,
+  .my-nav-button-register {
+    padding: 5px 8px;
+    font-size: 0.8rem;
+  }
+  
+  /* Hide text on smallest screens, show icons only */
+  .my-nav-button span,
+  .my-nav-button-register span {
+    display: none;
+  }
+  
+  .my-nav-button::before,
+  .my-nav-button-register::before {
+    content: attr(data-icon);
+    font-size: 1.1rem;
+  }
+}

@@ -7,6 +7,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth import authenticate
+from django.contrib.auth import logout
 from django.contrib.auth import login as auth_login  # Renamed import
 from django.contrib.auth.hashers import check_password
 from .models import CustomUser
@@ -107,3 +108,33 @@ def login_view(request):
             'success': False,
             'message': 'An error occurred during login'
         }, status=500)
+    
+
+
+@csrf_exempt  # Temporarily disable CSRF for testing
+def check_auth(request):
+    if request.method == 'GET':
+        if request.user.is_authenticated:
+            return JsonResponse({
+                'isAuthenticated': True,
+                'username': request.user.username
+            })
+        return JsonResponse({'isAuthenticated': False})
+    return JsonResponse({'error': 'Invalid method'}, status=405)
+
+@csrf_exempt  # For development only - remove in production
+def user_logout(request):
+    if request.method == 'POST':
+        if request.user.is_authenticated:
+            logout(request)
+            return JsonResponse({
+                'success': True,
+                'message': 'Logged out successfully'
+            })
+        return JsonResponse({
+            'success': False,
+            'message': 'User not authenticated'
+        }, status=401)
+    return JsonResponse({
+        'error': 'Only POST method allowed'
+    }, status=405)
