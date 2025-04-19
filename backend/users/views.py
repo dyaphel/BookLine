@@ -111,7 +111,8 @@ def login_view(request):
     
 
 
-
+@api_view(['GET'])
+@ensure_csrf_cookie
 def check_auth(request):
     if request.method == 'GET':
         if request.user.is_authenticated:

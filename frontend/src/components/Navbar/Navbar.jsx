@@ -64,7 +64,7 @@ const NavBar = ({ onFilterClick, onSearch }) => {
         if (response.data.success) {
             setIsLoggedIn(false);
             setUsername("");
-            navigate('/login');
+            navigate('/home');
         }
     } catch (error) {
         console.error("Detailed logout error:", {
