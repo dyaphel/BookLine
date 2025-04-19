@@ -32,7 +32,7 @@ const Home = () => {
       const response = await axios.get('http://localhost:8000/books/', {
         params: filters, // Pass filters as query parameters
       });
-      console.log(response.data); // Log the response data to inspect it
+     
       setBooks(response.data); // Update the books state with the fetched data
     } catch (error) {
       console.error("Error fetching books:", error);
@@ -102,8 +102,7 @@ const Home = () => {
           <div className="book-list">
             {books.map((book, index) => {
               const normalizedCoverUrl = normalizeCoverUrl(book.cover);
-              console.log(`Normalized URL for book ${index}:`, normalizedCoverUrl);
-
+  
               return (
                 <BookCard
                   key={index}

@@ -24,4 +24,5 @@ urlpatterns = [
     path('', views.home, name='home'), #in teroia potrebbe non seriver
     path('admin/', admin.site.urls),
     path('', include('bookline.urls')),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) # puo esseere usato dirrettamente in bookline file ulr
+    path('users/', include('users.urls')),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) # può essere usato direttamente in bookline file url

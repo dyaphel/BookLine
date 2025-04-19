@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'corsheaders',
+    'users',
     'rest_framework',
     'bookline',
 ]
@@ -54,6 +55,11 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+    ]
+}
 
 ROOT_URLCONF = 'backend.urls'
 
@@ -87,7 +93,7 @@ DATABASES = {
         'NAME': 'bookline_db',
         'USER': 'bookline_user',
         'PASSWORD': 'password',
-        'HOST': 'db',
+        'HOST': 'db',  # Use this if you're using Docker
         'PORT': 5432,
     }
 }
@@ -141,9 +147,21 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 #CORS headers
-CORS_ALLOW_ALL_ORIGINS = True  # Or specify allowed origins
+# CORS Settings
+CORS_ALLOWED_ORIGINS = ["http://localhost:5173"]
+CORS_ALLOW_CREDENTIALS = True
+CSRF_TRUSTED_ORIGINS = ["http://localhost:5173"]
 
+# CSRF Settings
+CSRF_COOKIE_HTTPONLY = False  # Allow JavaScript to read the cookie
+CSRF_COOKIE_SAMESITE = 'Lax'   # Or 'None' if using HTTPS
+CSRF_USE_SESSIONS = False      # Store CSRF token in cookie
+CSRF_COOKIE_SECURE = False  # Only for development
+SESSION_COOKIE_SECURE = False  # Only for development
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Custom user model
+AUTH_USER_MODEL = 'users.CustomUser'

@@ -8,9 +8,10 @@ services:
        db:
         condition: service_healthy #added this condition
     environment:
-      - DJANGO_SUPERUSER_USERNAME=admin
-      - DJANGO_SUPERUSER_PASSWORD=admin
       - DJANGO_SUPERUSER_EMAIL=admin@user.com
+      - DJANGO_SUPERUSER_PASSWORD=admin
+      - DJANGO_SUPERUSER_FIRST_NAME=Admin
+      - DJANGO_SUPERUSER_LAST_NAME=User
       - DJANGO_SETTINGS_MODULE=backend.settings
       - DATABASE_URL=postgres://bookline_user:password@db:5432/bookline_db
     ports:
