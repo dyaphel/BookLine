@@ -7,7 +7,7 @@
     margin-right: 10%;
     border-radius: 10px;
   }
-  
+
   /* Stile del pulsante */
   .button-reserve {
     background-color: transparent;
@@ -20,9 +20,20 @@
     cursor: pointer;
     transition: all 0.3s ease;
   }
-  
+
   .button-reserve:hover {
     background-color: lightsalmon; /* Cambia colore di sfondo al passaggio del mouse */
     color: white; /* Cambia colore del testo al passaggio del mouse */
   }
-  
+
+  /* Style for disabled button */
+  .button-reserve.disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    border: 1px dashed lightcoral;
+  }
+
+  .button-reserve.disabled:hover {
+    background-color: transparent;
+    color: lightsalmon;
+  }
