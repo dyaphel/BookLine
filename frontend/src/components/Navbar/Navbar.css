@@ -137,7 +137,7 @@
   }
   
 .my-search-container {
-    width: 10%;
+    width: 90%;
 }
   .my-search {
     padding: 6px 10px;
@@ -161,7 +161,7 @@
   }
 }
 
-@media (max-width: 576px) {
+@media (max-width: 550px) {
   .my-navbar {
     padding: 8px 10px;
   }
@@ -169,11 +169,12 @@
   .my-search {
     padding: 5px 8px;
     font-size: 0.8rem;
-    width: 90%;
+    width: 100%;
   }
   
   .my-nav-button,
   .my-nav-button-register {
+    display: none;
     padding: 5px 8px;
     font-size: 0.8rem;
   }
@@ -189,4 +190,10 @@
     content: attr(data-icon);
     font-size: 1.1rem;
   }
+  .my-filter {
+    display: none;
+  }
+  
+
 }
+
