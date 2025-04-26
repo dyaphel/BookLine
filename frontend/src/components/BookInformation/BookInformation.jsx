@@ -86,7 +86,10 @@ const BookInformation = () => {
         </div>
       </div>
 
-      <h3 className="bookstatus"> Status: </h3>
+      <div className="book-status-container">
+        <h3 className="bookstatus">Status:</h3>
+        <p className="bookstatusresponse">{book.status}</p>
+      </div>
 
       <div className="bookbutton">
             <Reservation/>
