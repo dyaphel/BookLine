@@ -142,16 +142,28 @@
   padding-inline: 2rem;
 
 }
-.bookstatus{
-    display: flex;
-    align-items: start;
-    justify-content: start;
-    padding-inline: 2rem;
-    font-size: 1.5rem;
-    margin-top: -15%;
-    font-style: italic;
-  }
+/* Container for both elements */
+.book-status-container {
+  display: flex;
+  align-items: center; /* Vertically center items */
+  gap: 1rem; /* Space between elements */
+  margin-top: -10%;
+  padding-inline: 2rem;
+}
 
+.bookstatus {
+  font-size: 1.5rem;
+  font-style: italic;
+  /* Remove negative margin as it's no longer needed */
+  /* padding-inline is now handled by the container */
+}
+
+.bookstatusresponse {
+  font-size: 1.5rem;
+  font-style: italic;
+  margin-top: -20px;
+  /* Remove manual margin-left as flex gap handles spacing */
+}
 
 /* Responsive design adjustments */
 @media (max-width: 992px) {
@@ -193,10 +205,15 @@
 
   .bookbutton{
     margin-bottom: 20px;
+    padding-inline: 0.5rem;
   
   }
-  .bookstatus{
-      margin-top: -150px;
+  .book-status-container {
+    display: flex;
+    align-items: center; /* Vertically center items */
+    gap: 1rem; /* Space between elements */
+    margin-top: -15%;
+    padding-inline: 0.5rem;
   }
   
 
@@ -236,10 +253,15 @@
 
   .bookbutton{
     margin-bottom: 20px;
+    padding-inline: 2rem;
   
   }
-  .bookstatus{
-      margin-top: -150px;
+  .book-status-container {
+    display: flex;
+    align-items: center; /* Vertically center items */
+    gap: 1rem; /* Space between elements */
+    margin-top: 5%;
+    padding-inline: 2rem;
   }
   
 }
@@ -298,15 +320,17 @@
     padding: 0;
   }
 
-  .bookstatus {
-    font-size: 1.3rem;
-    margin: 0.5rem 0;
-    order: 1; /* Ensure status appears first */
+  .bookbutton{
+    margin-bottom: 20px;
+    padding-inline: 1rem;
+  
   }
-
-  .bookbutton {
-    order: 2; /* Ensure buttons appear after status */
-    gap: 0.5rem;
+  .book-status-container {
+    display: flex;
+    align-items: center; /* Vertically center items */
+    gap: 1rem; /* Space between elements */
+    margin-top: 5%;
+    padding-inline: 1rem;
   }
 
   .book-info-card {
