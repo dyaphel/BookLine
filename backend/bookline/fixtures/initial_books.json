@@ -8,7 +8,7 @@
             "abstract": "A gripping exploration of artificial intelligence and deep-sea mysteries.",
             "author": "Ray Nayler",
             "published": "2022-10-04",
-            "cover": "media/book_covers/generic-cover_wLjq5WJ.jpg",
+            "cover": "media/book_covers/the-mountain-in-the-sea.png",
             "genre": "Science Fiction",
             "language": "English"
         }
@@ -22,7 +22,7 @@
             "abstract": "A beautifully written meditation on time and existence.",
             "author": "Emily St. John Mandel",
             "published": "2022-04-05",
-            "cover": "media/book_covers/generic-cover_wLjq5WJ.jpg",
+            "cover": "media/book_covers/sea-of-tranquility.png",
             "genre": "Science Fiction",
             "language": "English"
         }
@@ -36,7 +36,7 @@
             "abstract": "A chilling mix of space exploration and psychological horror.",
             "author": "S.A. Barnes",
             "published": "2022-02-08",
-            "cover": "media/book_covers/generic-cover_wLjq5WJ.jpg",
+            "cover": "media/book_covers/dead-silence.png",
             "genre": "Science Fiction, Horror",
             "language": "English"
         }
@@ -50,7 +50,7 @@
             "abstract": "A visionary novel about the future of terraforming and sustainability.",
             "author": "Annalee Newitz",
             "published": "2023-01-31",
-            "cover": "media/book_covers/generic-cover_wLjq5WJ.jpg",
+            "cover": "media/book_covers/the-terraformers.png",
             "genre": "Science Fiction",
             "language": "English"
         }
@@ -64,7 +64,7 @@
             "abstract": "A unique take on parallel universes and identity.",
             "author": "Micaiah Johnson",
             "published": "2020-08-04",
-            "cover": "media/book_covers/generic-cover_wLjq5WJ.jpg",
+            "cover": "media/book_covers/the-space-between-worlds.png",
             "genre": "Science Fiction",
             "language": "English"
         }
@@ -78,7 +78,7 @@
             "abstract": "A heartwarming and philosophical tale about purpose and connection.",
             "author": "Becky Chambers",
             "published": "2021-07-13",
-            "cover": "media/book_covers/generic-cover_wLjq5WJ.jpg",
+            "cover": "media/book_covers/a-psalm-for-the-wild-built.png",
             "genre": "Science Fiction",
             "language": "English"
         }
@@ -92,7 +92,7 @@
             "abstract": "An epic journey through the cosmos filled with action and mystery.",
             "author": "Adrian Tchaikovsky",
             "published": "2021-05-27",
-            "cover": "media/book_covers/generic-cover_wLjq5WJ.jpg",
+            "cover": "media/book_covers/shards-of-earth.png",
             "genre": "Science Fiction, Space Opera",
             "language": "English"
         }
@@ -106,7 +106,7 @@
             "abstract": "A thought-provoking exploration of our planet’s future.",
             "author": "Kim Stanley Robinson",
             "published": "2020-10-06",
-            "cover": "media/book_covers/generic-cover_wLjq5WJ.jpg",
+            "cover": "media/book_covers/the-ministry-for-the-future.png",
             "genre": "Science Fiction, Climate Fiction",
             "language": "English"
         }
@@ -120,7 +120,7 @@
             "abstract": "A thrilling survival story in deep space by the author of The Martian.",
             "author": "Andy Weir",
             "published": "2021-05-04",
-            "cover": "media/book_covers/generic-cover_wLjq5WJ.jpg",
+            "cover": "media/book_covers/project-hail-mary.png",
             "genre": "Science Fiction",
             "language": "English"
         }
@@ -134,7 +134,7 @@
             "abstract": "A witty and action-packed story filled with humor and monsters.",
             "author": "John Scalzi",
             "published": "2022-03-15",
-            "cover": "media/book_covers/generic-cover_wLjq5WJ.jpg",
+            "cover": "media/book_covers/the-kaiju-preservation-society.png",
             "genre": "Science Fiction, Adventure",
             "language": "English"
         }
@@ -148,7 +148,7 @@
             "abstract": "A classic of Greek literature.",
             "author": "Homer",
             "published": "0800-01-01",
-            "cover": "media/book_covers/generic-cover_wLjq5WJ.jpg",
+            "cover": "media/book_covers/the-odyssey.png",
             "genre": "Epic Poetry",
             "language": "Greek"
         }
@@ -162,7 +162,7 @@
             "abstract": "A timeless American classic.",
             "author": "Harper Lee",
             "published": "1960-07-11",
-            "cover": "media/book_covers/generic-cover_wLjq5WJ.jpg",
+            "cover": "media/book_covers/to-kill-a-mockingbird.png",
             "genre": "Fiction",
             "language": "English"
         }
@@ -176,7 +176,7 @@
             "abstract": "A warning against totalitarianism.",
             "author": "George Orwell",
             "published": "1949-06-08",
-            "cover": "media/book_covers/generic-cover_wLjq5WJ.jpg",
+            "cover": "media/book_covers/1984.png",
             "genre": "Dystopian Fiction",
             "language": "English"
         }
@@ -190,7 +190,7 @@
             "abstract": "A critique of the Jazz Age.",
             "author": "F. Scott Fitzgerald",
             "published": "1925-04-10",
-            "cover": "media/book_covers/generic-cover_wLjq5WJ.jpg",
+            "cover": "media/book_covers/the-great-gatsby.png",
             "genre": "Tragedy",
             "language": "English"
         }
@@ -204,7 +204,7 @@
             "abstract": "One of the most loved romance novels.",
             "author": "Jane Austen",
             "published": "1813-01-28",
-            "cover": "media/book_covers/generic-cover_wLjq5WJ.jpg",
+            "cover": "media/book_covers/pride-and-prejudice.png",
             "genre": "Romance",
             "language": "English"
         }
@@ -218,7 +218,7 @@
             "abstract": "A landmark in women's literature.",
             "author": "Charlotte Brontë",
             "published": "1847-10-16",
-            "cover": "media/book_covers/generic-cover_wLjq5WJ.jpg",
+            "cover": "media/book_covers/jane-eyre.png",
             "genre": "Gothic Fiction",
             "language": "English"
         }
@@ -232,7 +232,7 @@
             "abstract": "A masterpiece of American literature.",
             "author": "Herman Melville",
             "published": "1851-11-14",
-            "cover": "media/book_covers/generic-cover_wLjq5WJ.jpg",
+            "cover": "media/book_covers/moby-dick.png",
             "genre": "Adventure",
             "language": "English"
         }
@@ -246,7 +246,7 @@
             "abstract": "A pioneering work of science fiction.",
             "author": "Mary Shelley",
             "published": "1818-01-01",
-            "cover": "media/book_covers/generic-cover_wLjq5WJ.jpg",
+            "cover": "media/book_covers/frankenstein.png",
             "genre": "Horror",
             "language": "English"
         }
@@ -260,7 +260,7 @@
             "abstract": "The classic vampire novel.",
             "author": "Bram Stoker",
             "published": "1897-05-26",
-            "cover": "media/book_covers/generic-cover_wLjq5WJ.jpg",
+            "cover": "media/book_covers/dracula.png",
             "genre": "Horror",
             "language": "English"
         }
@@ -274,7 +274,7 @@
             "abstract": "One of the greatest novels of the 19th century.",
             "author": "Victor Hugo",
             "published": "1862-01-01",
-            "cover": "media/book_covers/generic-cover_wLjq5WJ.jpg",
+            "cover": "media/book_covers/les-misérables.png",
             "genre": "Historical Fiction",
             "language": "French"
         }
