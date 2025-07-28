@@ -16,6 +16,10 @@
 }
 
 .book-cover-container {
+  border-radius: 15px;
+  padding: 1rem;
+  min-height: 550px;
+  position: sticky;
   width: 100%;
   height: 380px;
   display: flex;
@@ -27,6 +31,8 @@
 }
 
 .book-cover {
+  border-radius: 8px;
+  object-fit: contain;
   width: 100%;
   height: 100%;
   object-fit: cover; /* Changed back to cover for consistent look */

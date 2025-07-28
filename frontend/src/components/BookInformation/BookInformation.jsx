@@ -50,11 +50,11 @@ const BookInformation = () => {
       
       <div className="book-details-container">
         {/* Book Cover Card (Left) */}
-        <div className="book-cover-container">
+        <div className="book-cover-container-details">
           <img 
             src={coverUrl}
             alt={`Cover of ${book.title}`} 
-            className="book-cover"
+            className="book-cover-details"
             onError={(e) => {
               e.target.src = '/default-cover.jpg';
             }}
@@ -85,15 +85,16 @@ const BookInformation = () => {
           </div>
         </div>
       </div>
-
-      <div className="book-status-container">
-        <h3 className="bookstatus">Status:</h3>
-        <p className="bookstatusresponse">{book.status}</p>
-      </div>
-
-      <div className="bookbutton">
-            <Reservation/>
+      <div className="status-button-row">
+        <div className="book-status-container">
+          <h3 className="bookstatus">Status:</h3>
+          <p className="bookstatusresponse">{book.status}</p>
         </div>
+
+        <div className="bookbutton">
+          <Reservation/>
+        </div>
+      </div>
     </>
   );
 }
