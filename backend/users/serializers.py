@@ -20,3 +20,9 @@ class RegisterSerializer(serializers.ModelSerializer):
         role = validated_data.pop('role', 'USER')
         user = CustomUser.objects.create_user(role=role, **validated_data)
         return user
+    
+class UserProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ['email', 'username', 'profile_image', 'first_name', 'last_name', 'role']
+        read_only_fields = ['email','role' ]  # Assuming role should not be changed by the user

@@ -3,14 +3,14 @@ import json
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth import logout
 from django.contrib.auth import login as auth_login  # Renamed import
 from django.contrib.auth.hashers import check_password
 from .models import CustomUser
-from .serializers import RegisterSerializer
+from .serializers import RegisterSerializer, UserProfileSerializer
 from .models import CustomUser
 from django.middleware.csrf import get_token
 from django.views.decorators.http import require_POST
@@ -55,7 +55,7 @@ def register(request):
 
 
 
-@csrf_exempt
+
 @require_POST
 def login_view(request):
     try:
@@ -87,20 +87,18 @@ def login_view(request):
         if user is not None and check_password(password, user.password):
             # Password matches, log the user in
             auth_login(request, user)
+            serializer = UserProfileSerializer(user)  # Serialize user data
             return JsonResponse({
                 'success': True,
                 'message': 'Login successful',
-                'user': {
-                    'id': user.id,
-                    'username': user.username,
-                    'email': user.email
-                }
-            })
+                'user': serializer.data,
+                })
         else:
             return JsonResponse({
                 'success': False,
                 'message': 'Invalid credentials'
             }, status=401)
+        
 
     except Exception as e:
         print("Errore durante il login:", str(e))  # Log per il debug
@@ -109,6 +107,14 @@ def login_view(request):
             'message': 'An error occurred during login'
         }, status=500)
     
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+@ensure_csrf_cookie
+def get_user_profile(request):
+    user = request.user
+    serializer = UserProfileSerializer(user)
+    return Response(serializer.data)
 
 
 @api_view(['GET'])

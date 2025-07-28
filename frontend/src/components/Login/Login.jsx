@@ -15,7 +15,7 @@ const Login = () => {
     const [csrfToken, setCsrfToken] = useState('');
     const navigate = useNavigate();
 
-    // Fetch CSRF token when component mounts
+   
     useEffect(() => {
         const fetchCsrf = async () => {
             try {
