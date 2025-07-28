@@ -1,6 +1,11 @@
 # BookLine
 Lab. advanced programming - project
 
+## 🔗 Useful Links  
+
+- [Miro Board](https://miro.com/app/board/uXjVILAemLI=/) - Mockup  
+- [Notion Documentation](https://www.notion.so/BookLine-Lab-AP-1b89f4cb74a8809ebd68c4b351b7ff7f) - Project notes and documentation.  
+
 ## 🛠️ Setup and Installation whit docker 🐋
 
 1. **Clone the repository**:
@@ -18,17 +23,17 @@ Lab. advanced programming - project
 4. **Stop the Docker container**:
     ```bash
    docker-compose down -v
+    ```
 # 🚀 Git Workflow Rules  
 
 To ensure smooth collaboration, follow these rules when working on this repository.  
 
 ## 📌 Branching Strategy  
-- **`main` branch** → Stable production-ready version (do not push here directly).  
-- **`development` branch** → The main working branch for integrating new features (do not push directly here).  
+- **`main` branch** → Stable production-ready version (do not push here directly).
 - **`sub-development` branch** → Use this as an intermediate branch to handle merge conflicts before pushing to `development`.  
 
 ## 🛠 Working on a New Feature  
-1. **Create a new branch** from `development`:  
+1. **Create a new branch** from `sub-development`:  
    ```bash
    git checkout development
    git pull origin development
@@ -62,13 +67,6 @@ To ensure smooth collaboration, follow these rules when working on this reposito
 Push the updated sub-development branch:
   ```bash
   git push origin sub-development
-  ```
-3.Once sub-development is stable, merge it into development:
-  ```bash
-  git checkout development
-  git pull origin development
-  git merge sub-development
-  git push origin development
   ```
 ## ⚠️ Important Notes
 - Never push directly to main or development.
