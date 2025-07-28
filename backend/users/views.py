@@ -55,8 +55,9 @@ def register(request):
 
 
 
-
+# @api_view(['POST'])
 @require_POST
+@ensure_csrf_cookie
 def login_view(request):
     try:
         data = json.loads(request.body)
