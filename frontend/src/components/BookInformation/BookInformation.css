@@ -1,0 +1,342 @@
+.book-details-container {
+  display: flex;
+  max-width: 1200px;
+
+  gap: 3rem;
+  
+}
+
+/* Book cover card (left side) */
+.book-cover-container {
+  flex: 0 0 400px;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 550px;
+  position: sticky;
+  background-color: transparent;
+}
+
+.book-cover {
+  max-width: 100%;
+  max-height: 500px;
+  width: auto;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  object-fit: contain;
+}
+
+/* Book info card (right side) */
+.book-info-card {
+  flex: 1;
+  background-color: rgba(255, 255, 255, 0.85);
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.book-title-info {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  color: lightcoral;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.book-author-info {
+  font-size: 1rem;
+  margin-bottom: 1px;
+  margin-top: -10px;
+  color: black;
+  font-weight: 500;
+  font-style: italic;
+}
+
+.book-meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  font-size: 1.1rem;
+  color: #444;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid lightsalmon;
+}
+
+.book-meta p {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.book-meta strong {
+  color: #333;
+  margin-bottom: 0.3rem;
+  font-weight: 600;
+}
+
+.book-description, 
+.book-abstract {
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 1.8rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  border-left: 4px solid lightsalmon;
+}
+
+.book-description h3, 
+.book-abstract h3 {
+  margin-top: 0;
+  margin-bottom: 1.2rem;
+  color: #333;
+  font-size: 1.5rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+}
+
+.book-description h3::before,
+.book-abstract h3::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 25px;
+  background: lightsalmon;
+  margin-right: 12px;
+  border-radius: 2px;
+}
+
+.book-description p, 
+.book-abstract p {
+  margin: 0;
+  line-height: 1.8;
+  color: #444;
+  text-align: justify;
+  hyphens: auto;
+  max-height: 300px;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+/* Scrollbar styling for long text */
+.book-description p::-webkit-scrollbar,
+.book-abstract p::-webkit-scrollbar {
+  width: 6px;
+}
+
+.book-description p::-webkit-scrollbar-thumb,
+.book-abstract p::-webkit-scrollbar-thumb {
+  background: lightsalmon;
+  border-radius: 3px;
+}
+
+.bookbutton{
+  display: flex;
+  padding-inline: 2rem;
+
+}
+/* Container for both elements */
+.book-status-container {
+  display: flex;
+  align-items: center; /* Vertically center items */
+  gap: 1rem; /* Space between elements */
+  margin-top: -10%;
+  padding-inline: 2rem;
+}
+
+.bookstatus {
+  font-size: 1.5rem;
+  font-style: italic;
+  /* Remove negative margin as it's no longer needed */
+  /* padding-inline is now handled by the container */
+}
+
+.bookstatusresponse {
+  font-size: 1.5rem;
+  font-style: italic;
+  margin-top: -20px;
+  /* Remove manual margin-left as flex gap handles spacing */
+}
+
+/* Responsive design adjustments */
+@media (max-width: 992px) {
+  .book-details-container {
+    gap: 2rem;
+    margin-top: 70px;
+  }
+  
+  .book-cover-container {
+    min-height: 500px; /* Increased height */
+    padding: 2rem;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .book-cover {
+    max-height: 450px; /* Increased to show more of the cover */
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    object-fit: contain;
+  }
+  .book-info-card {
+    padding: 1.2rem;
+    
+  }
+  .book-title {
+    font-size: 2.4rem;
+  }
+  .book-info-card {
+    margin-top: -40px;
+  }
+  
+  .book-meta {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .bookbutton{
+    margin-bottom: 20px;
+    padding-inline: 0.5rem;
+  
+  }
+  .book-status-container {
+    display: flex;
+    align-items: center; /* Vertically center items */
+    gap: 1rem; /* Space between elements */
+    margin-top: -15%;
+    padding-inline: 0.5rem;
+  }
+  
+
+}
+
+@media (max-width: 768px) {
+  .book-details-container {
+    flex-direction: column;
+  }
+  
+  .book-cover-container {
+    max-width: 80%;
+    height: auto;
+    position: static;
+    margin-bottom: 2rem;
+    margin-top: 50px;
+    margin-left: 50px;
+  }
+  
+  .book-info-card {
+    padding: 2rem;
+  }
+  
+  .book-title {
+    font-size: 2rem;
+  }
+  
+  .book-author {
+    font-size: 1.3rem;
+  }
+  
+  .book-description p, 
+  .book-abstract p {
+    max-height: none;
+    overflow-y: visible;
+  }
+
+  .bookbutton{
+    margin-bottom: 20px;
+    padding-inline: 2rem;
+  
+  }
+  .book-status-container {
+    display: flex;
+    align-items: center; /* Vertically center items */
+    gap: 1rem; /* Space between elements */
+    margin-top: 5%;
+    padding-inline: 2rem;
+  }
+  
+}
+
+@media (max-width: 480px) {
+  .book-details-container {
+    flex-direction: column;
+    margin-top: 20%;
+    gap: 2rem;
+    padding: 1 1rem;
+  }
+  
+  .book-cover-container {
+    min-height: auto;
+    padding: 1.5rem;
+    margin: auto auto;
+    margin-top: 50px;
+    width: 90%;
+  }
+  
+  .book-cover {
+    max-height: 300px;
+    margin-bottom: 1rem;
+  }
+  
+  .book-title-info {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .book-author-info {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .book-meta {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding-bottom: 1.5rem;
+  }
+  
+  .book-description, 
+  .book-abstract {
+    padding: 1.2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .book-description h3,
+  .book-abstract h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .book-button-container {
+    margin-top: 1rem;
+    padding: 0;
+  }
+
+  .bookbutton{
+    margin-bottom: 20px;
+    padding-inline: 1rem;
+  
+  }
+  .book-status-container {
+    display: flex;
+    align-items: center; /* Vertically center items */
+    gap: 1rem; /* Space between elements */
+    margin-top: 5%;
+    padding-inline: 1rem;
+  }
+
+  .book-info-card {
+    order: 3; /* Ensure info card appears after cover section */
+    
+  }
+
+  
+}
