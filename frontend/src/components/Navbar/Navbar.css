@@ -74,7 +74,9 @@
 .my-nav-right {
   flex: 0 0 auto;
   display: flex;
-  gap: 10px;
+  gap: 2%;
+  margin-right: 0.5%;
+  margin-top: -1%;
 }
 
 .my-nav-button,
