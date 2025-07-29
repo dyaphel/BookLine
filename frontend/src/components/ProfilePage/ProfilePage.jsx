@@ -29,9 +29,10 @@ const ProfilePage = () => {
   useEffect(() => {
   const fetchUserProfile = async () => {
     try {
-      const response = await axios.get(`http://localhost:8000/users/get_profile/${username}/`, {
+      const response = await axios.get(`http://localhost:8000/users/get_profile`, {
+        withCredentials: true,  // Correct property name (camelCase)
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+             'Content-Type': 'application/json',
         }
       });
       setUserData(response.data);

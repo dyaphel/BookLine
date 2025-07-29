@@ -7,9 +7,9 @@ const ProtectedRoutes = () => {
     return (
       <Router>
         <Routes>
-          <Route 
-                      path="/profile/:username" element={  <ProfilePage /> }
-                    />
+          <Route  path="/profile/:username" 
+           element={<ProfilePage />}
+          />
         </Routes>
       </Router>
 

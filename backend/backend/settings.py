@@ -151,6 +151,19 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 CORS_ALLOWED_ORIGINS = ["http://localhost:5173"]
 CORS_ALLOW_CREDENTIALS = True
 CSRF_TRUSTED_ORIGINS = ["http://localhost:5173"]
+# Add these headers to allowed headers
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+    'withcredentials',  # Add this
+]
 
 # CSRF Settings
 CSRF_COOKIE_HTTPONLY = False  # Allow JavaScript to read the cookie
