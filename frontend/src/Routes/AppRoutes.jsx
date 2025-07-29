@@ -5,6 +5,7 @@ import BookInformation from "../components/BookInformation/BookInformation";
 import Login from '../components/Login/Login';
 import Home from '../components/Home/Home';
 import RegisterPage from "../components/Register/Register";
+import ProfilePage from "../components/ProfilePage/ProfilePage";
 const AppRoutes = () => {   
     return (
         <Router>
@@ -18,6 +19,9 @@ const AppRoutes = () => {
 
                 {/*PROTECTED ROUTES*/}
                 <Route path="/bookinformation/:isbn" element={<BookInformation/>}/>
+                <Route path="/profile/:username" element={<ProfilePage />} />
+                
+                {/* Fallback route */}
              </Routes>
         </Router>
     );

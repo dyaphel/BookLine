@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.contrib.auth.models import AbstractUser, BaseUserManager, PermissionsMixin
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
@@ -19,7 +19,7 @@ class CustomUserManager(BaseUserManager):
 
         return self.create_user(email, password=password, **extra_fields)
 
-class CustomUser(AbstractBaseUser, PermissionsMixin):
+class CustomUser(AbstractUser, PermissionsMixin):
     class Roles(models.TextChoices):
         USER = "USER", "User"
         LIBRARIAN = "LIBRARIAN", "Librarian"

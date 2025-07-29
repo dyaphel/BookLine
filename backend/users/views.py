@@ -42,6 +42,12 @@ def register(request):
     username = request.data.get('username').strip().lower()
     request.data['username'] = username  # Modifica il dato per includere lo username in minuscolo
 
+    if 'profile_image' in request.data and request.data['profile_image']:
+        # The file will be automatically handled by MultiPartParser
+       pass
+    
+    serializer = RegisterSerializer(data=request.data)
+
     # Ora passa i dati modificati al serializer
     serializer = RegisterSerializer(data=request.data)
     
