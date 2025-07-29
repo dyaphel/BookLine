@@ -84,8 +84,6 @@ const NavBar = ({ onFilterClick, onSearch }) => {
     value.trim() && onSearch(value);
   };
 
-  if (loading) return <div className="my-navbar">Loading...</div>;
-
   return (
     <div className="my-navbar">
       <Title />
