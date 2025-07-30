@@ -133,19 +133,8 @@ def delete_user(request):
     
     if not request.user.is_authenticated:
         return JsonResponse({'error': 'User not authenticated'}, status=401)
-    
-    # Require password in request data
-    password = request.data.get('password')
-    
-    if not password:
-        return JsonResponse({'error': 'Password is required for account deletion'}, status=400)
-    
     # Verify password
     user = request.user
-    if not user.check_password(password):
-        return JsonResponse({'error': 'Incorrect password'}, status=403)
-    
-    # Delete user if password is correct
     user.delete()
     return JsonResponse({'message': 'User deleted successfully'}, status=204)
     

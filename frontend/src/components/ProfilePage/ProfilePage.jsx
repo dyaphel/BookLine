@@ -4,11 +4,13 @@ import EditButton from '../Buttons/Edit/Edit';
 import ResetButton from '../Buttons/ResetPassword/ResetPassword';
 import axios from 'axios';
 import NavBar from "../Navbar/Navbar";
+import Alert from '../../Utils/Alert/Alert';
 import './ProfilePage.css';
 
 const ProfilePage = () => {
   const [userData, setUserData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -48,10 +50,9 @@ const ProfilePage = () => {
         {/* Profile Image on the left */}
         <div className="profile-image-section">
           <img 
-            src={userData.profile_image 
-              ? `http://localhost:8000${userData.profile_image}`
-              : '/default-profile.png'}
-            alt="Profile" 
+            src={
+              `http://localhost:8000${userData.profile_image}`
+             }
             className="profile-avatar"
             onError={(e) => {
               e.target.onerror = null;

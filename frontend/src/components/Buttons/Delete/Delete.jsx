@@ -1,36 +1,34 @@
+import React, { useState } from 'react';
+import DeletePopup from '../../../Utils/Popup/DeletePopup'; // Import your popup component
+import './Delete.css';
 
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import './Delete.css'; // Import the CSS file for styling
-import { getCsrfToken } from '../../../Utils/GetToken';
+const DeleteButton = ({ onDelete }) => {
+  const [showPopup, setShowPopup] = useState(false);
 
-const DeleteButton = () => {
-  const [loading, setLoading] = useState(true);
-
-
-  useEffect(() => {
-    const checkAuthStatus = async () => {
-      try {
-        setLoading(true);
-        const token = await getCsrfToken();
-
-      } catch (error) {
-        console.error("Authentication check error:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    checkAuthStatus();
-  }, []);
-
+  const handleConfirmDelete = () => {
+    onDelete(); // Execute the deletion function passed from parent
+    setShowPopup(false); // Close the popup
+  };
 
   return (
-    <div className="delete-container">
-      <button className= "button-delete">
-       Delete Profile
-      </button>
-    </div>
+    <>
+      <div className="delete-container">
+        <button 
+          className="button-delete" 
+          onClick={() => setShowPopup(true)}
+        >
+          Delete Profile
+        </button>
+      </div>
+
+      {/* Conditionally render the popup */}
+      {showPopup && (
+        <DeletePopup 
+          onClose={() => setShowPopup(false)}
+          onConfirm={handleConfirmDelete}
+        />
+      )}
+    </>
   );
 };
 
