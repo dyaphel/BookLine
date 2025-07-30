@@ -126,17 +126,29 @@ def get_user_profile(request):
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
 def delete_user(request):
-    print(f"Incoming method: {request.method}")
-    if request.method!='DELETE':
+    print(f"Incoming method: {request.method}")  # Debugging
+    
+    if request.method != 'DELETE':
         return JsonResponse({'error': 'Method not allowed'}, status=405)
-    if request.user.is_authenticated:
-        user = request.user
-        user.delete()
-        return JsonResponse({'message': 'User deleted successfully'}, status=204)
-    else:
+    
+    if not request.user.is_authenticated:
         return JsonResponse({'error': 'User not authenticated'}, status=401)
-
-
+    
+    # Require password in request data
+    password = request.data.get('password')
+    
+    if not password:
+        return JsonResponse({'error': 'Password is required for account deletion'}, status=400)
+    
+    # Verify password
+    user = request.user
+    if not user.check_password(password):
+        return JsonResponse({'error': 'Incorrect password'}, status=403)
+    
+    # Delete user if password is correct
+    user.delete()
+    return JsonResponse({'message': 'User deleted successfully'}, status=204)
+    
 
 @api_view(['GET'])
 @ensure_csrf_cookie
