@@ -92,6 +92,7 @@ const Login = () => {
                 )}
                 <form className="mylogin-form" onSubmit={handleSubmit}>
                     <input
+                        autoFocus
                         type="text"
                         name="username"
                         placeholder="Username"

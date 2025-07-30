@@ -15,7 +15,6 @@ from .models import CustomUser
 from django.middleware.csrf import get_token
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import ensure_csrf_cookie
-from rest_framework.decorators import api_view
 import logging
 logger = logging.getLogger(__name__)
 
@@ -122,6 +121,21 @@ def get_user_profile(request):
     user = request.user
     serializer = UserProfileSerializer(user)
     return Response(serializer.data)
+
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def delete_user(request):
+    print(f"Incoming method: {request.method}")
+    if request.method!='DELETE':
+        return JsonResponse({'error': 'Method not allowed'}, status=405)
+    if request.user.is_authenticated:
+        user = request.user
+        user.delete()
+        return JsonResponse({'message': 'User deleted successfully'}, status=204)
+    else:
+        return JsonResponse({'error': 'User not authenticated'}, status=401)
+
 
 
 @api_view(['GET'])

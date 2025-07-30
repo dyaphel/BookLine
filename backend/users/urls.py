@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import login_view, register, get_csrf_token,check_auth , user_logout
-from .views import get_user_profile
+from .views import get_user_profile, delete_user
 
 urlpatterns = [
     path('login/', login_view, name='login'),
@@ -9,4 +9,5 @@ urlpatterns = [
     path('check-auth/', check_auth, name='check-auth'),
     path('logout/', user_logout, name='user-logout'),
     path('get_profile/', get_user_profile, name='get_user_profile'),
-]
+    path('delete_user/',delete_user, name='delete_user'),
+ ]
