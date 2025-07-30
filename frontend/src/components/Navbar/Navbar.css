@@ -19,6 +19,7 @@
 /* Title/Logo - Left side */
 .my-nav-left {
   flex: 0 0 auto;
+
 }
 
 /* Search Container - Center */
@@ -125,10 +126,9 @@
   .my-nav-button,
   .my-nav-button-register {
     padding: 7px 12px;
-    font-size: 0.9rem;
+    font-size: 1rem;
     margin-top: -10px;
     width: auto;
-    font-size: 18px;
   }
 }
 
@@ -160,7 +160,7 @@
   .my-nav-button,
   .my-nav-button-register {
     padding: 5px 10px;
-    font-size: 0.85rem;
+    font-size: 1rem;
   }
 }
 

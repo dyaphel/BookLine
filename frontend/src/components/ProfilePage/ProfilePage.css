@@ -13,7 +13,6 @@
   flex-direction: column;
   align-items: center;
   gap: 1.5rem;
-  position: sticky;
   top: 2rem;
 }
 
@@ -88,13 +87,12 @@
 }
 
 .profile-actions-container {
-  margin-left: 8%;
+  margin-left: 10%;
   display: flex;
   justify-content: center; /* Center horizontally */
   gap: 2rem; /* Space between buttons */
   width: 100%;
-  margin-top: 0; /* Remove top margin if previously set */
-}
+  }
 
 
 /* Responsive Design */
@@ -105,12 +103,24 @@
   }
   
   .profile-image-section {
-    position: static;
-    margin-bottom: 2rem;
+    margin-top: 3rem;
+    margin-bottom: -2rem;
+  }
+
+  .profile-username {
+    margin-top:-1rem;
   }
   
   .profile-info-card {
     width: 100%;
+  }
+  .profile-actions-container {
+    margin-left: 0%;
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    gap: 2rem; /* Space between buttons */
+    width: 100%;
+    margin-top: 5%; /* Remove top margin if previously set */
   }
 }
 

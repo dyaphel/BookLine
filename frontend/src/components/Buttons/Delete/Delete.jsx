@@ -28,7 +28,7 @@ const DeleteButton = () => {
   return (
     <div className="delete-container">
       <button className= "button-delete">
-       DELETE
+       Delete Profile
       </button>
     </div>
   );

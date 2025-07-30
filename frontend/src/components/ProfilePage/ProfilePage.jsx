@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import DeleteButton from '../Buttons/Delete/Delete';
 import EditButton from '../Buttons/Edit/Edit';
+import ResetButton from '../Buttons/ResetPassword/ResetPassword';
 import axios from 'axios';
 import NavBar from "../Navbar/Navbar";
 import './ProfilePage.css';
@@ -84,10 +85,8 @@ const ProfilePage = () => {
       </div>
         <div className="profile-actions-container">
           <EditButton />
-        <button className="profile-button reset-button">
-          <i className="fas fa-key"></i> Reset Password
-        </button>
-        <DeleteButton/>
+          <ResetButton />
+          <DeleteButton/>
       </div>
     </div>
   );
