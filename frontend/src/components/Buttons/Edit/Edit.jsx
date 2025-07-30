@@ -1,10 +1,10 @@
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './Delete.css'; // Import the CSS file for styling
+import './Edit.css'; // Import the CSS file for styling
 import { getCsrfToken } from '../../../Utils/GetToken';
 
-const DeleteButton = () => {
+const EditButton = () => {
   const [loading, setLoading] = useState(true);
 
 
@@ -26,12 +26,12 @@ const DeleteButton = () => {
 
 
   return (
-    <div className="delete-container">
-      <button className= "button-delete">
-       DELETE
+    <div className="edit-container">
+      <button className= "button-edit">
+       Edit Profile
       </button>
     </div>
   );
 };
 
-export default DeleteButton;
+export default EditButton;

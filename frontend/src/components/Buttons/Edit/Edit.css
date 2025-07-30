@@ -1,24 +1,24 @@
 /* Contenitore per il pulsante Filter */
-.delete-container {
-    border: 1px solid rgb(232, 72, 104); 
+.edit-container {
+    border: 1px solid  cyan; 
     border-radius: 10px;
   }
 
   /* Stile del pulsante */
-  .button-delete {
+  .button-edit {
     background-color: transparent;
     border: none;
-    color: rgb(232, 72, 104); /* Colore del testo */
+    color: cyan; /* Colore del testo */
     font-size: 1.5rem;
     font-weight: 500;
-    padding: 10px 40px;
+    padding: 10px 20px;
     border-radius: 9px; /* Bordi arrotondati */
     cursor: pointer;
     transition: all 0.3s ease;
   }
 
-  .button-delete:hover {
-    background-color: rgb(232, 72, 104); ; /* Cambia colore di sfondo al passaggio del mouse */
+  .button-edit:hover {
+    background-color: cyan ; /* Cambia colore di sfondo al passaggio del mouse */
     color: white; /* Cambia colore del testo al passaggio del mouse */
   }
 
