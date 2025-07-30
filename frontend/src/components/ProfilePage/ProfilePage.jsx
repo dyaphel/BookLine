@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useLocation, useNavigate } from 'react-router-dom';
+import DeleteButton from '../Buttons/Delete/Delete';
 import axios from 'axios';
 import NavBar from "../Navbar/Navbar";
 import './ProfilePage.css';
@@ -18,6 +18,7 @@ const ProfilePage = () => {
             'Content-Type': 'application/json'
           }
         });
+        console.log('Profile data fetched:', response.data);
         setUserData(response.data);
       } catch (err) {
         console.error('Error fetching profile:', err);
@@ -79,6 +80,15 @@ const ProfilePage = () => {
             </div>
           </div>
         </div>
+      </div>
+        <div className="profile-actions-container">
+        <button className="profile-button edit-button">
+          <i className="fas fa-edit"></i> Edit Profile
+        </button>
+        <button className="profile-button reset-button">
+          <i className="fas fa-key"></i> Reset Password
+        </button>
+        <DeleteButton/>
       </div>
     </div>
   );

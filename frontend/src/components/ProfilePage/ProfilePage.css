@@ -87,6 +87,16 @@
   font-size: 1.2rem;
 }
 
+.profile-actions-container {
+  margin-left: 6%;
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  gap: 1rem;
+  width: 100%;
+  margin-top: 0; /* Remove top margin if previously set */
+}
+
+
 /* Responsive Design */
 @media (max-width: 992px) {
   .profile-content-wrapper {
