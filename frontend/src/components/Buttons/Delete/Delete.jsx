@@ -2,14 +2,9 @@ import React, { useState } from 'react';
 import DeletePopup from '../../../Utils/Popup/DeletePopup'; // Import your popup component
 import './Delete.css';
 
-const DeleteButton = ({ onDelete }) => {
+const DeleteButton = () => {
   const [showPopup, setShowPopup] = useState(false);
-
-  const handleConfirmDelete = () => {
-    onDelete(); // Execute the deletion function passed from parent
-    setShowPopup(false); // Close the popup
-  };
-
+  
   return (
     <>
       <div className="delete-container">
@@ -25,7 +20,6 @@ const DeleteButton = ({ onDelete }) => {
       {showPopup && (
         <DeletePopup 
           onClose={() => setShowPopup(false)}
-          onConfirm={handleConfirmDelete}
         />
       )}
     </>
