@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import DeletePopup from '../../../Utils/Popup/DeletePopup'; // Import your popup component
+import DeletePopup from '../../../Utils/Popup/Delete/DeletePopup'; // Import your popup component
 import './Delete.css';
 
 const DeleteButton = () => {
