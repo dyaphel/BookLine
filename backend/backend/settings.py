@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'users',
     'rest_framework',
     'bookline',
+    'reservations',
 ]
 
 MIDDLEWARE = [

@@ -25,6 +25,7 @@ class Book(models.Model):
     genre = models.CharField(max_length=100, blank=True)
     language = models.CharField(max_length=50, blank=True)
     # copies = models.PositiveIntegerField(blank = False, default=1)
+    available_copies = models.PositiveIntegerField(default=1)
     # queue = models.PositiveIntegerField(default=0)  # Number of users in queue for the book
 
     # queued user to the book;
