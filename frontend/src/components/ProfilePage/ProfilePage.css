@@ -162,6 +162,7 @@
   color: #fff; /* Change text color on hover */
 } 
 
+
 /* Responsive Design */
 @media (max-width: 992px) {
   .profile-content-wrapper {

@@ -124,7 +124,13 @@ const ProfilePage = () => {
         }
       );
 
-      setUserData(response.data);
+      // Update user data with the response
+    setUserData(prev => ({
+      ...prev,
+      username: response.data.data.username,
+      profile_image: response.data.data.profile_image
+    }));
+
       setIsEditing(false);
     } catch (err) {
       console.error('Error updating profile:', err);
