@@ -169,6 +169,65 @@ def change_password(request):
 
     return JsonResponse({'success': True, 'message': 'Password changed successfully'})
 
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def update_profile(request):
+    try:
+        user = request.user
+        
+        # Handle username update
+        if 'username' in request.data:
+            new_username = request.data['username'].strip()
+            if new_username and new_username != user.username:
+                # Check if username already exists
+                if CustomUser.objects.exclude(pk=user.pk).filter(username=new_username).exists():
+                    return Response({
+                        'success': False,
+                        'message': 'Username already exists'
+                    }, status=400)
+                user.username = new_username
+        
+        # Handle profile image update
+        if 'profile_image' in request.FILES:
+            image = request.FILES['profile_image']
+            # Validate image
+            if image.size > 2 * 1024 * 1024:  # 2MB limit
+                return Response({
+                    'success': False,
+                    'message': 'Image size too large (max 2MB)'
+                }, status=400)
+            if not image.content_type in ['image/jpeg', 'image/png', 'image/jpg']:
+                return Response({
+                    'success': False,
+                    'message': 'Invalid image format (only JPEG, PNG allowed)'
+                }, status=400)
+            user.profile_image = image
+        
+        user.save()
+        
+        return Response({
+            'success': True,
+            'data': {
+                'username': user.username,
+                'profile_image': user.profile_image.url if user.profile_image else None,
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'email': user.email
+            }
+        })
+        
+    except ValidationError as e:
+        return Response({
+            'success': False,
+            'message': str(e)
+        }, status=400)
+    except Exception as e:
+        return Response({
+            'success': False,
+            'message': 'An error occurred while updating profile'
+        }, status=500)
+        
+
 
 @api_view(['GET'])
 @ensure_csrf_cookie

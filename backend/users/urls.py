@@ -1,6 +1,15 @@
 from django.urls import path
-from .views import login_view, register, get_csrf_token,check_auth , user_logout
-from .views import get_user_profile, delete_user, change_password
+from .views import (
+    login_view, 
+    register, 
+    get_csrf_token,
+    check_auth,
+    user_logout,
+    get_user_profile,
+    delete_user,
+    change_password,
+    update_profile  # No trailing comma here
+)
 
 urlpatterns = [
     path('login/', login_view, name='login'),
@@ -10,5 +19,6 @@ urlpatterns = [
     path('logout/', user_logout, name='user-logout'),
     path('get_profile/', get_user_profile, name='get_user_profile'),
     path('delete_user/',delete_user, name='delete_user'),
-     path('change_password/', change_password, name='change_password'),
+    path('change_password/', change_password, name='change_password'),
+    path('update_profile/', update_profile, name='update_profile'),
  ]
