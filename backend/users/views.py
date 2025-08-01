@@ -7,7 +7,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth import logout
-from django.contrib.auth import login as auth_login  # Renamed import
+from django.contrib.auth import login as auth_login 
 from django.contrib.auth.hashers import check_password
 from .models import CustomUser
 from .serializers import RegisterSerializer, UserProfileSerializer
@@ -15,6 +15,7 @@ from .models import CustomUser
 from django.middleware.csrf import get_token
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import ensure_csrf_cookie
+from django.contrib.auth import update_session_auth_hash
 import logging
 logger = logging.getLogger(__name__)
 
@@ -138,6 +139,95 @@ def delete_user(request):
     user.delete()
     return JsonResponse({'message': 'User deleted successfully'}, status=204)
     
+
+
+
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def change_password(request):
+    old_password = request.data.get('oldPassword')
+    new_password = request.data.get('newPassword')
+
+    if not old_password or not new_password:
+        return JsonResponse({'success': False, 'message': 'Both old and new passwords are required'}, status=400)
+
+    if not check_password(old_password, request.user.password):
+        return JsonResponse({'success': False, 'message': 'Old password is incorrect'}, status=400)
+
+    if len(new_password) < 8:
+        return JsonResponse({'success': False, 'message': 'Password must be at least 8 characters long'}, status=400)
+
+    if check_password(new_password, request.user.password):
+        return JsonResponse({'success': False, 'message': 'New password must be different from old password'}, status=400)
+
+    # Change password
+    request.user.set_password(new_password)
+    request.user.save()
+    update_session_auth_hash(request, request.user)
+
+    return JsonResponse({'success': True, 'message': 'Password changed successfully'})
+
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def update_profile(request):
+    try:
+        user = request.user
+        
+        # Handle username update
+        if 'username' in request.data:
+            new_username = request.data['username'].strip()
+            if new_username and new_username != user.username:
+                # Check if username already exists
+                if CustomUser.objects.exclude(pk=user.pk).filter(username=new_username).exists():
+                    return Response({
+                        'success': False,
+                        'message': 'Username already exists'
+                    }, status=400)
+                user.username = new_username
+        
+        # Handle profile image update
+        if 'profile_image' in request.FILES:
+            image = request.FILES['profile_image']
+            # Validate image
+            if image.size > 2 * 1024 * 1024:  # 2MB limit
+                return Response({
+                    'success': False,
+                    'message': 'Image size too large (max 2MB)'
+                }, status=400)
+            if not image.content_type in ['image/jpeg', 'image/png', 'image/jpg']:
+                return Response({
+                    'success': False,
+                    'message': 'Invalid image format (only JPEG, PNG allowed)'
+                }, status=400)
+            user.profile_image = image
+        
+        user.save()
+        
+        return Response({
+            'success': True,
+            'data': {
+                'username': user.username,
+                'profile_image': user.profile_image.url if user.profile_image else None,
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'email': user.email
+            }
+        })
+        
+    except ValidationError as e:
+        return Response({
+            'success': False,
+            'message': str(e)
+        }, status=400)
+    except Exception as e:
+        return Response({
+            'success': False,
+            'message': 'An error occurred while updating profile'
+        }, status=500)
+        
+
 
 @api_view(['GET'])
 @ensure_csrf_cookie

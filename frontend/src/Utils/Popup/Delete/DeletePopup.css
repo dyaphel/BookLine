@@ -1,69 +1,79 @@
 /* Fullscreen overlay with blur */
 .popup-overlay {
   position: fixed;
-  inset: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(5px);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  animation: fadeIn 0.3s ease;
 }
 
 /* Popup box */
 .popup-box {
-  background: white;
-  padding: 1.5rem;
+  background-color: #fff;
   border-radius: 12px;
-  width: 90%;
-  max-width: 400px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-  animation: popup-scale 0.2s ease-out;
-  text-align: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  width: 450px;
+  max-width: 95%;
+  padding: 30px;
+  animation: slideUp 0.4s ease;
 }
 
 /* Title */
 .popup-title {
   color: #dc2626; /* Red-600 */
-  font-size: 1.25rem;
-  font-weight: bold;
-  margin-bottom: 0.75rem;
+  margin: 0 0 25px 0;
+  font-size: 1.6rem;
+  text-align: center;
+  font-weight: 600;
 }
 
 /* Text */
 .popup-text {
-  color: #374151; /* Gray-700 */
-  margin-bottom: 1.5rem;
+  display: block;
+  margin-bottom: 8px;
+  color: #4a5568;
+  font-size: 0.95rem;
+  font-weight: 500;
 }
 
 /* Actions container */
 .popup-actions {
   display: flex;
-
-    align-items: center;
+  align-items: center;
   gap: 0.75rem;
 }
 
 /* Buttons */
 .popup-btn {
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.2s ease;
-  font-size: 0.9rem;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
 /* Cancel button */
 .popup-btn.cancel {
-  border: 1px solid #d1d5db; /* Gray-300 */
-  background-color: white;
+  background-color: #edf2f7;
   color: #374151; /* Gray-700 */
   width: 50%;
   
 }
 
-.popup-btn.cancel:hover {
-  background-color: #f9fafb; /* Gray-50 */
+.popup-btn.cancel:hover {  
+  background-color: #e2e8f0;background-color: #f9fafb; /* Gray-50 */
 }
 
 /* Delete button */
