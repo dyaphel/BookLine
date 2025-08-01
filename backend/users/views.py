@@ -7,7 +7,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth import logout
-from django.contrib.auth import login as auth_login  # Renamed import
+from django.contrib.auth import login as auth_login 
 from django.contrib.auth.hashers import check_password
 from .models import CustomUser
 from .serializers import RegisterSerializer, UserProfileSerializer
@@ -138,6 +138,66 @@ def delete_user(request):
     user.delete()
     return JsonResponse({'message': 'User deleted successfully'}, status=204)
     
+
+
+
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def change_password(request):
+    try:
+        old_password = request.data.get('oldPassword')
+        new_password = request.data.get('newPassword')
+
+        # Validate input
+        if not old_password or not new_password:
+            return JsonResponse({
+                'success': False,
+                'message': 'Both old and new passwords are required'
+            }, status=400)
+
+        # Check old password
+        if not check_password(old_password, request.user.password):
+            return JsonResponse({
+                'success': False,
+                'message': 'Old password is incorrect'
+            }, status=400)
+
+        # Validate new password
+        if len(new_password) < 8:
+            return JsonResponse({
+                'success': False,
+                'message': 'Password must be at least 8 characters long'
+            }, status=400)
+
+        # Check if new password is same as old
+        if check_password(new_password, request.user.password):
+            return JsonResponse({
+                'success': False,
+                'message': 'New password must be different from old password'
+            }, status=400)
+
+        # Change password
+        request.user.set_password(new_password)
+        request.user.save()
+
+        return JsonResponse({
+            'success': True,
+            'message': 'Password changed successfully'
+        })
+
+    except json.JSONDecodeError:
+        return JsonResponse({
+            'success': False,
+            'message': 'Invalid JSON data'
+        }, status=400)
+    except Exception as e:
+        return JsonResponse({
+            'success': False,
+            'message': str(e)
+        }, status=500)
+
 
 @api_view(['GET'])
 @ensure_csrf_cookie

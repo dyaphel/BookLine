@@ -71,7 +71,7 @@ const PasswordResetPopup = ({ onClose }) => {
     setSuccess('');
 
     try {
-      const response = await axios.post('/api/change-password', 
+      const response = await axios.post('http://localhost:8000/users/change_password/', 
         {
           oldPassword: passwords.oldPassword,
           newPassword: passwords.newPassword
@@ -80,7 +80,8 @@ const PasswordResetPopup = ({ onClose }) => {
           headers: { 
             'X-CSRFToken': csrfToken,
             'Content-Type': 'application/json'
-          }
+          },
+          withCredentials: true
         }
       );
 
