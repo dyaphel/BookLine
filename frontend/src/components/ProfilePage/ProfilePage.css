@@ -123,12 +123,11 @@
 }
 
 .profile-savechange-container {
-  margin-top: -80px;
+  margin-top: -8%;
   padding: 10px 20px;
   display: flex;
   justify-content: center; /* Center horizontally */
   gap: 2rem; /* Space between buttons */
-  
   }
 
 .save-btn {
@@ -189,6 +188,9 @@
     gap: 2rem; /* Space between buttons */
     width: 100%;
     margin-top: 5%; /* Remove top margin if previously set */
+  }
+  .profile-savechange-container {
+      margin-top: 1%;
   }
 }
 
