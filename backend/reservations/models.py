@@ -11,6 +11,7 @@ class Reservation(models.Model):
     ready_for_pickup = models.BooleanField(default=False)  # When the copy becomes available
     returned = models.BooleanField(default=False)  # User has returned the book
     position = models.PositiveIntegerField(null=True, blank=True) #Position in the queue
+    cancelled = models.BooleanField(default=False) #User/Librarian cancelled the reservation
 
     class Meta:
         unique_together = ('user', 'book')  # Prevent duplicate reservations
