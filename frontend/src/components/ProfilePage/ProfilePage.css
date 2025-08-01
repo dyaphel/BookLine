@@ -94,6 +94,74 @@
   width: 100%;
   }
 
+.profile-username-input {
+  font-size: 1.5rem;
+  text-align: center;
+  margin-top: 10px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 80%;
+}
+
+.change-image-btn {
+  margin-top: 10%; 
+  background-color: transparent;
+  border: 1px solid cyan;
+  color: cyan; /* Colore del testo */
+  font-size: 1.2rem;
+  font-weight: 500;
+  padding: 10px 20px;
+  border-radius: 9px; /* Bordi arrotondati */
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.change-image-btn:hover {
+  border: none;
+  background-color: cyan;
+  color: #fff; /* Change text color on hover */
+}
+
+.profile-savechange-container {
+  margin-top: -80px;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  gap: 2rem; /* Space between buttons */
+  
+  }
+
+.save-btn {
+  background-color: transparent;
+  border: 1px solid lightgreen;
+  color: lightgreen; /* Colore del testo */
+  font-size: 1.2rem;
+  font-weight: 500;
+  border-radius: 9px; /* Bordi arrotondati */
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.save-btn:hover {
+   border: none;
+  background-color: lightgreen;
+  color: #fff; /* Change text color on hover */
+}
+
+.cancel-btn { 
+  background-color: transparent;
+  border: 1px solid lightcoral ;
+  color: lightcoral; /* Colore del testo */
+  font-size: 1.2rem;
+  font-weight: 500;
+  border-radius: 9px; /* Bordi arrotondati */
+  cursor: pointer;
+  transition: all 0.3s ease; 
+}
+.cancel-btn:hover {
+  border: none;
+  background-color: lightcoral;
+  color: #fff; /* Change text color on hover */
+} 
 
 /* Responsive Design */
 @media (max-width: 992px) {
