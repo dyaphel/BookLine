@@ -149,7 +149,7 @@ const ProfilePage = () => {
             <>
               <div className="profile-image-edit-container">
                 <img
-                  src={previewImage || '/default-profile.png'}
+                  src={previewImage}
                   className="profile-avatar"
                 />
                 <input
@@ -181,7 +181,6 @@ const ProfilePage = () => {
                 className="profile-avatar"
                 onError={(e) => {
                   e.target.onerror = null;
-                  e.target.src = '/default-profile.png';
                 }}
               />
               <h2 className="profile-username">{userData.username}</h2>
