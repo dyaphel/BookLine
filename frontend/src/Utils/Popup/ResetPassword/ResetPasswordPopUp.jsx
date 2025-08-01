@@ -78,6 +78,7 @@ const PasswordResetPopup = ({ onClose }) => {
         },
         {
           headers: { 
+            'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
             'X-CSRFToken': csrfToken,
             'Content-Type': 'application/json'
           },
@@ -183,7 +184,7 @@ const PasswordResetPopup = ({ onClose }) => {
             >
               {isLoading ? (
                 <>
-                  <BeatLoader />Resetting...
+                  Resetting...
                 </>
               ) : (
                 'Change Password'
