@@ -6,12 +6,15 @@ import { normalizeCoverUrl } from "../../Utils/urlCoverNormalizer";
 import './BookInformation.css';
 import NavBar from "../Navbar/Navbar";
 import Reservation from "../Buttons/reservation/reservation";
+import GetInQueue from "../Buttons/GetInQueue/GetInQueue";
 
 const BookInformation = () => {
   const { isbn } = useParams();
   const [book, setBook] = useState(null);
+  const [reservations, setReservations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  
 
   useEffect(() => {
     const fetchBookInformation = async () => {
@@ -29,6 +32,31 @@ const BookInformation = () => {
     fetchBookInformation();
   }, [isbn]);
 
+  useEffect(() => {
+    const fetchReservationInformation = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8000/reservations/book/${isbn}/availability/`);
+        setReservations(response.data);
+        
+        // Aggiorna lo stato del libro in base alla disponibilità
+        setBook(prevBook => {
+          if (!prevBook) return prevBook;
+          return {
+            ...prevBook,
+            status: response.data.available_copies > 0 ? 'Available' : 'Not Available'
+          };
+        });
+      } catch (err) {
+        console.error("Error fetching availability:", err);
+        setError("Failed to load reservation information");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchReservationInformation();
+  }, [isbn]);
+
   if (loading) return <div className="loading">Loading book details...</div>;
   if (error) return <div className="error">{error}</div>;
   if (!book) return <div className="not-found">Book not found</div>;
@@ -44,9 +72,7 @@ const BookInformation = () => {
 
   return (
     <>
-      
-        <NavBar/>
-      
+      <NavBar/>
       
       <div className="book-details-container">
         {/* Book Cover Card (Left) */}
@@ -61,7 +87,6 @@ const BookInformation = () => {
           />
         </div>
        
-   
         {/* Book Info Card (Right) */}
         <div className="book-info-card">
           <h1 className="book-title-info">{book.title}</h1>
@@ -90,9 +115,17 @@ const BookInformation = () => {
           <h3 className="bookstatus">Status:</h3>
           <p className="bookstatusresponse">{book.status}</p>
         </div>
+         <div className="book-copies-container">
+          <h3 className="bookscopies">Number of copies:</h3>
+          <p className="bookscopieresponse">{reservations.available_copies}</p>
+        </div>
 
         <div className="bookbutton">
+          {reservations.available_copies > 0 ? (
           <Reservation/>
+          ):(
+          <GetInQueue/>
+          )}
         </div>
       </div>
     </>

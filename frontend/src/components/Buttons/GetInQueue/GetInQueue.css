@@ -1,0 +1,39 @@
+/* Contenitore per il pulsante Filter */
+.reservation-container {
+     /* Posiziona il contenitore in modo assoluto */
+    top: 20%; /* Distanza dal bordo superiore */
+    right: 0; /* Allinea a sinistra senza margine */
+    border: 1px solid lightcoral;
+    margin-right: 10%;
+    border-radius: 10px;
+  }
+
+  /* Stile del pulsante */
+  .button-reserve {
+    background-color: transparent;
+    border: none;
+    color: lightsalmon;
+    font-size: 1.5rem;
+    font-weight: 500;
+    padding: 10px 20px;
+    border-radius: 9px; /* Bordi arrotondati */
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .button-reserve:hover {
+    background-color: lightsalmon; /* Cambia colore di sfondo al passaggio del mouse */
+    color: white; /* Cambia colore del testo al passaggio del mouse */
+  }
+
+  /* Style for disabled button */
+  .button-reserve.disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    border: 1px dashed lightcoral;
+  }
+
+  .button-reserve.disabled:hover {
+    background-color: transparent;
+    color: lightsalmon;
+  }
