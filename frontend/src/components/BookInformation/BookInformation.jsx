@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import Title from "../../Utils/Title/BookLinetitle";
-import { normalizeCoverUrl } from "../../Utils/urlCoverNormalizer";
 import './BookInformation.css';
 import NavBar from "../Navbar/Navbar";
 import Reservation from "../Buttons/reservation/reservation";
 import GetInQueue from "../Buttons/GetInQueue/GetInQueue";
+import { getCsrfToken } from '../../Utils/GetToken';
+import { normalizeCoverUrl } from "../../Utils/urlCoverNormalizer";
 
 const BookInformation = () => {
   const { isbn } = useParams();
@@ -14,47 +14,122 @@ const BookInformation = () => {
   const [reservations, setReservations] = useState({ available_copies: 0 });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  
+  const [userReservation, setUserReservation] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    const fetchBookInformation = async () => {
+    const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/books/${isbn}`);
-        setBook(response.data);
+        setLoading(true);
+        const token = await getCsrfToken();
+        
+        // Check auth status
+        const authResponse = await axios.get('http://localhost:8000/users/check-auth/', {
+          headers: { 'X-CSRFToken': token },
+          withCredentials: true
+        });
+        setIsLoggedIn(authResponse.data.isAuthenticated);
+
+        // Fetch book data and availability in parallel
+        const [bookResponse, availabilityResponse] = await Promise.all([
+          axios.get(`http://localhost:8000/books/${isbn}`),
+          axios.get(`http://localhost:8000/reservations/book/${isbn}/availability/`)
+        ]);
+        
+        setBook(bookResponse.data);
+        setReservations(availabilityResponse.data);
+
+        // If logged in, check user's reservations
+        if (authResponse.data.isAuthenticated) {
+          try {
+            const accessToken = localStorage.getItem('access_token');
+            const userProfile = await axios.get('http://localhost:8000/users/get_profile/', {
+              headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'X-CSRFToken': token,
+              },
+              withCredentials: true
+            });
+
+            const userReservations = await axios.get(
+              `http://localhost:8000/reservations/?user=${userProfile.data.id}`,
+              {
+                headers: {
+                  'Authorization': `Bearer ${accessToken}`,
+                  'X-CSRFToken': token,
+                },
+                withCredentials: true
+              }
+            );
+            
+            // Find if user has reservation for this book
+            const reservationForThisBook = userReservations.data.find(
+              reservation => reservation.book === isbn
+            );
+            
+            if (reservationForThisBook) {
+              setUserReservation(reservationForThisBook);
+            }
+          } catch (err) {
+            console.error("Error checking user reservations:", err);
+            // Continue even if reservation check fails
+          }
+        }
       } catch (err) {
-        console.error("Error fetching book:", err);
+        console.error("Error fetching data:", err);
         setError("Failed to load book information");
-      }
-    };
-
-    fetchBookInformation();
-  }, [isbn]);
-
-  useEffect(() => {
-    const fetchReservationInformation = async () => {
-      try {
-        const response = await axios.get(`http://localhost:8000/reservations/book/${isbn}/availability/`);
-        setReservations(response.data);
-      } catch (err) {
-        console.error("Error fetching availability:", err);
-        setError("Failed to load reservation information");
       } finally {
         setLoading(false);
       }
     };
 
-    fetchReservationInformation();
+    fetchData();
   }, [isbn]);
+
+  const getCoverUrl = () => {
+    if (!book?.cover) return '/default-cover.jpg';
+    const normalizedPath = normalizeCoverUrl(book.cover);
+    return `http://localhost:8000${normalizedPath}`;
+  };
+
+  const renderButtonOrStatus = () => {
+    if (!isLoggedIn) {
+      return reservations.available_copies > 0 ? (
+        <Reservation isbn={isbn} />
+      ) : (
+        <GetInQueue isbn={isbn} />
+      );
+    }
+
+    if (userReservation) {
+      let statusMessage = '';
+      if (userReservation.fulfilled && !userReservation.returned) {
+        statusMessage = 'You have reserved this book';
+      } else if (userReservation.ready_for_pickup) {
+        statusMessage = 'Your reservation is ready for pickup';
+      } else if (userReservation.position) {
+        statusMessage = `You're in queue (position ${userReservation.position})`;
+      } else {
+        statusMessage = 'You have a reservation for this book';
+      }
+
+      return (
+        <div className="reservation-status">
+          <p>{statusMessage}</p>
+        </div>
+      );
+    }
+
+    return reservations.available_copies > 0 ? (
+      <Reservation isbn={isbn} />
+    ) : (
+      <GetInQueue isbn={isbn} />
+    );
+  };
 
   if (loading) return <div className="loading">Loading book details...</div>;
   if (error) return <div className="error">{error}</div>;
   if (!book) return <div className="not-found">Book not found</div>;
-
-  const getCoverUrl = () => {
-    if (!book.cover) return '/default-cover.jpg';
-    const normalizedPath = normalizeCoverUrl(book.cover);
-    return `http://localhost:8000${normalizedPath}`;
-  };
 
   const coverUrl = getCoverUrl();
 
@@ -98,30 +173,26 @@ const BookInformation = () => {
           </div>
         </div>
       </div>
+      
       <div className="status-button-row">
         <div className="book-status-container">
           <h3 className="bookstatus">Status:</h3>
-           {reservations.available_copies > 0 ? (
-            <p className="bookstatusresponse"> Available</p>
-           ):(
-            <p className="bookstatusresponse"> Not Available</p>
-           )}
+          <p className="bookstatusresponse">
+            {reservations.available_copies > 0 ? 'Available' : 'Not Available'}
+          </p>
         </div>
-         <div className="book-copies-container">
+        
+        <div className="book-copies-container">
           <h3 className="bookscopies">Number of copies:</h3>
           <p className="bookscopieresponse">{reservations.available_copies}</p>
         </div>
 
         <div className="bookbutton">
-          {reservations.available_copies > 0 ? (
-          <Reservation isbn={isbn} />
-          ):(
-          <GetInQueue isbn={isbn} />
-          )}
+          {renderButtonOrStatus()}
         </div>
       </div>
     </>
   );
-}
+};
 
 export default BookInformation;
