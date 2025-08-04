@@ -52,7 +52,7 @@ const BookInformation = () => {
             });
 
             const userReservations = await axios.get(
-              `http://localhost:8000/reservations/?user=${userProfile.data.id}`,
+              `http://localhost:8000/reservations/user/${userProfile.data.id}`,
               {
                 headers: {
                   'Authorization': `Bearer ${accessToken}`,
@@ -93,39 +93,46 @@ const BookInformation = () => {
   };
 
   const renderButtonOrStatus = () => {
-    if (!isLoggedIn) {
-      return reservations.available_copies > 0 ? (
-        <Reservation isbn={isbn} />
-      ) : (
-        <GetInQueue isbn={isbn} />
-      );
-    }
-
-    if (userReservation) {
-      let statusMessage = '';
-      if (userReservation.fulfilled && !userReservation.returned) {
-        statusMessage = 'You have reserved this book';
-      } else if (userReservation.ready_for_pickup) {
-        statusMessage = 'Your reservation is ready for pickup';
-      } else if (userReservation.position) {
-        statusMessage = `You're in queue (position ${userReservation.position})`;
-      } else {
-        statusMessage = 'You have a reservation for this book';
-      }
-
-      return (
-        <div className="reservation-status">
-          <p>{statusMessage}</p>
-        </div>
-      );
-    }
-
+  if (!isLoggedIn) {
     return reservations.available_copies > 0 ? (
       <Reservation isbn={isbn} />
     ) : (
       <GetInQueue isbn={isbn} />
     );
-  };
+  }
+
+  if (userReservation) {
+    let statusMessage = '';
+    let statusClass = 'reservation-status';
+    
+    if (userReservation.fulfilled && !userReservation.returned) {
+      statusMessage = 'You have reserved this book';
+      statusClass += ' status-reserved';
+    } else if (userReservation.ready_for_pickup) {
+      statusMessage = 'Your reservation is ready for pickup!';
+      statusClass += ' status-ready';
+    } else if (userReservation.position) {
+      statusMessage = `You're in queue (position ${userReservation.position})`;
+      statusClass += ' status-queue';
+    } else {
+      statusMessage = 'You have a reservation for this book';
+      statusClass += ' status-pending';
+    }
+
+    return (
+      <div className={statusClass}>
+        <div className="status-icon"></div>
+        <p>{statusMessage}</p>
+      </div>
+    );
+  }
+
+  return reservations.available_copies > 0 ? (
+    <Reservation isbn={isbn} />
+  ) : (
+    <GetInQueue isbn={isbn} />
+  );
+};
 
   if (loading) return <div className="loading">Loading book details...</div>;
   if (error) return <div className="error">{error}</div>;

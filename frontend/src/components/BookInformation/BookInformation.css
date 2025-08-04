@@ -141,7 +141,7 @@
   gap: 2rem;
   margin-top: 2rem;
   margin-left: 10%;
-  width: 80%; /* Adjusted to account for margin-left */
+  width:auto; /* Adjusted to account for margin-left */
   flex-wrap: nowrap; /* Changed to nowrap to prevent button text wrapping */
 
 }
@@ -193,6 +193,74 @@
  display: inline-flex ;
  white-space: nowrap;
 
+}
+/* Base status style */
+.reservation-status {
+  padding: 12px 20px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.4rem;
+  font-weight: 500;
+  margin-left: 20%;
+  border-left: 4px solid;
+}
+
+/* Status icon */
+.status-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* Reserved status (checked out) */
+.status-reserved {
+  background-color: rgba(46, 125, 50, 0.1);
+  border-color: #2E7D32;
+  color: #ffffff;
+}
+.status-reserved .status-icon {
+  background-color: #2E7D32;
+}
+
+/* Ready for pickup status */
+.status-ready {
+  background-color: rgba(255, 152, 0, 0.1);
+  border-color: #FF9800;
+  color: #ffffff;
+  animation: pulse 2s infinite;
+}
+.status-ready .status-icon {
+  background-color: #FF9800;
+}
+
+/* In queue status */
+.status-queue {
+  background-color: rgba(3, 169, 244, 0.1);
+  border-color: #03A9F4;
+  color: #ffffff;
+}
+.status-queue .status-icon {
+  background-color: #03A9F4;
+}
+
+/* Pending reservation status */
+.status-pending {
+  background-color: rgba(156, 39, 176, 0.1);
+  border-color: #9C27B0;
+  color: #ffffff;
+}
+.status-pending .status-icon {
+  background-color: #9C27B0;
+}
+
+/* Pulsing animation for ready status */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
 }
 
 
