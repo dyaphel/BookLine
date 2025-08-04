@@ -11,7 +11,7 @@ import GetInQueue from "../Buttons/GetInQueue/GetInQueue";
 const BookInformation = () => {
   const { isbn } = useParams();
   const [book, setBook] = useState(null);
-  const [reservations, setReservations] = useState([]);
+  const [reservations, setReservations] = useState({ available_copies: 0 });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   
@@ -24,8 +24,6 @@ const BookInformation = () => {
       } catch (err) {
         console.error("Error fetching book:", err);
         setError("Failed to load book information");
-      } finally {
-        setLoading(false);
       }
     };
 
@@ -37,15 +35,6 @@ const BookInformation = () => {
       try {
         const response = await axios.get(`http://localhost:8000/reservations/book/${isbn}/availability/`);
         setReservations(response.data);
-        
-        // Aggiorna lo stato del libro in base alla disponibilità
-        setBook(prevBook => {
-          if (!prevBook) return prevBook;
-          return {
-            ...prevBook,
-            status: response.data.available_copies > 0 ? 'Available' : 'Not Available'
-          };
-        });
       } catch (err) {
         console.error("Error fetching availability:", err);
         setError("Failed to load reservation information");
@@ -61,7 +50,6 @@ const BookInformation = () => {
   if (error) return <div className="error">{error}</div>;
   if (!book) return <div className="not-found">Book not found</div>;
 
-  // Calculate the normalized cover URL
   const getCoverUrl = () => {
     if (!book.cover) return '/default-cover.jpg';
     const normalizedPath = normalizeCoverUrl(book.cover);
@@ -113,7 +101,11 @@ const BookInformation = () => {
       <div className="status-button-row">
         <div className="book-status-container">
           <h3 className="bookstatus">Status:</h3>
-          <p className="bookstatusresponse">{book.status}</p>
+           {reservations.available_copies > 0 ? (
+            <p className="bookstatusresponse"> Available</p>
+           ):(
+            <p className="bookstatusresponse"> Not Available</p>
+           )}
         </div>
          <div className="book-copies-container">
           <h3 className="bookscopies">Number of copies:</h3>
@@ -122,9 +114,9 @@ const BookInformation = () => {
 
         <div className="bookbutton">
           {reservations.available_copies > 0 ? (
-          <Reservation/>
+          <Reservation isbn={isbn} />
           ):(
-          <GetInQueue/>
+          <GetInQueue isbn={isbn} />
           )}
         </div>
       </div>
