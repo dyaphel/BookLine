@@ -6,7 +6,7 @@ class RegisterSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = CustomUser
-        fields = ['email', 'username', 'profile_image', 'first_name', 'last_name', 'password', 'role']
+        fields = ['id','email', 'username', 'profile_image', 'first_name', 'last_name', 'password', 'role']
         extra_kwargs = {
             'role': {'default': 'USER'},
              'username': {'required': True, 'allow_blank': False}       
@@ -24,5 +24,5 @@ class RegisterSerializer(serializers.ModelSerializer):
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ['email', 'username', 'profile_image', 'first_name', 'last_name', 'role']
-        read_only_fields = ['email','role' ]  # Assuming role should not be changed by the user
+        fields = ['id','email', 'username', 'profile_image', 'first_name', 'last_name', 'role']
+        read_only_fields = ['id','email','role' ]  # Assuming role should not be changed by the user

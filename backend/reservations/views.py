@@ -51,7 +51,7 @@ def book_availability(request, isbn):
     book = get_object_or_404(Book, isbn=isbn)
     active_reservations = Reservation.objects.filter(book=book, fulfilled=True, returned=False).count()
     available = book.available_copies - active_reservations
-    return Response({'isbn': isbn, 'available_copies': max(0, available)})
+    return Response({'isbn': isbn, 'available_copies': available})
 
 
 # Per creare la reservation, the user must be authenticated and have the appropriate permissions. If the user is a regular user, they can only create reservations for themselves. The system checks if there are available copies of the book and creates a reservation accordingly. If all copies are reserved, the user is added to the queue.
