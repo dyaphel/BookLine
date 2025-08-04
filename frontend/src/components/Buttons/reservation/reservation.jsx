@@ -114,7 +114,7 @@ const Reservation = ({ isbn }) => {
         if (success) setSuccess(false);
         if (error) setError(null);
         handlePopupClose();
-      }, 5000);
+      }, 2000);
     }
     return () => clearTimeout(timer);
   }, [success, error]);
