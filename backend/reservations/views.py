@@ -54,6 +54,9 @@ def book_availability(request, isbn):
     return Response({'isbn': isbn, 'available_copies': max(0, available)})
 
 
+# Per creare la reservation, the user must be authenticated and have the appropriate permissions. If the user is a regular user, they can only create reservations for themselves. The system checks if there are available copies of the book and creates a reservation accordingly. If all copies are reserved, the user is added to the queue.
+# Insert in the body the "user" and "book" fields, where "user" is the ID of the user making the reservation and "book" is the ISBN of the book being reserved.
+
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def create_reservation(request):

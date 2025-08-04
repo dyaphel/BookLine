@@ -2,13 +2,13 @@
 from django.db import models
 
 class Book(models.Model):
-    STATUS_CHOICES = [
-        ('available', 'Available'), #copies > reservations
-        ('reserved', 'Reserved'), # user made a reservation
-        ('not_available', 'not available'), # copies <= reservations
-        ('in_queue', 'In Queue'), # user is in queue for the book,
-        # ('lost', 'Lost'),
-    ]
+    # STATUS_CHOICES = [
+    #     ('available', 'Available'), #copies > reservations
+    #     ('reserved', 'Reserved'), # user made a reservation
+    #     ('not_available', 'not available'), # copies <= reservations
+    #     ('in_queue', 'In Queue'), # user is in queue for the book,
+    #     # ('lost', 'Lost'),
+    # ]
     # ISBN as the primary key
     isbn = models.CharField(max_length=13, primary_key=True)  # Assuming ISBN is a 13-digit number, use CharField
     title = models.TextField()
@@ -16,11 +16,11 @@ class Book(models.Model):
     abstract = models.TextField(blank=True)
     author = models.TextField()
     published = models.DateField()
-    status = models.CharField(
-        max_length=20, 
-        choices=STATUS_CHOICES, 
-        default='available'
-    )
+    # status = models.CharField(
+    #     max_length=20, 
+    #     choices=STATUS_CHOICES, 
+    #     default='available'
+    # )
     cover = models.ImageField(upload_to='book_covers/', null=True, blank=True)  # Store image files in 'book_covers/' folder
     genre = models.CharField(max_length=100, blank=True)
     language = models.CharField(max_length=50, blank=True)
