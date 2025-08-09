@@ -112,7 +112,7 @@ const BookInformation = () => {
       statusMessage = 'Your reservation is ready for pickup!';
       statusClass += ' status-ready';
     } else if (userReservation.position) {
-      statusMessage = `You're in queue (position ${userReservation.position - reservations.available_copies})`;
+      statusMessage = `You're in queue (position ${userReservation.position - book.available_copies})`;
       statusClass += ' status-queue';
     } else {
       statusMessage = 'You have a reservation for this book';
