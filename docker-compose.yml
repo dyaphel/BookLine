@@ -1,39 +1,13 @@
 services:
-  books_service:
-    build: ./microservices/books_service
-    container_name: books_service
-    volumes:
-      - ./microservices/books_service:/app
-    depends_on:
-      db:
-        condition: service_healthy
-    #da vedere se servono
-    environment:
-      - DJANGO_SETTINGS_MODULE=books_project.settings
-      - DATABASE_URL=postgres://bookline_user:password@db:5432/bookline_db
-    ports:
-      - "8001:8000"
-
-
-  reservations_service:
-    build: ./microservices/reservations_service
-    container_name: reservations_service
-    volumes:
-      - ./microservices/reservations_service:/app
-    depends_on:
-      db:
-        condition: service_healthy #added this condition
-    environment:
-      - DJANGO_SETTINGS_MODULE=reservations_project.settings
-      - DATABASE_URL=postgres://bookline_user:password@db:5432/bookline_db
-    ports:
-      - "8002:8000"
-
   users_service:
     build: ./microservices/users_service
     container_name: users_service
     volumes:
       - ./microservices/users_service:/app
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/users/health/"]
+      interval: 5s
+      retries: 5
     depends_on:
       db:
         condition: service_healthy #added this condition
@@ -46,6 +20,43 @@ services:
       - DATABASE_URL=postgres://bookline_user:password@db:5432/bookline_db
     ports:
       - "8003:8000"
+      
+  books_service:
+    build: ./microservices/books_service
+    container_name: books_service
+    volumes:
+      - ./microservices/books_service:/app
+    depends_on:
+      db:
+        condition: service_healthy
+      users_service:
+        condition: service_healthy
+    #da vedere se servono
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/books/health/"]
+      interval: 5s
+      retries: 5
+    environment:
+      - DJANGO_SETTINGS_MODULE=books_project.settings
+      - DATABASE_URL=postgres://bookline_user:password@db:5432/bookline_db
+    ports:
+      - "8001:8000"
+
+  reservations_service:
+    build: ./microservices/reservations_service
+    container_name: reservations_service
+    volumes:
+      - ./microservices/reservations_service:/app
+    depends_on:
+      db:
+        condition: service_healthy #added this condition
+      books_service:
+        condition: service_healthy
+    environment:
+      - DJANGO_SETTINGS_MODULE=reservations_project.settings
+      - DATABASE_URL=postgres://bookline_user:password@db:5432/bookline_db
+    ports:
+      - "8002:8000"
 
 
   frontend:

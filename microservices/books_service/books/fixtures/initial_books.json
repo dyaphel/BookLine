@@ -1,6 +1,6 @@
 [
     {
-        "model": "bookline.book",
+        "model": "books.book",
         "pk": "9781250256737",
         "fields": {
             "title": "The Mountain in the Sea",
@@ -14,7 +14,7 @@
         }
     },
     {
-        "model": "bookline.book",
+        "model": "books.book",
         "pk": "9780593135204",
         "fields": {
             "title": "Sea of Tranquility",
@@ -28,7 +28,7 @@
         }
     },
     {
-        "model": "bookline.book",
+        "model": "books.book",
         "pk": "9781250276735",
         "fields": {
             "title": "Dead Silence",
@@ -42,7 +42,7 @@
         }
     },
     {
-        "model": "bookline.book",
+        "model": "books.book",
         "pk": "9780316593017",
         "fields": {
             "title": "The Terraformers",
@@ -56,7 +56,7 @@
         }
     },
     {
-        "model": "bookline.book",
+        "model": "books.book",
         "pk": "9781250267689",
         "fields": {
             "title": "The Space Between Worlds",
@@ -70,7 +70,7 @@
         }
     },
     {
-        "model": "bookline.book",
+        "model": "books.book",
         "pk": "9780593157527",
         "fields": {
             "title": "A Psalm for the Wild-Built",
@@ -84,7 +84,7 @@
         }
     },
     {
-        "model": "bookline.book",
+        "model": "books.book",
         "pk": "9781789097259",
         "fields": {
             "title": "Shards of Earth",
@@ -98,7 +98,7 @@
         }
     },
     {
-        "model": "bookline.book",
+        "model": "books.book",
         "pk": "9781250756800",
         "fields": {
             "title": "The Ministry for the Future",
@@ -112,7 +112,7 @@
         }
     },
     {
-        "model": "bookline.book",
+        "model": "books.book",
         "pk": "9781250236234",
         "fields": {
             "title": "Project Hail Mary",
@@ -126,7 +126,7 @@
         }
     },
     {
-        "model": "bookline.book",
+        "model": "books.book",
         "pk": "9780316703355",
         "fields": {
             "title": "The Kaiju Preservation Society",
@@ -140,7 +140,7 @@
         }
     },
     {
-        "model": "bookline.book",
+        "model": "books.book",
         "pk": "9780140449136",
         "fields": {
             "title": "The Odyssey",
@@ -154,7 +154,7 @@
         }
     },
     {
-        "model": "bookline.book",
+        "model": "books.book",
         "pk": "9780061120084",
         "fields": {
             "title": "To Kill a Mockingbird",
@@ -168,7 +168,7 @@
         }
     },
     {
-        "model": "bookline.book",
+        "model": "books.book",
         "pk": "9780451524935",
         "fields": {
             "title": "1984",
@@ -182,7 +182,7 @@
         }
     },
     {
-        "model": "bookline.book",
+        "model": "books.book",
         "pk": "9780743273565",
         "fields": {
             "title": "The Great Gatsby",
@@ -196,7 +196,7 @@
         }
     },
     {
-        "model": "bookline.book",
+        "model": "books.book",
         "pk": "9781503290563",
         "fields": {
             "title": "Pride and Prejudice",
@@ -210,7 +210,7 @@
         }
     },
     {
-        "model": "bookline.book",
+        "model": "books.book",
         "pk": "9780141439518",
         "fields": {
             "title": "Jane Eyre",
@@ -224,7 +224,7 @@
         }
     },
     {
-        "model": "bookline.book",
+        "model": "books.book",
         "pk": "9780142437209",
         "fields": {
             "title": "Moby-Dick",
@@ -238,7 +238,7 @@
         }
     },
     {
-        "model": "bookline.book",
+        "model": "books.book",
         "pk": "9780486415864",
         "fields": {
             "title": "Frankenstein",
@@ -252,7 +252,7 @@
         }
     },
     {
-        "model": "bookline.book",
+        "model": "books.book",
         "pk": "9780199535569",
         "fields": {
             "title": "Dracula",
@@ -266,7 +266,7 @@
         }
     },
     {
-        "model": "bookline.book",
+        "model": "books.book",
         "pk": "9780679783268",
         "fields": {
             "title": "Les Misérables",

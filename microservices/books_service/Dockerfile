@@ -34,4 +34,4 @@ EXPOSE 8000
 
 # Run migrations and create superuser
 
-CMD bash -c 'python manage.py makemigrations && python manage.py migrate && python manage.py loaddata initial_books.json && python manage.py runserver 0.0.0.0:8000'
+CMD bash -c 'python manage.py makemigrations books && python manage.py migrate && python manage.py loaddata initial_books.json && python manage.py runserver 0.0.0.0:8000'
