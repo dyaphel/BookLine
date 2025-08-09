@@ -25,4 +25,6 @@ EXPOSE 8000
 # Run migrations
 #Da aggiungere le fixtures per le reservations
 
-CMD bash -c 'python manage.py makemigrations && python manage.py migrate && python manage.py loaddata initial_reservations.json && python manage.py runserver 0.0.0.0:8000'
+CMD bash -c 'python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000'
+
+#  && python manage.py loaddata initial_reservations.json

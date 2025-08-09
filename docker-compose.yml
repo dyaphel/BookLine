@@ -1,12 +1,12 @@
 services:
   books_service:
-    build: ./books_service
+    build: ./microservices/books_service
     container_name: books_service
     volumes:
-      - ./books_service:/app
+      - ./microservices/books_service:/app
     depends_on:
-       db:
-        condition: service_healthy #added this condition
+      db:
+        condition: service_healthy
     #da vedere se servono
     environment:
       - DJANGO_SETTINGS_MODULE=books_project.settings
@@ -16,12 +16,12 @@ services:
 
 
   reservations_service:
-    build: ./reservations_service
+    build: ./microservices/reservations_service
     container_name: reservations_service
     volumes:
-      - ./reservations_service:/app
+      - ./microservices/reservations_service:/app
     depends_on:
-       db:
+      db:
         condition: service_healthy #added this condition
     environment:
       - DJANGO_SETTINGS_MODULE=reservations_project.settings
@@ -30,13 +30,13 @@ services:
       - "8002:8000"
 
   users_service:
-    build: ./users_service
+    build: ./microservices/users_service
     container_name: users_service
     volumes:
-      - ./users_service:/app
+      - ./microservices/users_service:/app
     depends_on:
       db:
-      condition: service_healthy #added this condition
+        condition: service_healthy #added this condition
     environment:
       - DJANGO_SUPERUSER_EMAIL=admin@user.com
       - DJANGO_SUPERUSER_PASSWORD=admin
@@ -54,7 +54,9 @@ services:
     ports:
       - "5173:5173"
     depends_on:
-      - backend
+      - books_service
+      - reservations_service
+      - users_service
     volumes:
       - ./frontend:/app
       - /app/node_modules
