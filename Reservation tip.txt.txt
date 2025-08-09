@@ -1,0 +1,179 @@
+Modelli User e Book con UUIDField in un'architettura a microservizi
+Ecco come modificherei i tuoi modelli CustomUser e Book per usarli in un'architettura a microservizi con UUID come chiavi primarie:
+
+Modello CustomUser con UUID
+python
+import uuid
+from django.db import models
+from django.contrib.auth.models import AbstractUser, BaseUserManager, PermissionsMixin
+from django.utils.translation import gettext_lazy as _
+
+class CustomUserManager(BaseUserManager):
+    def create_user(self, email, password=None, **extra_fields):
+        if not email:
+            raise ValueError(_("Email is required"))
+        email = self.normalize_email(email)
+        user = self.model(email=email, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, email, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+        extra_fields.setdefault('role', CustomUser.Roles.ADMIN)
+        extra_fields.setdefault('username', str(uuid.uuid4()))  # Username come UUID
+
+        return self.create_user(email, password=password, **extra_fields)
+
+class CustomUser(AbstractUser, PermissionsMixin):
+    class Roles(models.TextChoices):
+        USER = "USER", _("User")
+        LIBRARIAN = "LIBRARIAN", _("Librarian")
+        ADMIN = "ADMIN", _("Admin")
+
+    id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        editable=False,
+        unique=True
+    )
+    email = models.EmailField(_('email address'), unique=True)
+    first_name = models.CharField(_('first name'), max_length=150)
+    last_name = models.CharField(_('last name'), max_length=150)
+    username = models.CharField(
+        _('username'),
+        max_length=150,
+        unique=True,
+        default=uuid.uuid4  # Username generato come UUID
+    )
+    profile_image = models.ImageField(
+        _('profile image'),
+        upload_to='user_profiles/',
+        null=True,
+        blank=True
+    )
+    role = models.CharField(
+        _('role'),
+        max_length=10,
+        choices=Roles.choices,
+        default=Roles.USER
+    )
+    is_active = models.BooleanField(_('active'), default=True)
+    is_staff = models.BooleanField(_('staff status'), default=False)
+
+    objects = CustomUserManager()
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['first_name', 'last_name']
+
+    class Meta:
+        verbose_name = _('user')
+        verbose_name_plural = _('users')
+
+    def __str__(self):
+        return f"{self.email} ({self.get_role_display()})"
+Modello Book con UUID
+python
+import uuid
+from django.db import models
+from django.utils.translation import gettext_lazy as _
+
+class Book(models.Model):
+    id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        editable=False,
+        unique=True
+    )
+    isbn = models.CharField(
+        _('ISBN'),
+        max_length=13,
+        unique=True,
+        db_index=True
+    )
+    title = models.TextField(_('title'))
+    description = models.TextField(_('description'), blank=True)
+    abstract = models.TextField(_('abstract'), blank=True)
+    author = models.TextField(_('author'))
+    published = models.DateField(_('publication date'))
+    cover = models.ImageField(
+        _('cover image'),
+        upload_to='book_covers/',
+        null=True,
+        blank=True
+    )
+    genre = models.CharField(_('genre'), max_length=100, blank=True)
+    language = models.CharField(_('language'), max_length=50, blank=True)
+    available_copies = models.PositiveIntegerField(
+        _('available copies'),
+        default=1
+    )
+    total_copies = models.PositiveIntegerField(
+        _('total copies'),
+        default=1
+    )
+    created_at = models.DateTimeField(_('created at'), auto_now_add=True)
+    updated_at = models.DateTimeField(_('updated at'), auto_now=True)
+
+    class Meta:
+        verbose_name = _('book')
+        verbose_name_plural = _('books')
+        ordering = ['title', 'author']
+        indexes = [
+            models.Index(fields=['title']),
+            models.Index(fields=['author']),
+        ]
+
+    def __str__(self):
+        return f"{self.title} by {self.author}"
+
+    @property
+    def status(self):
+        if self.available_copies > 0:
+            return 'available'
+        return 'not_available'
+Modello Reservation risultante
+python
+import uuid
+from django.db import models
+from django.utils import timezone
+
+class Reservation(models.Model):
+    id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        editable=False
+    )
+    user_id = models.UUIDField(_('user ID'), editable=False)
+    book_id = models.UUIDField(_('book ID'), editable=False)
+    timestamp = models.DateTimeField(_('timestamp'), default=timezone.now)
+    fulfilled = models.BooleanField(_('fulfilled'), default=False)
+    ready_for_pickup = models.BooleanField(_('ready for pickup'), default=False)
+    returned = models.BooleanField(_('returned'), default=False)
+    position = models.PositiveIntegerField(_('position'), null=True, blank=True)
+    cancelled = models.BooleanField(_('cancelled'), default=False)
+    due_date = models.DateTimeField(_('due date'), null=True, blank=True)
+
+    class Meta:
+        verbose_name = _('reservation')
+        verbose_name_plural = _('reservations')
+        unique_together = ('user_id', 'book_id')
+        ordering = ['timestamp']
+        indexes = [
+            models.Index(fields=['user_id']),
+            models.Index(fields=['book_id']),
+            models.Index(fields=['fulfilled']),
+            models.Index(fields=['cancelled']),
+        ]
+
+    def __str__(self):
+        return f"Reservation {self.id} - User {self.user_id} - Book {self.book_id}"
+
+    def clean(self):
+        # Aggiungi qui eventuali validazioni custom
+        pass
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
