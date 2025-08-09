@@ -1,21 +1,52 @@
 services:
-  backend:
-    build: ./backend
-    container_name: bookline_backend
+  books_service:
+    build: ./books_service
+    container_name: books_service
     volumes:
-      - ./backend:/app
+      - ./books_service:/app
     depends_on:
        db:
         condition: service_healthy #added this condition
+    #da vedere se servono
+    environment:
+      - DJANGO_SETTINGS_MODULE=books_project.settings
+      - DATABASE_URL=postgres://bookline_user:password@db:5432/bookline_db
+    ports:
+      - "8001:8000"
+
+
+  reservations_service:
+    build: ./reservations_service
+    container_name: reservations_service
+    volumes:
+      - ./reservations_service:/app
+    depends_on:
+       db:
+        condition: service_healthy #added this condition
+    environment:
+      - DJANGO_SETTINGS_MODULE=reservations_project.settings
+      - DATABASE_URL=postgres://bookline_user:password@db:5432/bookline_db
+    ports:
+      - "8002:8000"
+
+  users_service:
+    build: ./users_service
+    container_name: users_service
+    volumes:
+      - ./users_service:/app
+    depends_on:
+      db:
+      condition: service_healthy #added this condition
     environment:
       - DJANGO_SUPERUSER_EMAIL=admin@user.com
       - DJANGO_SUPERUSER_PASSWORD=admin
       - DJANGO_SUPERUSER_FIRST_NAME=Admin
       - DJANGO_SUPERUSER_LAST_NAME=User
-      - DJANGO_SETTINGS_MODULE=backend.settings
+      - DJANGO_SETTINGS_MODULE=users_project.settings
       - DATABASE_URL=postgres://bookline_user:password@db:5432/bookline_db
     ports:
-      - "8000:8000"
+      - "8003:8000"
+
 
   frontend:
     build: ./frontend
