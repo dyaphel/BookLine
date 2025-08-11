@@ -1,6 +1,5 @@
 from .models import Reservation
 import jwt
-import requests
 from django.conf import settings
 from rest_framework.exceptions import AuthenticationFailed
 

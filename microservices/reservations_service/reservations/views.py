@@ -3,7 +3,6 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework import status
 from django.db import transaction
-
 from .models import Reservation
 from .serializers import ReservationSerializer
 from .external_models import Book
@@ -24,10 +23,9 @@ def all_reservations(request):
 
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticatedFromToken])
 def reservations_by_book(request, isbn):
     role = get_user_role_from_token(request)
-    if role not in ["LIBRARIAN", "ADMIN"]:
+    if role not in ["Librarian", "Admin"]:
         return Response({'detail': 'Not authorized.'}, status=status.HTTP_403_FORBIDDEN)
 
     reservations = Reservation.objects.filter(book__isbn=isbn)
