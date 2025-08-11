@@ -155,8 +155,7 @@ CORS_ALLOW_HEADERS = [
     'withcredentials',  # Add this
 ]
 
-#------------------------ DA VEDERE------------------------------------
-SESSION_ENGINE = 'django.contrib.sessions.backends.db' 
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # or 'cache' if using cache
 SESSION_COOKIE_NAME = 'bookline_sessionid'
 SESSION_COOKIE_AGE = 1209600  # 2 weeks in seconds
 SESSION_COOKIE_HTTPONLY = True

@@ -55,6 +55,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+
+
+
 ROOT_URLCONF = 'reservations_project.urls'
 
 TEMPLATES = [
@@ -161,3 +164,4 @@ SESSION_COOKIE_SECURE = False  # Only for development
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+

@@ -15,7 +15,7 @@ from django.db import transaction
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def all_reservations(request):
-    if request.user.role not in [CustomUser.Roles.LIBRARIAN, CustomUser.Roles.ADMIN]:
+    if request.user.role not in ["Librarian","Admin"]:
         return Response({'detail': 'Not authorized.'}, status=status.HTTP_403_FORBIDDEN)
 
     reservations = Reservation.objects.all()
@@ -26,7 +26,7 @@ def all_reservations(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def reservations_by_book(request, isbn):
-    if request.user.role not in [CustomUser.Roles.LIBRARIAN, CustomUser.Roles.ADMIN]:
+    if request.user.role not in ["Librarian","Admin"]:
         return Response({'detail': 'Not authorized.'}, status=status.HTTP_403_FORBIDDEN)
 
     reservations = Reservation.objects.filter(book__isbn=isbn)
@@ -37,9 +37,9 @@ def reservations_by_book(request, isbn):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def reservations_by_user(request, user_id):
-    # if request.user.id != user_id and request.user.role not in [CustomUser.Roles.LIBRARIAN, CustomUser.Roles.ADMIN]:
-    #     return Response({'detail': 'Not authorized to view reservations of other users.'},
-    #                     status=status.HTTP_403_FORBIDDEN)
+    if request.user.id != user_id and request.user.role not in ["Librarian","Admin"]:
+        return Response({'detail': 'Not authorized to view reservations of other users.'},
+                         status=status.HTTP_403_FORBIDDEN)
 
     reservations = Reservation.objects.filter(user__id=user_id)
     serializer = ReservationSerializer(reservations, many=True)
@@ -67,7 +67,7 @@ def create_reservation(request):
         return Response({'detail': 'Missing user or book information.'}, status=status.HTTP_400_BAD_REQUEST)
 
     # If user is not admin or librarian, enforce self-reservation
-    if request.user.role == CustomUser.Roles.USER and int(user_id) != request.user.id:
+    if request.user.role == "User" and int(user_id) != request.user.id:
         return Response({'detail': 'Users can only create reservations for themselves.'},
                         status=status.HTTP_403_FORBIDDEN)
 
@@ -98,7 +98,7 @@ def create_reservation(request):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def return_book(request, reservation_id):
-    if request.user.role not in [CustomUser.Roles.LIBRARIAN, CustomUser.Roles.ADMIN]:
+    if request.user.role not in ["Librarian","Admin"]:
         return Response({'detail': 'Only librarians or admins can mark a book as returned.'},
                         status=status.HTTP_403_FORBIDDEN)
 
@@ -143,7 +143,7 @@ def cancel_reservation(request, reservation_id):
     reservation = get_object_or_404(Reservation, id=reservation_id)
 
     # Check permissions: allow if the user is the owner OR a librarian OR the admin
-    if (reservation.user != request.user and request.user.role not in [CustomUser.Roles.LIBRARIAN, CustomUser.Roles.ADMIN]):
+    if (reservation.user != request.user and request.user.role not in ["Librarian","Admin"]):
         return Response({"detail": "You do not have permission to cancel this reservation."},
                         status=status.HTTP_403_FORBIDDEN)
 
