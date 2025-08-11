@@ -38,7 +38,7 @@ const ProfilePage = () => {
 
     const fetchUserProfile = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/users/get_profile', {
+        const response = await axios.get('http://localhost:8003/users/get_profile', {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
             'Content-Type': 'application/json',
@@ -51,7 +51,7 @@ const ProfilePage = () => {
           username: response.data.username,
           profile_image: null
         });
-        setPreviewImage(`http://localhost:8000${response.data.profile_image}`);
+        setPreviewImage(`http://localhost:8003${response.data.profile_image}`); // da controllare il percorso dell'immagine
       } catch (err) {
         console.error('Error fetching profile:', err);
         setError('Failed to load profile data');
@@ -73,7 +73,7 @@ const ProfilePage = () => {
       username: userData.username,
       profile_image: null
     });
-    setPreviewImage(`http://localhost:8000${userData.profile_image}`);
+    setPreviewImage(`http://localhost:8003${userData.profile_image}`);
   };
 
   const handleInputChange = (e) => {
@@ -113,7 +113,7 @@ const ProfilePage = () => {
       }
 
       const response = await axios.put(
-        'http://localhost:8000/users/update_profile/',
+        'http://localhost:8003/users/update_profile/',
         formData,
         {
           headers: {
@@ -183,7 +183,7 @@ const ProfilePage = () => {
           ) : (
             <>
               <img
-                src={`http://localhost:8000${userData.profile_image}`}
+                src={`http://localhost:8003${userData.profile_image}`}
                 className="profile-avatar"
                 onError={(e) => {
                   e.target.onerror = null;

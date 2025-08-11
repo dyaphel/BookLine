@@ -24,7 +24,7 @@ const BookInformation = () => {
         const token = await getCsrfToken();
         
         // Check auth status
-        const authResponse = await axios.get('http://localhost:8000/users/check-auth/', {
+        const authResponse = await axios.get('http://localhost:8003/users/check-auth/', {
           headers: { 'X-CSRFToken': token },
           withCredentials: true
         });
@@ -32,8 +32,8 @@ const BookInformation = () => {
 
         // Fetch book data and availability in parallel
         const [bookResponse, availabilityResponse] = await Promise.all([
-          axios.get(`http://localhost:8000/books/${isbn}`),
-          axios.get(`http://localhost:8000/reservations/book/${isbn}/availability/`)
+          axios.get(`http://localhost:8001/books/${isbn}`),
+          axios.get(`http://localhost:8002/reservations/book/${isbn}/availability/`)
         ]);
         
         setBook(bookResponse.data);
@@ -43,7 +43,7 @@ const BookInformation = () => {
         if (authResponse.data.isAuthenticated) {
           try {
             const accessToken = localStorage.getItem('access_token');
-            const userProfile = await axios.get('http://localhost:8000/users/get_profile/', {
+            const userProfile = await axios.get('http://localhost:8003/users/get_profile/', {
               headers: {
                 'Authorization': `Bearer ${accessToken}`,
                 'X-CSRFToken': token,
@@ -52,7 +52,7 @@ const BookInformation = () => {
             });
 
             const userReservations = await axios.get(
-              `http://localhost:8000/reservations/user/${userProfile.data.id}`,
+              `http://localhost:8002/reservations/user/${userProfile.data.id}`,
               {
                 headers: {
                   'Authorization': `Bearer ${accessToken}`,
@@ -89,7 +89,7 @@ const BookInformation = () => {
   const getCoverUrl = () => {
     if (!book?.cover) return '/default-cover.jpg';
     const normalizedPath = normalizeCoverUrl(book.cover);
-    return `http://localhost:8000${normalizedPath}`;
+    return `http://localhost:8001${normalizedPath}`; //check if the cover URL is valid the port number
   };
 
   const renderButtonOrStatus = () => {

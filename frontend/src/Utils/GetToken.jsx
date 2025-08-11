@@ -1,6 +1,6 @@
 export async function getCsrfToken() {
   try {
-      const response = await fetch('http://localhost:8000/users/csrf/', {
+      const response = await fetch('http://localhost:8003/users/csrf/', {
           credentials: 'include',
           headers: {
               'Content-Type': 'application/json'

@@ -20,7 +20,7 @@ const NavBar = ({ onFilterClick, onSearch }) => {
         const token = await getCsrfToken();
         
         // Check auth status with the token
-        const authResponse = await axios.get('http://localhost:8000/users/check-auth/', {
+        const authResponse = await axios.get('http://localhost:8003/users/check-auth/', {
           headers: {
             'X-CSRFToken': token
           },
@@ -50,7 +50,7 @@ const NavBar = ({ onFilterClick, onSearch }) => {
         
         // Make logout request
         const response = await axios.post(
-            'http://localhost:8000/users/logout/',
+            'http://localhost:8003/users/logout/',
             {},
             {
                 headers: {

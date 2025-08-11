@@ -7,7 +7,7 @@ const BookCard = ({ cover, title, author, onClick }) => {
   return (
     <div className="book-card" onClick={onClick}>
       <div className="book-cover-container">
-      <img src={`http://localhost:8000${cover}`} alt={title} className="book-cover" />
+      <img src={`http://localhost:8001${cover}`} alt={title} className="book-cover" />
       </div>
       <div className="book-details">
         <h3 className="book-title">{title}</h3>

@@ -27,7 +27,7 @@ const DeletePopup = ({ onClose }) => {
     setError('');
 
     try {
-      await axios.delete('http://localhost:8000/users/delete_user/', {
+      await axios.delete('http://localhost:8003/users/delete_user/', {
         headers: {
           'X-CSRFToken': csrfToken,
           'Authorization': `Bearer ${localStorage.getItem('token')}`  // Add JWT token

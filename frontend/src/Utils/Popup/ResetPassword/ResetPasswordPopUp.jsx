@@ -71,7 +71,7 @@ const PasswordResetPopup = ({ onClose }) => {
     setSuccess('');
 
     try {
-      const response = await axios.post('http://localhost:8000/users/change_password/', 
+      const response = await axios.post('http://localhost:8003/users/change_password/', 
         {
           oldPassword: passwords.oldPassword,
           newPassword: passwords.newPassword

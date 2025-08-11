@@ -29,7 +29,7 @@ const Home = () => {
   const fetchBooks = async (filters) => {
     setLoading(true); // Set loading to true before fetching
     try {
-      const response = await axios.get('http://localhost:8000/books/', {
+      const response = await axios.get('http://localhost:8001/books/', {
         params: filters, // Pass filters as query parameters
       });
      

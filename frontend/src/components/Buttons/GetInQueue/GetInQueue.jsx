@@ -19,7 +19,7 @@ const GetInQueue = ({ isbn }) => {
       try {
         setLoading(true);
         const token = await getCsrfToken();
-        const authResponse = await axios.get('http://localhost:8000/users/check-auth/', {
+        const authResponse = await axios.get('http://localhost:8003/users/check-auth/', {
           headers: {
             'X-CSRFToken': token
           },
@@ -51,7 +51,7 @@ const GetInQueue = ({ isbn }) => {
       const token = await getCsrfToken();
       const accessToken = localStorage.getItem('access_token');
 
-      const userResponse = await axios.get('http://localhost:8000/users/get_profile/', {
+      const userResponse = await axios.get('http://localhost:8003/users/get_profile/', {
         headers: {
           'Authorization': `Bearer ${accessToken}`,
           'X-CSRFToken': token,
@@ -64,7 +64,7 @@ const GetInQueue = ({ isbn }) => {
       }
 
       const reservationResponse = await axios.post(
-        'http://localhost:8000/reservations/create/',
+        'http://localhost:8002/reservations/create/',
         {
           user: userResponse.data.id,
           book: isbn
