@@ -1,21 +1,21 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.decorators import permission_classes
 from rest_framework.response import Response
 from rest_framework import status
+from django.db import transaction
+
 from .models import Reservation
 from .serializers import ReservationSerializer
-from .external_models import Book, CustomUser
-from django.shortcuts import get_object_or_404
-from django.db.models import Q
-from django.db import transaction
+from .external_models import Book
+from .utils import get_user_role_from_token, get_user_id_from_token
+from .permissions import IsAuthenticatedFromToken
 
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticatedFromToken])
 def all_reservations(request):
-    if request.user.role not in ["Librarian","Admin"]:
+    role = get_user_role_from_token(request)
+    if role not in ["LIBRARIAN", "ADMIN"]:
         return Response({'detail': 'Not authorized.'}, status=status.HTTP_403_FORBIDDEN)
 
     reservations = Reservation.objects.all()
@@ -24,9 +24,10 @@ def all_reservations(request):
 
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticatedFromToken])
 def reservations_by_book(request, isbn):
-    if request.user.role not in ["Librarian","Admin"]:
+    role = get_user_role_from_token(request)
+    if role not in ["LIBRARIAN", "ADMIN"]:
         return Response({'detail': 'Not authorized.'}, status=status.HTTP_403_FORBIDDEN)
 
     reservations = Reservation.objects.filter(book__isbn=isbn)
@@ -35,13 +36,18 @@ def reservations_by_book(request, isbn):
 
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticatedFromToken])
 def reservations_by_user(request, user_id):
-    if request.user.id != user_id and request.user.role not in ["Librarian","Admin"]:
-        return Response({'detail': 'Not authorized to view reservations of other users.'},
-                         status=status.HTTP_403_FORBIDDEN)
+    token_user_id = get_user_id_from_token(request)
+    role = get_user_role_from_token(request)
 
-    reservations = Reservation.objects.filter(user__id=user_id)
+    if token_user_id != user_id and role not in ['LIBRARIAN', 'ADMIN']:
+        return Response(
+            {'detail': 'Not authorized to view reservations of other users.'},
+            status=status.HTTP_403_FORBIDDEN
+        )
+
+    reservations = Reservation.objects.filter(user_id=user_id)
     serializer = ReservationSerializer(reservations, many=True)
     return Response(serializer.data)
 
@@ -54,20 +60,19 @@ def book_availability(request, isbn):
     return Response({'isbn': isbn, 'available_copies': available})
 
 
-# Per creare la reservation, the user must be authenticated and have the appropriate permissions. If the user is a regular user, they can only create reservations for themselves. The system checks if there are available copies of the book and creates a reservation accordingly. If all copies are reserved, the user is added to the queue.
-# Insert in the body the "user" and "book" fields, where "user" is the ID of the user making the reservation and "book" is the ISBN of the book being reserved.
-
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticatedFromToken])
 def create_reservation(request):
+    token_user_id = get_user_id_from_token(request)
+    role = get_user_role_from_token(request)
+
     user_id = request.data.get('user')
     isbn = request.data.get('book')
 
     if not user_id or not isbn:
         return Response({'detail': 'Missing user or book information.'}, status=status.HTTP_400_BAD_REQUEST)
 
-    # If user is not admin or librarian, enforce self-reservation
-    if request.user.role == "User" and int(user_id) != request.user.id:
+    if role == "USER" and int(user_id) != token_user_id:
         return Response({'detail': 'Users can only create reservations for themselves.'},
                         status=status.HTTP_403_FORBIDDEN)
 
@@ -95,10 +100,12 @@ def create_reservation(request):
     serializer = ReservationSerializer(reservation)
     return Response(serializer.data, status=status.HTTP_201_CREATED)
 
+
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticatedFromToken])
 def return_book(request, reservation_id):
-    if request.user.role not in ["Librarian","Admin"]:
+    role = get_user_role_from_token(request)
+    if role not in ["LIBRARIAN", "ADMIN"]:
         return Response({'detail': 'Only librarians or admins can mark a book as returned.'},
                         status=status.HTTP_403_FORBIDDEN)
 
@@ -137,13 +144,16 @@ def return_book(request, reservation_id):
 
     return Response({'message': 'Book returned and queue updated.'})
 
+
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticatedFromToken])
 def cancel_reservation(request, reservation_id):
+    token_user_id = get_user_id_from_token(request)
+    role = get_user_role_from_token(request)
+
     reservation = get_object_or_404(Reservation, id=reservation_id)
 
-    # Check permissions: allow if the user is the owner OR a librarian OR the admin
-    if (reservation.user != request.user and request.user.role not in ["Librarian","Admin"]):
+    if reservation.user_id != token_user_id and role not in ["LIBRARIAN", "ADMIN"]:
         return Response({"detail": "You do not have permission to cancel this reservation."},
                         status=status.HTTP_403_FORBIDDEN)
 
@@ -156,19 +166,17 @@ def cancel_reservation(request, reservation_id):
         reservation.fulfilled = False
         reservation.save()
 
-        # Shift remaining reservations up in the queue
         later_reservations = Reservation.objects.filter(
             book=reservation.book,
             cancelled=False,
             fulfilled=False,
-            position_in_queue__gt=reservation.position_in_queue
-        ).order_by('position_in_queue')
+            position__gt=reservation.position
+        ).order_by('position')
 
         for r in later_reservations:
-            r.position_in_queue -= 1
+            r.position -= 1
             r.save()
 
-        # Promote next in line if necessary
         if was_fulfilled and later_reservations.exists():
             next_in_line = later_reservations.first()
             next_in_line.fulfilled = True

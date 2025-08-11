@@ -132,8 +132,14 @@ dist
 # Jetbrains editor config files
 .idea
 
+# Python cache data
+__pycache__/
+microservices/users_service/users/__pycache__
+microservices/users_service/users_project/__pycache__
+*.pyc
+*.pyo
+
 #macOS DS_Store files
 *.DS_Store
-
-#Django cache files
-*.pyc
+*.cache
+/microservices/books_service/books/__pycache__
