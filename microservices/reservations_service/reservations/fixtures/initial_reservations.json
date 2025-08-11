@@ -1,0 +1,212 @@
+[
+  {
+    "model": "reservations.reservation",
+    "pk": 1,
+    "fields": {
+      "user": 2,
+      "book": "9781250256737",
+      "timestamp": "2025-08-01T10:00:00Z",
+      "fulfilled": false,
+      "ready_for_pickup": true,
+      "returned": false,
+      "position": 1,
+      "cancelled": false
+    }
+  },
+  {
+    "model": "reservations.reservation",
+    "pk": 2,
+    "fields": {
+      "user": 3,
+      "book": "9781250256737",
+      "timestamp": "2025-08-02T11:00:00Z",
+      "fulfilled": false,
+      "ready_for_pickup": false,
+      "returned": false,
+      "position": 2,
+      "cancelled": false
+    }
+  },
+  {
+    "model": "reservations.reservation",
+    "pk": 3,
+    "fields": {
+      "user": 4,
+      "book": "9781250256737",
+      "timestamp": "2025-08-03T12:00:00Z",
+      "fulfilled": false,
+      "ready_for_pickup": false,
+      "returned": false,
+      "position": 3,
+      "cancelled": false
+    }
+  },
+  {
+    "model": "reservations.reservation",
+    "pk": 4,
+    "fields": {
+      "user": 5,
+      "book": "9780593135204",
+      "timestamp": "2025-07-25T15:30:00Z",
+      "fulfilled": true,
+      "ready_for_pickup": false,
+      "returned": false,
+      "position": null,
+      "cancelled": false
+    }
+  },
+  {
+    "model": "reservations.reservation",
+    "pk": 5,
+    "fields": {
+      "user": 6,
+      "book": "9780593135204",
+      "timestamp": "2025-07-28T10:00:00Z",
+      "fulfilled": false,
+      "ready_for_pickup": true,
+      "returned": false,
+      "position": 1,
+      "cancelled": false
+    }
+  },
+  {
+    "model": "reservations.reservation",
+    "pk": 6,
+    "fields": {
+      "user": 2,
+      "book": "9780593135204",
+      "timestamp": "2025-07-30T09:00:00Z",
+      "fulfilled": false,
+      "ready_for_pickup": false,
+      "returned": false,
+      "position": 2,
+      "cancelled": false
+    }
+  },
+  {
+    "model": "reservations.reservation",
+    "pk": 7,
+    "fields": {
+      "user": 3,
+      "book": "9781250276735",
+      "timestamp": "2025-07-20T08:45:00Z",
+      "fulfilled": false,
+      "ready_for_pickup": false,
+      "returned": false,
+      "position": 1,
+      "cancelled": false
+    }
+  },
+  {
+    "model": "reservations.reservation",
+    "pk": 8,
+    "fields": {
+      "user": 4,
+      "book": "9781250276735",
+      "timestamp": "2025-07-22T10:30:00Z",
+      "fulfilled": false,
+      "ready_for_pickup": false,
+      "returned": false,
+      "position": 2,
+      "cancelled": false
+    }
+  },
+  {
+    "model": "reservations.reservation",
+    "pk": 9,
+    "fields": {
+      "user": 5,
+      "book": "9780316593017",
+      "timestamp": "2025-07-15T09:00:00Z",
+      "fulfilled": true,
+      "ready_for_pickup": false,
+      "returned": true,
+      "position": null,
+      "cancelled": false
+    }
+  },
+  {
+    "model": "reservations.reservation",
+    "pk": 10,
+    "fields": {
+      "user": 6,
+      "book": "9780316593017",
+      "timestamp": "2025-07-18T14:00:00Z",
+      "fulfilled": false,
+      "ready_for_pickup": true,
+      "returned": false,
+      "position": 1,
+      "cancelled": false
+    }
+  },
+  {
+    "model": "reservations.reservation",
+    "pk": 11,
+    "fields": {
+      "user": 2,
+      "book": "9781250267689",
+      "timestamp": "2025-08-02T14:20:00Z",
+      "fulfilled": false,
+      "ready_for_pickup": true,
+      "returned": false,
+      "position": 1,
+      "cancelled": false
+    }
+  },
+  {
+    "model": "reservations.reservation",
+    "pk": 12,
+    "fields": {
+      "user": 3,
+      "book": "9781250267689",
+      "timestamp": "2025-08-03T15:00:00Z",
+      "fulfilled": false,
+      "ready_for_pickup": false,
+      "returned": false,
+      "position": 2,
+      "cancelled": false
+    }
+  },
+  {
+    "model": "reservations.reservation",
+    "pk": 13,
+    "fields": {
+      "user": 4,
+      "book": "9780593157527",
+      "timestamp": "2025-07-10T11:15:00Z",
+      "fulfilled": true,
+      "ready_for_pickup": false,
+      "returned": true,
+      "position": null,
+      "cancelled": false
+    }
+  },
+  {
+    "model": "reservations.reservation",
+    "pk": 14,
+    "fields": {
+      "user": 5,
+      "book": "9780593157527",
+      "timestamp": "2025-07-12T10:30:00Z",
+      "fulfilled": false,
+      "ready_for_pickup": true,
+      "returned": false,
+      "position": 1,
+      "cancelled": false
+    }
+  },
+  {
+    "model": "reservations.reservation",
+    "pk": 15,
+    "fields": {
+      "user": 6,
+      "book": "9780593157527",
+      "timestamp": "2025-07-13T11:00:00Z",
+      "fulfilled": false,
+      "ready_for_pickup": false,
+      "returned": false,
+      "position": 2,
+      "cancelled": false
+    }
+  }
+]
