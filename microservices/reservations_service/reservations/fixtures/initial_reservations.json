@@ -49,7 +49,7 @@
       "book": "9780593135204",
       "timestamp": "2025-07-25T15:30:00Z",
       "fulfilled": true,
-      "ready_for_pickup": false,
+      "ready_for_pickup": true,
       "returned": false,
       "position": null,
       "cancelled": false
@@ -63,7 +63,7 @@
       "book": "9780593135204",
       "timestamp": "2025-07-28T10:00:00Z",
       "fulfilled": false,
-      "ready_for_pickup": true,
+      "ready_for_pickup": false,
       "returned": false,
       "position": 1,
       "cancelled": false
@@ -91,9 +91,9 @@
       "book": "9781250276735",
       "timestamp": "2025-07-20T08:45:00Z",
       "fulfilled": false,
-      "ready_for_pickup": false,
+      "ready_for_pickup": true,
       "returned": false,
-      "position": 1,
+      "position": null,
       "cancelled": false
     }
   },
@@ -107,7 +107,7 @@
       "fulfilled": false,
       "ready_for_pickup": false,
       "returned": false,
-      "position": 2,
+      "position": 1,
       "cancelled": false
     }
   },

@@ -105,12 +105,12 @@ const BookInformation = () => {
     let statusMessage = '';
     let statusClass = 'reservation-status';
     
-    if (userReservation.fulfilled && !userReservation.returned) {
-      statusMessage = 'You have reserved this book';
-      statusClass += ' status-reserved';
-    } else if (userReservation.ready_for_pickup) {
+    if (userReservation.ready_for_pickup) {
       statusMessage = 'Your reservation is ready for pickup!';
       statusClass += ' status-ready';
+    } else if  (userReservation.fulfilled && !userReservation.returned) {
+      statusMessage = 'You have reserved this book';
+      statusClass += ' status-reserved';
     } else if (userReservation.position) {
       statusMessage = `You're in queue (position ${userReservation.position - book.available_copies})`;
       statusClass += ' status-queue';

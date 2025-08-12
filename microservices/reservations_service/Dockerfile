@@ -12,8 +12,7 @@ RUN apt-get update && \
     apt-get install -y postgresql-client-17 && \
     rm -rf /var/lib/apt/lists/*
 
-#Install JWT
-RUN pip install PyJWT
+
 
 # Copy requirements and install Python dependencies
 COPY requirements.txt .
