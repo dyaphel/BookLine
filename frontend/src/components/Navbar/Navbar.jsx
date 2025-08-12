@@ -109,7 +109,7 @@ const NavBar = ({ onFilterClick, onSearch }) => {
             <button onClick={() => navigate('/my-books')} className="my-nav-button">
               My Books
             </button>
-            <button onClick={() => navigate(`/profile/${username}`)} className="my-nav-button">
+            <button onClick={() => navigate(`/users/${username}`)} className="my-nav-button">
               My Profile
             </button>
             <button onClick={handleLogout} className="my-nav-button" disabled={loading}>

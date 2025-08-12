@@ -18,8 +18,8 @@ const AppRoutes = () => {
                 <Route path="/home" element = {<Home />} />
 
                 {/*PROTECTED ROUTES*/}
-                <Route path="/bookinformation/:isbn" element={<BookInformation/>}/>
-                <Route path="/profile/:username" element={<ProfilePage />} />
+                <Route path="/books/:isbn" element={<BookInformation/>}/>
+                <Route path="/users/:username" element={<ProfilePage />} />
                 
                 {/* Fallback route */}
              </Routes>
