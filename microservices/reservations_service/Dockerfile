@@ -28,7 +28,7 @@ EXPOSE 8000
 # Run migrations
 #Da aggiungere le fixtures per le reservations
 
-CMD bash -c 'python manage.py makemigrations reservations && python manage.py migrate && python manage.py loaddata initial_reservations.json && python manage.py runserver 0.0.0.0:8000'
+CMD bash -c 'python manage.py makemigrations users && python manage.py makemigrations reservations && python manage.py migrate && python manage.py loaddata initial_reservations.json && python manage.py runserver 0.0.0.0:8000'
 
 # Import models from the database -> python manage.py inspectdb users_customuser books_book > ./reservations/external_models.py
 #  && python manage.py loaddata initial_reservations.json

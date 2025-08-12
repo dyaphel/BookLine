@@ -1,4 +1,13 @@
 services:
+
+  redis:
+    image: redis:7
+    container_name: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
   users_service:
     build: ./microservices/users_service
     container_name: users_service
@@ -114,3 +123,4 @@ services:
 volumes:
   db_data:
   pgadmin-data:
+  redis_data:

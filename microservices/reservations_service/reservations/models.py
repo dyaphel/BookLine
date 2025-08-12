@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
-from .external_models import Book, CustomUser  # Local copy of unmanaged models
+from .external_models import Book
+from users.models import CustomUser  # Local copy of unmanaged models
 
 class Reservation(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
