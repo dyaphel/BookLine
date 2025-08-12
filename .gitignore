@@ -136,7 +136,6 @@ dist
 __pycache__/
 microservices/users_service/users/__pycache__
 microservices/users_service/users_project/__pycache__
-*.pyc
 *.pyo
 
 #macOS DS_Store files
