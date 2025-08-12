@@ -1,5 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager, PermissionsMixin
+import os
+
+def user_profile_image_path(instance, filename):
+    ext = filename.split('.')[-1]  # get file extension
+    filename = f"{instance.username}.{ext}"
+    # save inside "profile_images/" folder (can be relative to MEDIA_ROOT)
+    return os.path.join('profile_images', filename)
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
@@ -29,7 +36,7 @@ class CustomUser(AbstractUser, PermissionsMixin):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     username = models.CharField(max_length=50, unique=True)
-    profile_image = models.ImageField( null=True, blank=True)
+    profile_image = models.ImageField(upload_to=user_profile_image_path, default="profile_images/default.jpg")
     role = models.CharField(
         max_length=10,
         choices=Roles.choices,

@@ -73,7 +73,7 @@ const ProfilePage = () => {
       username: userData.username,
       profile_image: null
     });
-    setPreviewImage(`http://localhost:8003${userData.profile_image}`);
+    setPreviewImage(`http://localhost:8003/${userData.profile_image}`);
   };
 
   const handleInputChange = (e) => {
@@ -183,7 +183,7 @@ const ProfilePage = () => {
           ) : (
             <>
               <img
-                src={`http://localhost:8003${userData.profile_image}`}
+                src={`http://localhost:8003/${userData.profile_image}`}
                 className="profile-avatar"
                 onError={(e) => {
                   e.target.onerror = null;
