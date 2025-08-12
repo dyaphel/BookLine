@@ -45,11 +45,10 @@ def reservations_by_book(request, isbn):
 
 
 @api_view(['GET'])
-#@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def reservations_by_user(request, user_id):
-    # if request.user.id != user_id and request.user.role not in [CustomUser.Roles.LIBRARIAN, CustomUser.Roles.ADMIN]:
-    #     return Response({'detail': 'Not authorized to view reservations of other users.'},
-    #                     status=status.HTTP_403_FORBIDDEN)
+    if request.user.id != user_id and request.user.role not in [CustomUser.Roles.LIBRARIAN, CustomUser.Roles.ADMIN]:
+        return Response({'detail': 'Not authorized to view reservations of other users.'}, status=status.HTTP_403_FORBIDDEN)
 
     reservations = Reservation.objects.filter(user__id=user_id)
     serializer = ReservationSerializer(reservations, many=True)

@@ -149,17 +149,7 @@ CORS_ALLOW_HEADERS = [
     'withcredentials',  # Add this
 ]
 
-CACHES = {
-    "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://redis:6379/1",  # 'redis' is the Docker service name
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient",
-        }
-    }
-}
-
-SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # or 'cache' if using cache
 SESSION_CACHE_ALIAS = "default"
 SESSION_COOKIE_NAME = 'bookline_sessionid'
 SESSION_COOKIE_AGE = 1209600  # 2 weeks in seconds
