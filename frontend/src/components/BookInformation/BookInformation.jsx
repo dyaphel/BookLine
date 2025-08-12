@@ -50,7 +50,10 @@ const BookInformation = () => {
               },
               withCredentials: true
             });
-
+              // Opzione 1: usando then()
+              cookieStore.get('bookline_sessionid').then(cookie => {
+                  console.log(cookie);
+              });
             const userReservations = await axios.get(
               `http://localhost:8002/reservations/user/${userProfile.data.id}`,
               {

@@ -156,7 +156,7 @@ SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # or 'cache' if using ca
 SESSION_CACHE_ALIAS = "default"
 SESSION_COOKIE_NAME = 'bookline_sessionid'
 SESSION_COOKIE_AGE = 1209600  # 2 weeks in seconds
-SESSION_COOKIE_HTTPONLY = False
+SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SAMESITE = 'Lax'
 # CSRF Settings
 CSRF_COOKIE_HTTPONLY = False  # Allow JavaScript to read the cookie
