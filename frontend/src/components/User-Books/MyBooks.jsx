@@ -4,6 +4,7 @@ import './MyBooks.css';
 import { getCsrfToken } from '../../Utils/GetToken';
 import Navbar from '../Navbar/Navbar';
 import axios from 'axios';
+import { normalizeCoverUrl } from '../../Utils/urlCoverNormalizer';
 
 const MyBooks = ({ userId }) => {
   const [reservations, setReservations] = useState([]);
@@ -67,8 +68,6 @@ useEffect(() => {
 useEffect(() => {
   const fetchBookDetails = async () => {
     if (!reservations.length || !csrfToken) return;
-
-    setLoading(true);
     try {
       // Create array of book fetch promises with improved error handling
       const bookPromises = reservations.map(reservation => 
@@ -132,7 +131,7 @@ useEffect(() => {
       console.error('Unexpected error in book fetching:', err);
       setError('Failed to load book details');
     } finally {
-      setLoading(false);
+
     }
   };
 
@@ -177,45 +176,104 @@ useEffect(() => {
   if (loading) return <div className="loading">Loading your books...</div>;
   if (error) return <div className="error">Error: {error}</div>;
 
- return (
-  <div>
+return (
+  <div className="my-books-page">
     <Navbar />
     <div className="my-books-container">
-      <h1>Your Reserved Books</h1>
-      <div className="books-grid">
-        {reservations.map(reservation => {
-          const book = booksData[reservation.book];
-          if (!book) return null;
-          
-          return (
-            <div key={reservation.id} className="reservation-item">
-              <BookCard
-                cover={book.cover}
-                title={book.title}
-                author={book.author}
-              />
-              <div className="reservation-status">
-                <p>{getStatusText(reservation)}</p>
-                {reservation.ready_for_pickup && !reservation.fulfilled && (
-                  <button 
-                    className="pickup-button"
-                    onClick={() => handlePickupConfirmation(reservation.id)}
-                    disabled={loading}  // Disable during API calls
-                  >
-                    {loading ? 'Processing...' : 'Confirm Pickup'}
-                  </button>
-                )}
+      <h1 className="my-books-page-title">Your Reserved Books</h1>
+
+      {reservations.length === 0 ? (
+        <div className="empty-state">
+          <img src="/images/no-books.svg" alt="No books reserved" />
+          <p>You haven't reserved any books yet</p>
+        </div>
+      ) : (
+        <div className="books-grid">
+          {reservations.map(reservation => {
+            const book = booksData[reservation.book];
+            const normalizedCoverUrl = book?.cover
+              ? normalizeCoverUrl(book.cover)
+              : '';
+
+            if (!book) return null;
+
+            return (
+              <div key={reservation.id} className="my-books-reservation-item">
+                <BookCard cover={normalizedCoverUrl} />
+
+                <p
+                  className="my-books-status-text"
+                  data-status={
+                    reservation.ready_for_pickup
+                      ? 'ready'
+                      : reservation.position
+                      ? 'waiting'
+                      : 'pending'
+                  }
+                >
+                  {getStatusText(reservation)}
+                  {reservation.position && (
+                    <span className="my-books-position-badge">
+                      #{reservation.position}
+                    </span>
+                  )}
+                </p>
+
+                {/* Buttons container */}
+                <div className="my-books-buttons">
+                  {!reservation.fulfilled && (
+                    <button
+                      className="my-books-cancel-button"
+                      onClick={() =>
+                        handleCancelReservation(reservation.id)
+                      }
+                    >
+                      Cancel
+                    </button>
+                  )}
+
+                  {reservation.ready_for_pickup && !reservation.fulfilled && (
+                    <button
+                      className="my-books-pickup-button"
+                      onClick={() =>
+                        handlePickupConfirmation(reservation.id)
+                      }
+                      disabled={loading}
+                    >
+                      {loading ? (
+                        <span className="my-books-button-loading">
+                          <span className="my-books-spinner"></span>{' '}
+                          Processing...
+                        </span>
+                      ) : (
+                        <>
+                          <span className="my-books-icon">📚</span> Confirm
+                          Pickup
+                        </>
+                      )}
+                    </button>
+                  )}
+                </div>
+
+                {/* Fulfilled info */}
                 {reservation.fulfilled && (
-                  <p className="fulfilled-text">Pickup confirmed</p>
+                  <p className="my-books-fulfilled-text">
+                    <span className="checkmark">✓</span>
+                    Pickup confirmed on{' '}
+                    {new Date(
+                      reservation.fulfilled_date
+                    ).toLocaleDateString()}
+                  </p>
                 )}
               </div>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   </div>
 );
+
 };
 
 export default MyBooks;
