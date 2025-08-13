@@ -1,29 +1,62 @@
-import React from "react";
-import { BrowserRouter as Router,Routes, Route, Navigate } from 'react-router-dom';
-
+import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import axios from 'axios';
+import { getCsrfToken } from "../Utils/GetToken";
 import BookInformation from "../components/BookInformation/BookInformation";
 import Login from '../components/Login/Login';
 import Home from '../components/Home/Home';
 import RegisterPage from "../components/Register/Register";
 import ProfilePage from "../components/ProfilePage/ProfilePage";
-const AppRoutes = () => {   
+import MyBooks from "../components/User-Books/MyBooks";
+
+const AppRoutes = () => { 
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [userData, setUserData] = useState({ username: "", id: null });
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        const initialize = async () => {
+            try {
+                setLoading(true);
+                const token = await getCsrfToken();
+                const authResponse = await axios.get('http://localhost:8003/users/check-auth/', {
+                    headers: {
+                        'X-CSRFToken': token
+                    },
+                    withCredentials: true
+                });
+                if (authResponse.data.isAuthenticated) {
+                    setIsLoggedIn(true);
+                    setUserData({
+                        username: authResponse.data.username,
+                        id: authResponse.data.id
+                    });
+                }
+            } catch (error) {
+                console.error("Initialization error:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        initialize();
+    }, []);
+
     return (
         <Router>
-             <Routes>
-                <Route path="/" element = {<Navigate to ='/home'/>} />
+            <Routes>
+                <Route path="/" element={<Navigate to='/home'/>} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<RegisterPage />} />
+                <Route path="/home" element={<Home />} />
 
-                <Route path="/login" element = {<Login />} />
-                
-                <Route path="/register" element = {<RegisterPage />} />
-                <Route path="/home" element = {<Home />} />
-
-                {/*PROTECTED ROUTES*/}
+                {/* PROTECTED ROUTES */}
                 <Route path="/books/:isbn" element={<BookInformation/>}/>
                 <Route path="/users/:username" element={<ProfilePage />} />
-                
-                {/* Fallback route */}
-             </Routes>
+                <Route path="/my-books" element={<MyBooks userId={userData.id}/>} />
+
+            </Routes>
         </Router>
     );
 };
- export default AppRoutes;
+
+export default AppRoutes;

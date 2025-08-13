@@ -9,8 +9,11 @@ const NavBar = ({ onFilterClick, onSearch }) => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [username, setUsername] = useState("");
+  const [userData, setUserData] = useState({ username: "", id: null });
   const [loading, setLoading] = useState(false);
+
+  const hideOnPaths = ['/users/'];
+  const shouldHide = hideOnPaths.some(path => location.pathname.startsWith(path));
 
   useEffect(() => {
     const initialize = async () => {
@@ -29,7 +32,10 @@ const NavBar = ({ onFilterClick, onSearch }) => {
         
         if (authResponse.data.isAuthenticated) {
           setIsLoggedIn(true);
-          setUsername(authResponse.data.username);
+          setUserData({
+            username: authResponse.data.username,
+            id: authResponse.data.id
+          });
         }
       } catch (error) {
         console.error("Initialization error:", error);
@@ -47,7 +53,6 @@ const NavBar = ({ onFilterClick, onSearch }) => {
         
         // Get fresh CSRF token using your utility
         const token = await getCsrfToken();
-        
         // Make logout request
         const response = await axios.post(
             'http://localhost:8003/users/logout/',
@@ -63,7 +68,7 @@ const NavBar = ({ onFilterClick, onSearch }) => {
 
         if (response.data.success) {
             setIsLoggedIn(false);
-            setUsername("");
+            setUserData({ username: "", id: null });
             navigate('/home');
         }
     } catch (error) {
@@ -88,6 +93,7 @@ const NavBar = ({ onFilterClick, onSearch }) => {
     <div className="my-navbar">
       <Title />
       
+    {!shouldHide &&  (
       <div className="my-nav-center">
         <div className="my-search-container">
           <input
@@ -102,6 +108,7 @@ const NavBar = ({ onFilterClick, onSearch }) => {
           </button>
         </div>
       </div>
+    )}
 
       <div className="my-nav-right">
         {isLoggedIn ? (
@@ -109,7 +116,7 @@ const NavBar = ({ onFilterClick, onSearch }) => {
             <button onClick={() => navigate('/my-books')} className="my-nav-button">
               My Books
             </button>
-            <button onClick={() => navigate(`/users/${username}`)} className="my-nav-button">
+            <button onClick={() => navigate(`/users/${userData.username}`)} className="my-nav-button">
               My Profile
             </button>
             <button onClick={handleLogout} className="my-nav-button" disabled={loading}>

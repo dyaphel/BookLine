@@ -247,7 +247,8 @@ def check_auth(request):
         if request.user.is_authenticated:
             return JsonResponse({
                 'isAuthenticated': True,
-                'username': request.user.username
+                'username': request.user.username,
+                'id':request.user.id
             })
         return JsonResponse({'isAuthenticated': False})
     return JsonResponse({'error': 'Invalid method'}, status=405)
