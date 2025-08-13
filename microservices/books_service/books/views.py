@@ -20,6 +20,8 @@ def docker_health_check(request):
     return HttpResponse("OK", status=200)
 
 @api_view(['GET'])
+@authentication_classes([]) # NECESSARIO PER LA CHIMATA
+@permission_classes([AllowAny])
 def book_list(request):
     query = request.GET.get('q', '')  # General search query
     title = request.GET.get('title', None)
