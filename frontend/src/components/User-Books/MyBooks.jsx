@@ -5,6 +5,7 @@ import { getCsrfToken } from '../../Utils/GetToken';
 import Navbar from '../Navbar/Navbar';
 import axios from 'axios';
 import { normalizeCoverUrl } from '../../Utils/urlCoverNormalizer';
+import { useNavigate } from "react-router-dom";
 
 const MyBooks = ({ userId }) => {
   const [reservations, setReservations] = useState([]);
@@ -12,7 +13,7 @@ const MyBooks = ({ userId }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [csrfToken, setCsrfToken] = useState('');
-
+  const navigate = useNavigate();
   // Fetch CSRF token on component mount
   useEffect(() => {
     const fetchCsrf = async () => {
@@ -197,8 +198,12 @@ return (
             if (!book) return null;
 
             return (
-              <div key={reservation.id} className="my-books-reservation-item">
-                <BookCard cover={normalizedCoverUrl} />
+              <div key={reservation.id} >
+                <BookCard 
+                  cover={normalizedCoverUrl} 
+                  title={book.title}
+                  author={book.author}
+                  onClick={() => navigate(`/books/${book.isbn}`)}/>
                 <p
                   className="my-books-status-text"
                   data-status={
