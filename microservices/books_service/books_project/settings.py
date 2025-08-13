@@ -73,6 +73,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'books_project.wsgi.application'
 
+# settings.py
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+}
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases

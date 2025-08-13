@@ -37,6 +37,7 @@ const BookInformation = () => {
         ]);
         
         setBook(bookResponse.data);
+        console.log({bookResponse})
         setReservations(availabilityResponse.data);
 
         // If logged in, check user's reservations

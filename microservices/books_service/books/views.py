@@ -6,6 +6,8 @@ from rest_framework.decorators import api_view
 from .models import Book
 from .serializers import BookSerializer
 from django.db.models import Q
+from rest_framework.decorators import api_view, permission_classes, authentication_classes
+from rest_framework.permissions import AllowAny
 
 def docker_health_check(request):
     # Controllo del database (opzionale ma utile)
@@ -54,10 +56,12 @@ def book_list(request):
     return Response(serializer.data)
 
 @api_view(['GET'])
+@authentication_classes([]) # NECESSARIO PER LA CHIMATA
+@permission_classes([AllowAny])
 def book_detail(request, isbn):
     """Return details of a book given its ISBN."""
     try:
-        book = Book.objects.get(pk=isbn)
+        book = Book.objects.get(isbn=isbn)
         serializer = BookSerializer(book)
         return Response(serializer.data)
     except Book.DoesNotExist:
