@@ -184,7 +184,6 @@ return (
 
       {reservations.length === 0 ? (
         <div className="empty-state">
-          <img src="/images/no-books.svg" alt="No books reserved" />
           <p>You haven't reserved any books yet</p>
         </div>
       ) : (
@@ -200,7 +199,6 @@ return (
             return (
               <div key={reservation.id} className="my-books-reservation-item">
                 <BookCard cover={normalizedCoverUrl} />
-
                 <p
                   className="my-books-status-text"
                   data-status={
@@ -212,16 +210,10 @@ return (
                   }
                 >
                   {getStatusText(reservation)}
-                  {reservation.position && (
-                    <span className="my-books-position-badge">
-                      #{reservation.position}
-                    </span>
-                  )}
                 </p>
 
-                {/* Buttons container */}
+                {/* Buttons cancel */}
                 <div className="my-books-buttons">
-                  {!reservation.fulfilled && (
                     <button
                       className="my-books-cancel-button"
                       onClick={() =>
@@ -230,41 +222,7 @@ return (
                     >
                       Cancel
                     </button>
-                  )}
-
-                  {reservation.ready_for_pickup && !reservation.fulfilled && (
-                    <button
-                      className="my-books-pickup-button"
-                      onClick={() =>
-                        handlePickupConfirmation(reservation.id)
-                      }
-                      disabled={loading}
-                    >
-                      {loading ? (
-                        <span className="my-books-button-loading">
-                          <span className="my-books-spinner"></span>{' '}
-                          Processing...
-                        </span>
-                      ) : (
-                        <>
-                          <span className="my-books-icon">📚</span> Confirm
-                          Pickup
-                        </>
-                      )}
-                    </button>
-                  )}
                 </div>
-
-                {/* Fulfilled info */}
-                {reservation.fulfilled && (
-                  <p className="my-books-fulfilled-text">
-                    <span className="checkmark">✓</span>
-                    Pickup confirmed on{' '}
-                    {new Date(
-                      reservation.fulfilled_date
-                    ).toLocaleDateString()}
-                  </p>
-                )}
               </div>
             );
           })}
@@ -273,7 +231,6 @@ return (
     </div>
   </div>
 );
-
 };
 
 export default MyBooks;
