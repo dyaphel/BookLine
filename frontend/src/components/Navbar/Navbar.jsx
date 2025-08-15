@@ -3,13 +3,17 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Title from '../../Utils/Title/BookLinetitle';
 import './Navbar.css';
-import { getCsrfToken } from '../../Utils/GetToken'; // Import your existing CSRF utility
+import { getCsrfToken } from '../../Utils/GetToken';
 
 const NavBar = ({ onFilterClick, onSearch }) => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userData, setUserData] = useState({ username: "", id: null });
+  const [userData, setUserData] = useState({ 
+    username: "", 
+    id: null,
+    isStaff: false  // Changed to match backend response
+  });
   const [loading, setLoading] = useState(false);
 
   const hideOnPaths = ['/users/'];
@@ -19,10 +23,8 @@ const NavBar = ({ onFilterClick, onSearch }) => {
     const initialize = async () => {
       try {
         setLoading(true);
-        // Use your existing CSRF utility
         const token = await getCsrfToken();
         
-        // Check auth status with the token
         const authResponse = await axios.get('http://localhost:8003/users/check-auth/', {
           headers: {
             'X-CSRFToken': token
@@ -34,7 +36,8 @@ const NavBar = ({ onFilterClick, onSearch }) => {
           setIsLoggedIn(true);
           setUserData({
             username: authResponse.data.username,
-            id: authResponse.data.id
+            id: authResponse.data.id,
+            isStaff: authResponse.data.is_staff || false  // Using is_staff from backend
           });
         }
       } catch (error) {
@@ -50,10 +53,7 @@ const NavBar = ({ onFilterClick, onSearch }) => {
   const handleLogout = async () => {
     try {
         setLoading(true);
-        
-        // Get fresh CSRF token using your utility
         const token = await getCsrfToken();
-        // Make logout request
         const response = await axios.post(
             'http://localhost:8003/users/logout/',
             {},
@@ -68,7 +68,7 @@ const NavBar = ({ onFilterClick, onSearch }) => {
 
         if (response.data.success) {
             setIsLoggedIn(false);
-            setUserData({ username: "", id: null });
+            setUserData({ username: "", id: null, isStaff: false });
             navigate('/home');
         }
     } catch (error) {
@@ -81,7 +81,7 @@ const NavBar = ({ onFilterClick, onSearch }) => {
     } finally {
         setLoading(false);
     }
-};
+  };
 
   const handleSearchChange = (e) => {
     const value = e.target.value;
@@ -93,32 +93,45 @@ const NavBar = ({ onFilterClick, onSearch }) => {
     <div className="my-navbar">
       <Title />
       
-    {!shouldHide &&  (
-      <div className="my-nav-center">
-        <div className="my-search-container">
-          <input
-            type="text"
-            placeholder="Search..."
-            className="my-search"
-            value={searchQuery}
-            onChange={handleSearchChange}
-          />
-          <button onClick={onFilterClick} className="my-filter">
-            <img src="/Filter.png" alt="Filter" className="my-filter-image" />
-          </button>
+      {!shouldHide || userData.isStaff && (
+        <div className="my-nav-center">
+          <div className="my-search-container">
+            <input
+              type="text"
+              placeholder="Search..."
+              className="my-search"
+              value={searchQuery}
+              onChange={handleSearchChange}
+            />
+            <button onClick={onFilterClick} className="my-filter">
+              <img src="/Filter.png" alt="Filter" className="my-filter-image" />
+            </button>
+          </div>
         </div>
-      </div>
-    )}
+      )}
 
       <div className="my-nav-right">
         {isLoggedIn ? (
           <>
-            <button onClick={() => navigate('/my-books')} className="my-nav-button">
-              My Books
-            </button>
             <button onClick={() => navigate(`/users/${userData.username}`)} className="my-nav-button">
-              My Profile
+             Profile
             </button>
+            {userData.isStaff ? (
+              <>
+                <button onClick={() => navigate('/all-reservations')} className="my-nav-button">
+                  Reservations
+                </button>
+                <button onClick={() => navigate('/analytics')} className="my-nav-button">
+                  Analytics
+                </button>
+              </>
+            ) : (
+              <>
+                <button onClick={() => navigate('/my-books')} className="my-nav-button">
+                  My Books
+                </button>
+              </>
+            )}
             <button onClick={handleLogout} className="my-nav-button" disabled={loading}>
               {loading ? 'Logging out...' : 'Logout'}
             </button>

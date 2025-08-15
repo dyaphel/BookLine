@@ -11,9 +11,8 @@ import MyBooks from "../components/User-Books/MyBooks";
 
 const AppRoutes = () => { 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [userData, setUserData] = useState({ username: "", id: null });
-    const [loading, setLoading] = useState(false);
-
+    const [userData, setUserData] = useState({ username: "", id: null, isStaff:false });
+    const [Loading, setLoading] = useState(false);
     useEffect(() => {
         const initialize = async () => {
             try {
@@ -29,7 +28,8 @@ const AppRoutes = () => {
                     setIsLoggedIn(true);
                     setUserData({
                         username: authResponse.data.username,
-                        id: authResponse.data.id
+                        id: authResponse.data.id,
+                        isStaff: authResponse.data.is_staff
                     });
                 }
             } catch (error) {
@@ -51,9 +51,18 @@ const AppRoutes = () => {
 
                 {/* PROTECTED ROUTES */}
                 <Route path="/books/:isbn" element={<BookInformation/>}/>
-                <Route path="/users/:username" element={<ProfilePage />} />
-                <Route path="/my-books" element={<MyBooks userId={userData.id}/>} />
-
+               <Route 
+                    path="/users/:username" 
+                    element={isLoggedIn ? <ProfilePage /> : <Login /> }  />
+                    
+                <Route 
+                    path="/my-books" 
+                    element={isLoggedIn ? <MyBooks userId={userData.id} /> : <Login /> }  />
+                
+                <Route 
+                path="/all-reservations" 
+                element={ userData.isStaff ?<MyBooks userId={userData.id}/>:<Login />  } />
+                
             </Routes>
         </Router>
     );
