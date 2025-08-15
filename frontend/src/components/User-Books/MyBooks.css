@@ -68,8 +68,8 @@
 }
 
 .my-books-status-text[data-status="ready"] {
-  background-color: rgba(76, 175, 80, 0.2);
-  color: #4caf50;
+  background-color: lightgreen;
+  color: green;
 }
 
 .my-books-status-text[data-status="waiting"] {

@@ -146,41 +146,50 @@ def return_book(request, reservation_id):
 
     return Response({'message': 'Book returned and queue updated.'})
 
-@api_view(['POST'])
+@api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
 def cancel_reservation(request, reservation_id):
     reservation = get_object_or_404(Reservation, id=reservation_id)
 
-    # Check permissions: allow if the user is the owner OR a librarian OR the admin
-    if (reservation.user != request.user and request.user.role not in [CustomUser.Roles.LIBRARIAN, CustomUser.Roles.ADMIN]):
-        return Response({"detail": "You do not have permission to cancel this reservation."},
-                        status=status.HTTP_403_FORBIDDEN)
+    # Check permissions
+    if (reservation.user != request.user and 
+        request.user.role not in [CustomUser.Roles.LIBRARIAN, CustomUser.Roles.ADMIN]):
+        return Response(
+            {"detail": "Permission denied"},
+            status=status.HTTP_403_FORBIDDEN
+        )
 
     if reservation.cancelled:
-        return Response({"detail": "Reservation already cancelled."}, status=status.HTTP_400_BAD_REQUEST)
+        return Response(
+            {"detail": "Already cancelled"},
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
+    if reservation.fulfilled:
+        return Response(
+            {"detail": "Cannot cancel fulfilled reservation"},
+            status=status.HTTP_400_BAD_REQUEST
+        )
 
     with transaction.atomic():
         reservation.cancelled = True
-        was_fulfilled = reservation.fulfilled
-        reservation.fulfilled = False
         reservation.save()
 
-        # Shift remaining reservations up in the queue
-        later_reservations = Reservation.objects.filter(
-            book=reservation.book,
-            cancelled=False,
-            fulfilled=False,
-            position_in_queue__gt=reservation.position_in_queue
-        ).order_by('position_in_queue')
+        # Inizializza la variabile
+        later_reservations = Reservation.objects.none()
+        
+        # Solo se la prenotazione aveva una position numerica
+        if reservation.position is not None:
+            later_reservations = Reservation.objects.filter(
+                book=reservation.book,
+                cancelled=False,
+                fulfilled=False,
+                position__gt=reservation.position
+            ).order_by('position')
 
+        # Itera solo se ci sono elementi
         for r in later_reservations:
-            r.position_in_queue -= 1
+            r.position -= 1
             r.save()
 
-        # Promote next in line if necessary
-        if was_fulfilled and later_reservations.exists():
-            next_in_line = later_reservations.first()
-            next_in_line.fulfilled = True
-            next_in_line.save()
-
-    return Response({"detail": "Reservation cancelled."}, status=status.HTTP_200_OK)
+    return Response(status=status.HTTP_204_NO_CONTENT)

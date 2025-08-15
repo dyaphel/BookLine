@@ -139,6 +139,31 @@ useEffect(() => {
   fetchBookDetails();
 }, [reservations, csrfToken]);
 
+const handleCancelReservation = async (reservationId) => {
+  try {
+    const response = await axios.delete(
+      `http://localhost:8002/reservations/${reservationId}/`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrfToken,
+        },
+        withCredentials: true, // 'true' deve essere in minuscolo
+      }
+    );
+
+    if (response.status !== 200 && response.status !== 204) {
+      throw new Error('Failed to cancel reservation');
+    }
+
+    // Refresh reservations after successful cancellation
+    const updatedReservations = reservations.filter(res => res.id !== reservationId);
+    setReservations(updatedReservations);
+  } catch (err) {
+    setError(err.message);
+  }
+};
+
   // const handlePickupConfirmation = async (reservationId) => {
   //   try {
   //     const response = await fetch(
