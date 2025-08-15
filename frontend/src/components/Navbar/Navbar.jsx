@@ -93,7 +93,7 @@ const NavBar = ({ onFilterClick, onSearch }) => {
     <div className="my-navbar">
       <Title />
       
-      {!shouldHide || userData.isStaff && (
+      {!shouldHide && !userData.isStaff && (
         <div className="my-nav-center">
           <div className="my-search-container">
             <input
