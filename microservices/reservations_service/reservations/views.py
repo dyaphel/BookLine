@@ -165,12 +165,6 @@ def cancel_reservation(request, reservation_id):
             status=status.HTTP_400_BAD_REQUEST
         )
 
-    if reservation.fulfilled:
-        return Response(
-            {"detail": "Cannot cancel fulfilled reservation"},
-            status=status.HTTP_400_BAD_REQUEST
-        )
-
     with transaction.atomic():
         reservation.cancelled = True
         reservation.save()
