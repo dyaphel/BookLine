@@ -88,7 +88,7 @@ def create_reservation(request):
         reservation = Reservation.objects.create(
             user_id=user_id,
             book=book,
-            fulfilled=True,
+            fulfilled=True, #SHOULD BE FALSE SINCE I HAVE JUST ASKED FOR A RESERVATION BUT I STILL DO NOT HAVE THE BOOKS IN MY HAND THE LIBRARIAN SHOULD SAY IF FULFILLED OR NOT
             ready_for_pickup=True,
             position=None
         )
@@ -165,14 +165,30 @@ def cancel_reservation(request, reservation_id):
             status=status.HTTP_400_BAD_REQUEST
         )
 
+    # CHECK THE FULFILLED STATUS IN CREATE RESERVATIONS
+    
+    # if reservation.fulfilled and not reservation.returned:
+    #     return Response(
+    #         {"detail": "Cannot cancel fulfilled reservation that hasn't been returned"},
+    #         status=status.HTTP_400_BAD_REQUEST
+    #     )
+
     with transaction.atomic():
         reservation.cancelled = True
         reservation.save()
 
-        # Inizializza la variabile
-        later_reservations = Reservation.objects.none()
-        
-        # Solo se la prenotazione aveva una position numerica
+        # Update book's available copies if reservation was ready for pickup or fulfilled
+        if reservation.ready_for_pickup or reservation.fulfilled:
+            try:
+                book = Book.objects.get(isbn=reservation.book.isbn)
+                book.available_copies += 1
+                book.save()
+            except Book.DoesNotExist:
+                print(f"Book {reservation.book.isbn} not found")
+            except Exception as e:
+                print(f"Error updating book copies: {str(e)}")
+
+        # Update positions for remaining reservations if needed
         if reservation.position is not None:
             later_reservations = Reservation.objects.filter(
                 book=reservation.book,
@@ -181,9 +197,29 @@ def cancel_reservation(request, reservation_id):
                 position__gt=reservation.position
             ).order_by('position')
 
-        # Itera solo se ci sono elementi
-        for r in later_reservations:
-            r.position -= 1
-            r.save()
+            # Use bulk_update for better performance
+            updates = []
+            for r in later_reservations:
+                r.position -= 1
+                updates.append(r)
+            
+            if updates:
+                Reservation.objects.bulk_update(updates, ['position'])
 
-    return Response(status=status.HTTP_204_NO_CONTENT)
+        # Promote next in line if this was the current reservation
+        if reservation.ready_for_pickup:
+            next_in_line = Reservation.objects.filter(
+                book=reservation.book,
+                cancelled=False,
+                fulfilled=False,
+                ready_for_pickup=False
+            ).order_by('position').first()
+
+            if next_in_line:
+                next_in_line.ready_for_pickup = True
+                next_in_line.save()
+
+    return Response(
+        {"detail": "Reservation cancelled successfully"},
+        status=status.HTTP_200_OK
+    )

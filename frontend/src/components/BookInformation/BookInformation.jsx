@@ -64,7 +64,7 @@ const BookInformation = () => {
             
             // Find if user has reservation for this book
             const reservationForThisBook = userReservations.data.find(
-              reservation => reservation.book === isbn
+              reservation => reservation.book === isbn && !reservation.cancelled
             );
             
             if (reservationForThisBook) {
@@ -72,7 +72,6 @@ const BookInformation = () => {
             }
           } catch (err) {
             console.error("Error checking user reservations:", err);
-            // Continue even if reservation check fails
           }
         }
       } catch (err) {
@@ -104,7 +103,6 @@ const BookInformation = () => {
   if (userReservation) {
     let statusMessage = '';
     let statusClass = 'reservation-status';
-    
     if (userReservation.ready_for_pickup) {
       statusMessage = 'Your reservation is ready for pickup!';
       statusClass += ' status-ready';
