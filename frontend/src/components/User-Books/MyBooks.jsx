@@ -140,7 +140,7 @@ const MyBooks = ({ userId }) => {
 
   const getStatusText = (reservation) => {
     if (reservation.ready_for_pickup) return 'Ready for pickup!';
-    if (reservation.position) return `Position in queue: ${reservation.position}`;
+    if (reservation.position) return `Position in queue: ${reservation.position-1}`;
     return 'Pending';
   };
 
