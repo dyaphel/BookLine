@@ -30,14 +30,17 @@ const EditCatalog = () => {
     navigate(`/edit-book/${isbn}`);
   };
 
-  const handleDelete = async (isbn) => {
-    try {
-      await axios.delete(`http://localhost:8001/books/${isbn}/`);
-      setBooks(books.filter(book => book.isbn !== isbn));
-    } catch (error) {
-      console.error("Error deleting book:", error);
-    }
-  };
+
+// PROBLEMA CON LE RESERVATIONS VISTO CHE "ON CASCADE NON FUNZIONA"ù
+
+//   const handleDelete = async (isbn) => {
+//     try {
+//       await axios.delete(`http://localhost:8001/books/delete/${isbn}/`);
+//       setBooks(books.filter(book => book.isbn !== isbn));
+//     } catch (error) {
+//       console.error("Error deleting book:", error);
+//     }
+//   };
 
   const handleChangeImage = (isbn) => {
     navigate(`/change-image/${isbn}`);
@@ -98,7 +101,7 @@ return (
               
               <div className="catalog-book-actions">
                 <button className="catalog-edit-btn" onClick={() => handleEdit(book.isbn)}>Edit</button>
-                <button className="catalog-delete-btn" onClick={() => handleDelete(book.isbn)}>Delete</button>
+                {/* <button className="catalog-delete-btn" onClick={() => handleDelete(book.isbn)}>Delete</button> */}
                 <button className="catalog-image-btn" onClick={() => handleChangeImage(book.isbn)}>
                   Change Image
                 </button>
