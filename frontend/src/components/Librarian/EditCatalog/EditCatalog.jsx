@@ -10,19 +10,20 @@ const EditCatalog = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchBooks = async () => {
-      setLoading(true);
-      try {
-        const response = await axios.get('http://localhost:8001/books/');
-        setBooks(response.data);
-      } catch (error) {
-        console.error("Error fetching books:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+ // Move fetchBooks outside useEffect so it's accessible everywhere
+  const fetchBooks = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get('http://localhost:8001/books/');
+      setBooks(response.data);
+    } catch (error) {
+      console.error("Error fetching books:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchBooks();
   }, []);
 
@@ -42,9 +43,50 @@ const EditCatalog = () => {
 //     }
 //   };
 
-  const handleChangeImage = (isbn) => {
-    navigate(`/change-image/${isbn}`);
+  const handleChangeImage = async (isbn) => {
+    setLoading(true);
+    try {
+      const formData = new FormData();
+      const fileInput = document.createElement('input');
+      fileInput.type = 'file';
+      fileInput.accept = 'image/*';
+      
+      fileInput.onchange = async (e) => {
+        const file = e.target.files[0];
+        if (!file) {
+          setLoading(false);
+          return;
+        }
+        
+        formData.append('cover', file);
+        
+        try {
+          const response = await axios.put(
+            `http://localhost:8001/books/changeimage/${isbn}/`,
+            formData,
+            {
+              headers: {
+                'Content-Type': 'multipart/form-data',
+              }
+            }
+          );
+          
+          console.log('Image changed successfully:', response.data);
+          fetchBooks(); // Now this will work
+        } catch (error) {
+          console.error("Error changing image:", error.response?.data || error.message);
+        } finally {
+          setLoading(false);
+        }
+      };
+      
+      fileInput.click();
+    } catch (error) {
+      console.error("Error in image change process:", error);
+      setLoading(false);
+    }
   };
+
 
 return (
     <div className="catalog-container">
