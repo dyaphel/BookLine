@@ -27,7 +27,7 @@
   flex: 1;
   min-width: 0; /* Allows shrinking */
   max-width: 600px;
-  margin: 0 15px;
+  margin: 20px 15px;
 }
 
 .my-search-container {
@@ -77,6 +77,7 @@
   display: flex;
   gap: 2%;
   margin-right: 5%;
+  margin-left: 2%;
   margin-top: -1%;
 }
 

@@ -93,7 +93,7 @@ const NavBar = ({ onFilterClick, onSearch }) => {
     <div className="my-navbar">
       <Title />
       
-      {!shouldHide && !userData.isStaff && (
+      {!shouldHide &&  (
         <div className="my-nav-center">
           <div className="my-search-container">
             <input
@@ -111,19 +111,22 @@ const NavBar = ({ onFilterClick, onSearch }) => {
       )}
 
       <div className="my-nav-right">
-        {isLoggedIn ? (
+        {userData.isStaff ?(
           <>
-            <button onClick={() => navigate(`/users/${userData.username}`)} className="my-nav-button">
-             Profile
+            <button onClick={() => navigate('/catalog')} className="my-nav-button">
+                Catalog
             </button>
-            {userData.isStaff ? (
+            <button onClick={() => navigate('/all-reservations')} className="my-nav-button">
+                Dashboard
+            </button>
+            <button onClick={() => navigate('/analytics')} className="my-nav-button">
+                Analytics
+            </button>
+            { isLoggedIn ?(
               <>
-                <button onClick={() => navigate('/all-reservations')} className="my-nav-button">
-                  Reservations
-                </button>
-                <button onClick={() => navigate('/analytics')} className="my-nav-button">
-                  Analytics
-                </button>
+              <button onClick={() => navigate(`/users/${userData.username}`)} className="my-nav-button">
+                Profile
+              </button>
               </>
             ) : (
               <>

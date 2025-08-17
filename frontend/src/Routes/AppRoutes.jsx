@@ -8,6 +8,8 @@ import Home from '../components/Home/Home';
 import RegisterPage from "../components/Register/Register";
 import ProfilePage from "../components/ProfilePage/ProfilePage";
 import MyBooks from "../components/User-Books/MyBooks";
+import EditCatalog from "../components/Librarian/EditCatalog/EditCatalog";
+import AllReservations from "../components/Librarian/AllReservations/AllReservations";
 
 const AppRoutes = () => { 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -61,8 +63,11 @@ const AppRoutes = () => {
                 
                 <Route 
                 path="/all-reservations" 
-                element={ userData.isStaff ?<MyBooks userId={userData.id}/>:<Login />  } />
+                element={ userData.isStaff ?<AllReservations/>:<Login />  } />
                 
+                <Route 
+                path="/catalog" 
+                element={ userData.isStaff ?<EditCatalog/>:<Login />  } />
             </Routes>
         </Router>
     );
