@@ -10,7 +10,7 @@ Lab. advanced programming - project
    
 2. **Navigate to the project directory**:
      ```bash
-      cd BookLine/Bookline-frontend
+      cd source/Bookline-frontend
 4. **Build and start the Docker container**:
    ```bash
      docker-compose up --build

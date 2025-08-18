@@ -1,0 +1,7 @@
+## System Description
+General overview of the system, its distributed nature, and its main functionalities.
+
+## User Stories
+- US1: As a <user>, I want <functionality>, so that <benefit>.
+- US2: As a <user>, I want <functionality>, so that <benefit>.
+- US3: ...
