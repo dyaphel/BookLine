@@ -4,4 +4,17 @@ from .models import Book
 class BookSerializer(serializers.ModelSerializer):
     class Meta:
         model = Book
-        fields = '__all__'  # Include all fields in the model
+        fields = [
+            'isbn',
+            'title', 
+            'author',
+            'description',
+            'abstract',
+            'genre',
+            'language',
+            'available_copies',
+            'cover'
+        ]
+        extra_kwargs = {
+            'isbn': {'read_only': True}  # Prevent ISBN from being changed
+        }

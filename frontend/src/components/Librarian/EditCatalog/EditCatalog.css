@@ -25,125 +25,226 @@
 .catalog-book-card {
   border: 1px solid #e1e1e1;
   border-radius: 8px;
-  padding: 20px;
+  padding: 25px;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
-  min-height: 400px;
+  min-height: 450px;
+  background: #1e1e1e;
 }
 
 .catalog-book-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+  transform: translateY(-5px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
 }
 
-/* Book Header Section */
-.catalog-book-header {
-  display: flex;
-  gap: 20px;
-  margin-bottom: 15px;
-}
+
 
 .catalog-book-cover {
-  flex: 0 0 100px;
+  flex: 0 0 120px;
+  align-self: center;
+  margin-top: 120px;
 }
 
 .catalog-book-cover img {
-  width: 100px;
+  width: 120px;
   height: 180px;
   object-fit: cover;
-  border-radius: 4px;
-  border: 1px solid #ddd;
+  border-radius: 6px;
+  border: 1px solid #444;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Title and Author */
-.catalog-book-title-section {
-  flex: 1;
+
+
+/* Remove existing .title-author-row styles */
+/* Add these new styles: */
+
+.title-author-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: -30%;
+  gap: 8px;
+  margin-bottom: 15px;
 }
 
-.catalog-book-title-section h3 {
-  margin: 0 0 5px 0;
+.book-title {
+  margin: 0;
   font-size: 1.8rem;
   color: lightcoral;
+  text-align: center;
 }
 
-.catalog-author {
-  font-size: 1.5rem;
+.book-author {
+  margin: 0;
+  font-size: 1.4rem;
   color: #e1e1e1;
+  text-align: center;
+  font-style: italic;
 }
 
-/* Description and Abstract */
-.catalog-text-content {
+/* Remove flex properties from these classes */
+.catalog-book-header {
+  display: flex;
+  gap: 25px;
+  margin-bottom: 20px;
+  /* Remove align-items: center if exists */
+}
+
+.catalog-book-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Description and Abstract Row */
+.description-abstract-row {
+  display: flex;
+  gap: 25px;
   margin-top: 10px;
-  max-height: 200px;
-  overflow-y: auto;
-  padding-right: 5px;
 }
 
-.catalog-description,
-.catalog-abstract {
-  margin-bottom: 12px;
+/* Edit Fields */
+.edit-field {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
-.catalog-description h4,
-.catalog-abstract h4 {
-  margin: 0 0 5px 0;
-  font-size: 1.3rem;
+.edit-label {
   color: lightsalmon;
+  font-weight: 600;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+.edit-input {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #444;
+  border-radius: 6px;
+  background-color: #2a2a2a;
+  color: #ffffff;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.edit-input:focus {
+  border-color: lightsalmon;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 160, 122, 0.3);
+}
+
+.edit-textarea {
+  width: 100%;
+  height: 120px;
+  padding: 12px;
+  border: 2px solid #444;
+  border-radius: 6px;
+  background-color: #2a2a2a;
+  color: #ffffff;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  resize: vertical;
+  transition: all 0.3s ease;
+}
+
+.edit-textarea:focus {
+  border-color: lightsalmon;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 160, 122, 0.3);
+}
+
+/* View Fields */
+.view-field {
+  flex: 1;
+  text-align: center;
+  padding: 15px;
+  background: rgba(42, 42, 42, 0.6);
+  border-radius: 8px;
+}
+
+.view-label {
+  color: lightsalmon;
+  margin: 0 0 10px 0;
+  font-size: 1.2rem;
   font-weight: 600;
 }
 
-.catalog-description p,
-.catalog-abstract p {
+.view-field p {
   margin: 0;
   color: #e1e1e1;
-  font-size: 1rem;
-  line-height: 1.5;
+  line-height: 1.6;
+  font-size: 0.95rem;
 }
 
-/* Book Details Section */
-.catalog-book-details {
-  margin: 20px auto 20px 15%;
+/* Book Details Grid - 2x2 layout */
+.book-details-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 30px;
-  font-size: 1rem;
-  width: 85%;
-  padding: 15px;
-  border-radius: 6px;
+  grid-template-rows: repeat(2, auto);
+  gap: 20px;
+  width: 90%;
+  margin: 25px auto;
+  max-width: 600px;
 }
 
-.catalog-detail-row {
+.detail-item {
   display: flex;
+  flex-direction: column;
   align-items: center;
+  gap: 8px;
+  padding: 15px;
+  background: rgba(42, 42, 42, 0.7);
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-.catalog-detail-label {
-  font-weight: 600;
+.detail-label {
+  font-weight: 700;
   color: lightsalmon;
-  min-width: 80px;
-  margin-right: 8px;
+  font-size: 1.1rem;
+}
+
+.detail-value {
+  color: #e1e1e1;
+  font-size: 1.05rem;
+}
+
+.detail-input {
+  width: 90%;
+  text-align: center;
+  padding: 10px;
+  background: #333;
+  border: 1px solid #555;
+  border-radius: 4px;
+  color: white;
 }
 
 /* Action Buttons */
 .catalog-book-actions {
   display: flex;
-  gap: 10px;
+  gap: 15px;
   margin-top: auto;
-  padding-top: 15px;
-  border-top: 1px solid #eee;
+  padding-top: 20px;
+  border-top: 1px solid #444;
+  justify-content: center;
 }
 
 .catalog-book-actions button {
-  padding: 8px 12px;
+  padding: 10px 20px;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
   font-size: 1rem;
-  flex: 1;
-  transition: all 0.2s ease;
-  font-weight: 500;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  min-width: 120px;
 }
 
 .catalog-edit-btn {
@@ -153,15 +254,7 @@
 
 .catalog-edit-btn:hover {
   background-color: #ffa07a;
-}
-
-.catalog-delete-btn {
-  background-color: lightcoral;
-  color: #222;
-}
-
-.catalog-delete-btn:hover {
-  background-color: #f08080;
+  transform: scale(1.05);
 }
 
 .catalog-image-btn {
@@ -170,39 +263,56 @@
 }
 
 .catalog-image-btn:hover {
-  background-color: #222;
+  background-color: #444;
+  transform: scale(1.05);
+}
+
+.catalog-save-btn {
+  background-color: lightgreen;
+  color: white;
+}
+
+.catalog-save-btn:hover {
+  background-color: lightgreen;
+  transform: scale(1.05);
+}
+
+.catalog-cancel-btn {
+  background-color: lightcoral;
+  color: white;
+}
+
+.catalog-cancel-btn:hover {
+  background-color: lightcoral;
+  transform: scale(1.05);
 }
 
 /* Responsive Adjustments */
 @media (max-width: 1200px) {
   .catalog-book-cover {
     flex: 0 0 auto;
-    align-self: center;
   }
 
   .catalog-book-cover img {
-    width: 80px;
-    height: 120px;
+    width: 100px;
+    height: 150px;
   }
+}
 
-  .catalog-book-title-section h3 {
-    font-size: 1.5rem;
-    margin-left: 0;
-    text-align: center;
-  }
-
-  .catalog-book-details {
-    margin: 15px auto;
+@media (max-width: 992px) {
+  .catalog-books-grid {
     grid-template-columns: 1fr;
-    gap: 15px;
-    width: 100%;
+  }
+  
+  .catalog-book-card {
+    min-height: auto;
   }
 }
 
 @media (max-width: 768px) {
-  .catalog-books-grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
+  .catalog-container {
+    padding: 15px;
+    margin-top: 80px;
   }
 
   .catalog-book-header {
@@ -210,46 +320,37 @@
     align-items: center;
   }
 
-  .catalog-book-title-section h3,
-  .catalog-author {
-    text-align: center;
+  .title-author-row,
+  .description-abstract-row {
+    flex-direction: column;
+    gap: 15px;
   }
 
-  .catalog-book-details {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 480px) {
-  .catalog-container {
-    padding: 15px;
-    margin-top: 80px;
-  }
-
-  .catalog-book-card {
-    padding: 15px;
-    min-height: auto;
-  }
-
-  .catalog-book-title-section h3 {
-    font-size: 1.3rem;
-  }
-
-  .catalog-author {
-    font-size: 1.1rem;
-  }
-
-  .catalog-book-details {
+  .book-details-grid {
     grid-template-columns: 1fr;
-    font-size: 0.9rem;
-    padding: 10px;
+    grid-template-rows: repeat(4, auto);
   }
 
   .catalog-book-actions {
     flex-direction: column;
+    gap: 10px;
   }
 
   .catalog-book-actions button {
     width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .catalog-book-card {
+    padding: 15px;
+  }
+  
+  .book-title {
+    font-size: 1.5rem;
+  }
+
+  .book-author {
+    font-size: 1.2rem;
   }
 }
