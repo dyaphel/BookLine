@@ -1,17 +1,11 @@
-/* Main Container */
+
 .catalog-container {
   padding: 20px;
   max-width: 1200px;
   margin: 100px auto 0;
 }
 
-/* Loading State */
-.loading {
-  text-align: center;
-  padding: 40px;
-  font-size: 1.2rem;
-  color: #333;
-}
+
 
 /* Books Grid Layout */
 .catalog-books-grid {
@@ -41,11 +35,6 @@
 
 
 
-.catalog-book-cover {
-  flex: 0 0 120px;
-  align-self: center;
-  margin-top: 120px;
-}
 
 .catalog-book-cover img {
   width: 120px;
@@ -58,40 +47,43 @@
 
 
 
-/* Remove existing .title-author-row styles */
-/* Add these new styles: */
-
-.title-author-column {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-left: -30%;
-  gap: 8px;
-  margin-bottom: 15px;
+.title-author-center {
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .book-title {
   margin: 0;
   font-size: 1.8rem;
   color: lightcoral;
-  text-align: center;
 }
 
 .book-author {
   margin: 0;
   font-size: 1.4rem;
   color: #e1e1e1;
-  text-align: center;
   font-style: italic;
 }
 
-/* Remove flex properties from these classes */
+/* Book Header - cover + description/abstract in a row */
 .catalog-book-header {
   display: flex;
   gap: 25px;
   margin-bottom: 20px;
-  /* Remove align-items: center if exists */
 }
+
+.catalog-book-cover {
+  flex: 0 0 120px;
+}
+
+.description-abstract-row {
+  display: flex;
+  gap: 25px;
+  flex: 1;
+}
+
+
+
 
 .catalog-book-content {
   flex: 1;
@@ -100,12 +92,6 @@
   gap: 20px;
 }
 
-/* Description and Abstract Row */
-.description-abstract-row {
-  display: flex;
-  gap: 25px;
-  margin-top: 10px;
-}
 
 /* Edit Fields */
 .edit-field {
@@ -160,7 +146,7 @@
   box-shadow: 0 0 0 3px rgba(255, 160, 122, 0.3);
 }
 
-/* View Fields */
+
 .view-field {
   flex: 1;
   text-align: center;

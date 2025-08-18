@@ -121,17 +121,13 @@ const EditCatalog = () => {
   return (
     <div className="catalog-container">
       <NavBar />
-      <h1>Book Catalog</h1>
       {loading ? (
         <div className="loading">Loading...</div>
       ) : (
         <div className="catalog-books-grid">
           {books.map((book) => (
             <div key={book.isbn} className="catalog-book-card">
-              <div className="catalog-book-header">
-                <div className="catalog-book-cover">
-                  <img src={`http://localhost:8001${normalizeCoverUrl(book.cover)}`} alt={`${book.title} cover`} />
-                </div>
+
                 
                 <div className="catalog-book-content">
                   {/* Title and Author */}
@@ -159,11 +155,15 @@ const EditCatalog = () => {
                       </div>
                     </div>
                   ) : (
-                    <div className="title-author-column">
+                    <div className="title-author-center">
                       <h3 className="book-title">{book.title}</h3>
                       <p className="book-author">{book.author}</p>
                     </div>
                   )}
+                <div className="catalog-book-header">
+                  <div className="catalog-book-cover">
+                    <img src={`http://localhost:8001${normalizeCoverUrl(book.cover)}`} alt={`${book.title} cover`} />
+                </div>
                   
                   {/* Description and Abstract */}
                   <div className="description-abstract-row">
@@ -208,7 +208,7 @@ const EditCatalog = () => {
                 </div>
               </div>
               
-              {/* Book Details - 4 items in 2x2 grid */}
+              {/* Book Details */}
               <div className="book-details-grid">
                 <div className="detail-item">
                   <span className="detail-label">Genre:</span>
