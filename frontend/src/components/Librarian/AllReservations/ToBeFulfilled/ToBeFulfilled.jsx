@@ -37,7 +37,7 @@ const ToBeFulfilled = () => {
           { withCredentials: true }
         );
         const readyReservations = (reservationsRes.data ?? []).filter(
-          reservation => reservation.ready_for_pickup && !reservation.fulfilled && !reservation.returned && !reservation.cancelled
+          reservation => reservation.ready_for_pickup && !reservation.fulfilled && !reservation.cancelled
         );
 
         

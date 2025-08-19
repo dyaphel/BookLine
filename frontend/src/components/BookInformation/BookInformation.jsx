@@ -91,7 +91,7 @@ const BookInformation = () => {
     return `http://localhost:8001${normalizedPath}`; //check if the cover URL is valid the port number
   };
 
-const renderButtonOrStatus = () => {
+  const renderButtonOrStatus = () => {
   if (!isLoggedIn) {
     return reservations.available_copies > 0 ? (
       <Reservation isbn={isbn} />
@@ -100,34 +100,23 @@ const renderButtonOrStatus = () => {
     );
   }
 
-  // If user has a reservation
   if (userReservation) {
-    if (userReservation.cancelled) {
-      // Reservation was cancelled -> behave as if no reservation exists
-      return reservations.available_copies > 0 ? (
-        <Reservation isbn={isbn} />
-      ) : (
-        <GetInQueue isbn={isbn} />
-      );
-    }
-
-    // Active reservation -> show status
     let statusMessage = '';
     let statusClass = 'reservation-status';
+if (userReservation.ready_for_pickup && reservations.available_copies > 0) {
+  statusMessage = 'Your reservation is ready for pickup!';
+  statusClass += ' status-ready';
+} else if (userReservation.fulfilled && !userReservation.returned) {
+  statusMessage = 'You have reserved this book';
+  statusClass += ' status-reserved';
+} else if (userReservation.position) {
+  statusMessage = `You're in queue (position ${userReservation.position - reservations.available_copies})`;
+  statusClass += ' status-queue';
+} else {
+  statusMessage = 'You have a reservation for this book';
+  statusClass += ' status-pending';
+}
 
-    if (userReservation.ready_for_pickup) {
-      statusMessage = 'Your reservation is ready for pickup!';
-      statusClass += ' status-ready';
-    } else if (userReservation.fulfilled && !userReservation.returned) {
-      statusMessage = 'You have reserved this book';
-      statusClass += ' status-reserved';
-    } else if (userReservation.position) {
-      statusMessage = `You're in queue (position ${userReservation.position - reservations.available_copies})`;
-      statusClass += ' status-queue';
-    } else {
-      statusMessage = 'You have a reservation for this book';
-      statusClass += ' status-pending';
-    }
 
     return (
       <div className={statusClass}>
@@ -137,7 +126,6 @@ const renderButtonOrStatus = () => {
     );
   }
 
-  // Default: no reservation
   return reservations.available_copies > 0 ? (
     <Reservation isbn={isbn} />
   ) : (
@@ -202,9 +190,10 @@ const renderButtonOrStatus = () => {
         
         <div className="book-copies-container">
           <h3 className="bookscopies">Number of copies:</h3>
-          <p className="bookscopieresponse">{reservations.available_copies} </p>
-          {/* <p className="bookscopieresponse">
-          {reservations.available_copies > 0 ? reservations.available_copies : 0} */}
+         <p className="bookscopieresponse">
+          {reservations.available_copies > 0 ? reservations.available_copies : 0}
+        </p>
+
         </div>
 
         <div className="bookbutton">

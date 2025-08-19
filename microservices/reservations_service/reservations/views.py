@@ -99,8 +99,9 @@ def create_reservation(request):
             user_id=user_id,
             book=book,
             fulfilled=False,
-            position=position
-        )
+            position=position,
+            ready_for_pickup=False,
+    )
 
     serializer = ReservationSerializer(reservation)
     return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -118,7 +119,6 @@ def return_book(request, reservation_id):
         return Response({'error': 'Invalid reservation return attempt.'}, status=status.HTTP_400_BAD_REQUEST)
 
     reservation.returned = True
-    reservation.fulfilled = False
     reservation.save()
 
     next_in_line = Reservation.objects.filter(
@@ -175,7 +175,6 @@ def fulfill_book(request, reservation_id):
 
 
 #TO CHECK THE CANCEL RESERVATIONS
-
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
 def cancel_reservation(request, reservation_id):
