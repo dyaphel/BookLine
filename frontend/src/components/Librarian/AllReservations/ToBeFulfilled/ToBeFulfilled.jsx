@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { normalizeCoverUrl } from "../../../../Utils/urlCoverNormalizer";
 import './ToBeFulfilled.css';
+import { getCsrfToken } from '../../../../Utils/GetToken';
 
 const ToBeFulfilled = () => {
   const [reservations, setReservations] = useState([]);
@@ -9,6 +10,22 @@ const ToBeFulfilled = () => {
   const [users, setUsers] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [csrfToken, setCsrfToken] = useState('');
+
+
+  useEffect(() => {
+    const fetchCsrf = async () => {
+      try {
+        const token = await getCsrfToken();
+        setCsrfToken(token);
+      } catch (err) {
+        console.error('Error fetching CSRF token:', err);
+        setError('Connection Error: Unable to fetch CSRF token');
+      }
+    };
+    fetchCsrf();
+  }, []);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,9 +36,10 @@ const ToBeFulfilled = () => {
           'http://localhost:8002/reservations/all',
           { withCredentials: true }
         );
-        const readyReservations = (reservationsRes.data || []).filter(
-          res => res.ready_for_pickup === true
+        const readyReservations = (reservationsRes.data ?? []).filter(
+          reservation => reservation.ready_for_pickup && !reservation.fulfilled
         );
+
         
         const bookIds = [...new Set(readyReservations.map(res => res.book))];
         const userIds = [...new Set(readyReservations.map(res => res.user))];
@@ -77,13 +95,18 @@ const ToBeFulfilled = () => {
 
   const handleFulfill = async (reservationId) => {
     try {
-      await axios.patch(
-        `http://localhost:8002/reservations/fulfill/${reservationId}/`,
-        {},
-        { 
-          withCredentials: true 
-        }
-      );
+     await axios.patch(
+  `http://localhost:8002/reservations/fulfill/${reservationId}/`,
+  {}, // empty body
+  {
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRFToken': csrfToken,
+    },
+    withCredentials: true,
+  }
+);
+
       setReservations(prev => prev.filter(res => res.id !== reservationId));
     } catch (err) {
       setError(err.response?.data?.detail || 'Fulfillment failed');
