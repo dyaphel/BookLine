@@ -117,7 +117,13 @@ const ToBeFulfilled = () => {
     try {
       await axios.delete(
         `http://localhost:8002/reservations/cancel/${reservationId}/`,
-        { withCredentials: true }
+       {
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrfToken,
+          },
+          withCredentials: true,
+        }
       );
       setReservations(prev => prev.filter(res => res.id !== reservationId));
     } catch (err) {
