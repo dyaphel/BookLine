@@ -1,17 +1,18 @@
 import './AllReservations.css';
 import Navbar from '../../Navbar/Navbar';
-import LibrarianFulfillmentView from "../AllReservations/ToBeFulfilled/ToBeFulfilled"
+import ToBeFulfilled from "../AllReservations/ToBeFulfilled/ToBeFulfilled";
 
 const AllReservations = () => {
-
   return (
-    <div className="my-books-page">
+    <div className="all-reservations-page">
       <Navbar />
-      <LibrarianFulfillmentView ></LibrarianFulfillmentView >
+      <div className="reservation-header">
+        <h1 className="reservation-title">BOOKS TO BE FULFILLED</h1>
+        <div className="title-underline"></div>
+      </div>
+      <ToBeFulfilled />
+       <div className="cards-underline"></div>
     </div>
-
-
-       
   );
 };
 

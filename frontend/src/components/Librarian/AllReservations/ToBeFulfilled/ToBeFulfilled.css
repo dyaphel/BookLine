@@ -1,7 +1,8 @@
 .fulfill-page-container {
     width: 120%;
-    margin-top: 8%;
-    margin-left: -10%;
+    margin-left:5%;
+    margin-right: 5%;
+    margin-top: -25px;
     box-sizing: border-box;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
@@ -45,8 +46,8 @@
 
 .fulfill-card {
     flex: 0 0 calc(22% - 30px);
-    min-width: 220px;
-    max-height: 550px;
+    min-width: 300px;
+    max-height: 500px;
     border-radius: 16px;
     overflow: hidden;
     box-shadow: 0 12px 20px rgba(0, 0, 0, 0.5);
@@ -109,7 +110,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     color: #fff;
-    margin-top: 4%;
+
 }
 
 .fulfill-info-container {
@@ -146,7 +147,7 @@
 .fulfill-buttons {
     display: flex;
     gap: 15px;
-    margin-top: 15%;
+   
 }
 
 .btn {
