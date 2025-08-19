@@ -166,6 +166,7 @@ def fulfill_book(request, reservation_id):
         )
     # Update the reservation status
     reservation.fulfilled = True
+    reservation.ready_for_pickup = False
     reservation.save()
 
     return Response({'message': 'Reservation successfully marked as fulfilled.'},

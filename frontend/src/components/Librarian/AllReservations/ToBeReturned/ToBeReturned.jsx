@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { normalizeCoverUrl } from "../../../../Utils/urlCoverNormalizer";
-import './ToBeFulfilled.css';
 import { getCsrfToken } from '../../../../Utils/GetToken';
 
-const ToBeFulfilled = () => {
+const ToBeReturned = () => {
   const [reservations, setReservations] = useState([]);
   const [books, setBooks] = useState([]);
   const [users, setUsers] = useState({});
@@ -37,7 +36,7 @@ const ToBeFulfilled = () => {
           { withCredentials: true }
         );
         const readyReservations = (reservationsRes.data ?? []).filter(
-          reservation => reservation.ready_for_pickup && !reservation.fulfilled && !reservation.returned
+          reservation => reservation.fulfilled && !reservation.returned
         );
 
         
@@ -93,10 +92,10 @@ const ToBeFulfilled = () => {
     fetchData();
   }, []);
 
-  const handleFulfill = async (reservationId) => {
+  const handleReturn = async (reservationId) => {
     try {
-     await axios.patch(
-  `http://localhost:8002/reservations/fulfill/${reservationId}/`,
+     await axios.post(
+  `http://localhost:8002/reservations/return/${reservationId}/`,
   {}, 
   {
     headers: {
@@ -139,7 +138,7 @@ const ToBeFulfilled = () => {
     
     <div className="fulfill-page-container">
       {reservations.length === 0 ? ( 
-        <div className="fulfill-no-reservations">No books ready for pickup</div>
+        <div className="fulfill-no-reservations">No books to return</div>
       ) : (
         <div className="fulfill-cards-container">
           {reservations.map((reservation) => {
@@ -187,10 +186,10 @@ const ToBeFulfilled = () => {
 
                   <div className="fulfill-buttons">
                     <button
-                      onClick={() => handleFulfill(reservation.id)}
+                      onClick={() => handleReturn(reservation.id)}
                       className="btn fulfill"
                     >
-                      Fulfill
+                      Return
                     </button>
                     <button
                       onClick={() => handleCancel(reservation.id)}
@@ -209,4 +208,4 @@ const ToBeFulfilled = () => {
   );
 };
 
-export default ToBeFulfilled;
+export default ToBeReturned;
