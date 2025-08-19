@@ -174,6 +174,8 @@ def fulfill_book(request, reservation_id):
 
 
 
+#TO CHECK THE CANCEL RESERVATIONS
+
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
 def cancel_reservation(request, reservation_id):
@@ -204,18 +206,9 @@ def cancel_reservation(request, reservation_id):
     with transaction.atomic():
         reservation.cancelled = True
         reservation.save()
-
-        # Update book's available copies if reservation was ready for pickup or fulfilled
-        if reservation.ready_for_pickup or reservation.fulfilled:
-            try:
-                book = Book.objects.get(isbn=reservation.book.isbn)
-                book.available_copies += 1
-                book.save()
-            except Book.DoesNotExist:
-                print(f"Book {reservation.book.isbn} not found")
-            except Exception as e:
-                print(f"Error updating book copies: {str(e)}")
-
+        book = Book.objects.get(isbn=reservation.book.isbn)
+        book.available_copies += 1
+        book.save()
         # Update positions for remaining reservations if needed
         if reservation.position is not None:
             later_reservations = Reservation.objects.filter(

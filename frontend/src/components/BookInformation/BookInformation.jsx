@@ -202,7 +202,9 @@ const renderButtonOrStatus = () => {
         
         <div className="book-copies-container">
           <h3 className="bookscopies">Number of copies:</h3>
-          <p className="bookscopieresponse">{reservations.available_copies}</p>
+          <p className="bookscopieresponse">{reservations.available_copies} </p>
+          {/* <p className="bookscopieresponse">
+          {reservations.available_copies > 0 ? reservations.available_copies : 0} */}
         </div>
 
         <div className="bookbutton">
