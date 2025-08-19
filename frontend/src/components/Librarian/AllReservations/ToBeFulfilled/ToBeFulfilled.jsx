@@ -80,7 +80,9 @@ const ToBeFulfilled = () => {
       await axios.patch(
         `http://localhost:8002/reservations/fulfill/${reservationId}/`,
         {},
-        { withCredentials: true }
+        { 
+          withCredentials: true 
+        }
       );
       setReservations(prev => prev.filter(res => res.id !== reservationId));
     } catch (err) {

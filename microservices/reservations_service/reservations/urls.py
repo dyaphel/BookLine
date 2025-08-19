@@ -10,4 +10,6 @@ urlpatterns = [
     path('return/<int:reservation_id>/', views.return_book, name='return_book'),
     path('cancel/<int:reservation_id>/', views.cancel_reservation, name='cancel_reservation'),
     path('whoami/', views.whoami, name='whoami'),
+
+    path('fulfill/<int:reservation_id>/', views.fulfill_book, name='fulfill_book'),
 ]
