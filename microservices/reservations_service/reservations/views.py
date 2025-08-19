@@ -119,6 +119,7 @@ def return_book(request, reservation_id):
         return Response({'error': 'Invalid reservation return attempt.'}, status=status.HTTP_400_BAD_REQUEST)
 
     reservation.returned = True
+    reservation.fulfilled = True
     reservation.save()
 
     next_in_line = Reservation.objects.filter(

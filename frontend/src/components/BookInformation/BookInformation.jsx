@@ -100,7 +100,7 @@ const BookInformation = () => {
     );
   }
 
-  if (userReservation) {
+if (userReservation) {
     let statusMessage = '';
     let statusClass = 'reservation-status';
 if (userReservation.ready_for_pickup && reservations.available_copies > 0) {
@@ -110,7 +110,7 @@ if (userReservation.ready_for_pickup && reservations.available_copies > 0) {
   statusMessage = 'You have reserved this book';
   statusClass += ' status-reserved';
 } else if (userReservation.position) {
-  statusMessage = `You're in queue (position ${userReservation.position - reservations.available_copies})`;
+  statusMessage = `You're in queue (position ${userReservation.position})`;
   statusClass += ' status-queue';
 } else {
   statusMessage = 'You have a reservation for this book';
