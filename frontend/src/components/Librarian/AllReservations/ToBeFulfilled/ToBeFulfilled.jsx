@@ -37,7 +37,7 @@ const ToBeFulfilled = () => {
           { withCredentials: true }
         );
         const readyReservations = (reservationsRes.data ?? []).filter(
-          reservation => reservation.ready_for_pickup && !reservation.fulfilled
+          reservation => reservation.ready_for_pickup && !reservation.fulfilled && !reservation.returned
         );
 
         
@@ -97,7 +97,7 @@ const ToBeFulfilled = () => {
     try {
      await axios.patch(
   `http://localhost:8002/reservations/fulfill/${reservationId}/`,
-  {}, // empty body
+  {}, 
   {
     headers: {
       'Content-Type': 'application/json',

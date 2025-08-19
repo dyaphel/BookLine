@@ -7,6 +7,7 @@ from .models import Reservation
 from .serializers import ReservationSerializer
 from .external_models import Book
 from users.models import CustomUser
+from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
 from django.db import transaction
@@ -158,11 +159,11 @@ def fulfill_book(request, reservation_id):
     reservation = get_object_or_404(Reservation, id=reservation_id)
 
 # Check if the reservation CANNOT be marked as fulfilled
-if reservation.returned or reservation.ready_for_pickup or reservation.fulfilled:
-    return Response(
-        {'error': 'Reservation cannot be fulfilled because it is either already fulfilled, returned, or ready for pickup.'},
-        status=status.HTTP_400_BAD_REQUEST
-    )
+    if reservation.returned or reservation.fulfilled:
+        return Response(
+            {'error': 'Reservation cannot be fulfilled because it is either already fulfilled, returned'},
+            status=status.HTTP_400_BAD_REQUEST
+        )
     # Update the reservation status
     reservation.fulfilled = True
     reservation.save()

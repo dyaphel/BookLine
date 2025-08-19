@@ -56,7 +56,8 @@ const Login = () => {
             );
             
             if (response.data.success) {
-                navigate('/home');
+                window.location.replace("/home");
+                // navigate('/home');
             } else {
                 setAlert({
                     message: response.data.message || 'Login failed',
