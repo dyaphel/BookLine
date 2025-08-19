@@ -59,7 +59,7 @@ def reservations_by_user(request, user_id):
 @api_view(['GET'])
 def book_availability(request, isbn):
     book = get_object_or_404(Book, isbn=isbn)
-    active_reservations = Reservation.objects.filter(book=book, fulfilled=True, returned=False).count()
+    active_reservations = Reservation.objects.filter(book=book, returned=False).count()
     available = book.available_copies - active_reservations
     return Response({'isbn': isbn, 'available_copies': available})
 

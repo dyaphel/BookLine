@@ -36,7 +36,7 @@ const ToBeReturned = () => {
           { withCredentials: true }
         );
         const readyReservations = (reservationsRes.data ?? []).filter(
-          reservation => reservation.fulfilled && !reservation.returned
+          reservation => reservation.fulfilled && !reservation.returned && !reservation.cancelled
         );
 
         
