@@ -12,8 +12,8 @@ from django.contrib.auth import logout
 from django.contrib.auth import login as auth_login 
 from django.contrib.auth.hashers import check_password
 from .models import CustomUser
+from django.shortcuts import get_object_or_404
 from .serializers import RegisterSerializer, UserProfileSerializer
-from .models import CustomUser
 from django.middleware.csrf import get_token
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import ensure_csrf_cookie
@@ -135,6 +135,16 @@ def get_user_profile(request):
     return Response(serializer.data)
 
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_user_by_id(request, id):
+    user = get_object_or_404(CustomUser, id=id)
+    serializer = UserProfileSerializer(user)
+    return Response(serializer.data)
+
+
+
+
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
 def delete_user(request):
@@ -150,9 +160,6 @@ def delete_user(request):
     user.delete()
     return JsonResponse({'message': 'User deleted successfully'}, status=204)
     
-
-
-
 
 
 @api_view(['POST'])

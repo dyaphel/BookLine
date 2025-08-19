@@ -7,6 +7,7 @@ from .views import (
     check_auth,
     user_logout,
     get_user_profile,
+    get_user_by_id,
     delete_user,
     change_password,
     update_profile  # No trailing comma here
@@ -23,4 +24,6 @@ urlpatterns = [
     path('delete_user/',delete_user, name='delete_user'),# da cmbiare in delete
     path('change_password/', change_password, name='change_password'),
     path('update_profile/', update_profile, name='update_profile'), # da cambiare in edit
+    path('get_by/<int:id>', get_user_by_id, name='get_user_by_id'),
+    
 ]

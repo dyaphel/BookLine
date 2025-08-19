@@ -88,7 +88,7 @@ def create_reservation(request):
         reservation = Reservation.objects.create(
             user_id=user_id,
             book=book,
-            fulfilled=True, #SHOULD BE FALSE SINCE I HAVE JUST ASKED FOR A RESERVATION BUT I STILL DO NOT HAVE THE BOOKS IN MY HAND THE LIBRARIAN SHOULD SAY IF FULFILLED OR NOT
+            fulfilled=False, #SHOULD BE FALSE SINCE I HAVE JUST ASKED FOR A RESERVATION BUT I STILL DO NOT HAVE THE BOOKS IN MY HAND THE LIBRARIAN SHOULD SAY IF FULFILLED OR NOT
             ready_for_pickup=True,
             position=None
         )
@@ -129,7 +129,7 @@ def return_book(request, reservation_id):
 
     if next_in_line:
         next_in_line.ready_for_pickup = True
-        next_in_line.fulfilled = True
+        next_in_line.fulfilled = False
         next_in_line.position = None
         next_in_line.save()
 
