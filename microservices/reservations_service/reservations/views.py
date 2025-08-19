@@ -150,43 +150,25 @@ def return_book(request, reservation_id):
 @api_view(['PATCH'])
 @permission_classes([IsAuthenticated])
 def fulfill_book(request, reservation_id):
+    # Permission check
     if request.user.role not in [CustomUser.Roles.LIBRARIAN, CustomUser.Roles.ADMIN]:
-        return Response({'detail': 'Only librarians or admins can mark a book as returned.'},
+        return Response({'detail': 'Only librarians or admins can mark a book as fulfilled.'},
                         status=status.HTTP_403_FORBIDDEN)
 
     reservation = get_object_or_404(Reservation, id=reservation_id)
 
-
-    reservation.returned = False
-    reservation.ready_for_pickup=False
+# Check if the reservation CANNOT be marked as fulfilled
+if reservation.returned or reservation.ready_for_pickup or reservation.fulfilled:
+    return Response(
+        {'error': 'Reservation cannot be fulfilled because it is either already fulfilled, returned, or ready for pickup.'},
+        status=status.HTTP_400_BAD_REQUEST
+    )
+    # Update the reservation status
     reservation.fulfilled = True
     reservation.save()
 
-    next_in_line = Reservation.objects.filter(
-        book=reservation.book,
-        fulfilled=False,
-        ready_for_pickup=False,
-        returned=False
-    ).order_by('position').first()
-
-    if next_in_line:
-        next_in_line.ready_for_pickup = True
-        next_in_line.fulfilled = False
-        next_in_line.position = None
-        next_in_line.save()
-
-        others = Reservation.objects.filter(
-            book=reservation.book,
-            fulfilled=False,
-            ready_for_pickup=False,
-            returned=False
-        ).exclude(id=next_in_line.id).order_by('position')
-
-        for i, res in enumerate(others, start=1):
-            res.position = i + 1
-            res.save()
-
-    return Response({'message': 'Book fulfilled and queue updated.'})
+    return Response({'message': 'Reservation successfully marked as fulfilled.'},
+                   status=status.HTTP_200_OK)
 
 
 
