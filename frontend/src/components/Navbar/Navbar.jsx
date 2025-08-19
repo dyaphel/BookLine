@@ -110,46 +110,49 @@ const NavBar = ({ onFilterClick, onSearch }) => {
         </div>
       )}
 
-      <div className="my-nav-right">
-        {userData.isStaff ?(
-          <>
-            <button onClick={() => navigate('/catalog')} className="my-nav-button">
-                Catalog
-            </button>
-            <button onClick={() => navigate('/all-reservations')} className="my-nav-button">
-                Dashboard
-            </button>
-            <button onClick={() => navigate('/analytics')} className="my-nav-button">
-                Analytics
-            </button>
-            { isLoggedIn ?(
-              <>
-              <button onClick={() => navigate(`/users/${userData.username}`)} className="my-nav-button">
-                Profile
-              </button>
-              </>
-            ) : (
-              <>
-                <button onClick={() => navigate('/my-books')} className="my-nav-button">
-                  My Books
-                </button>
-              </>
-            )}
-            <button onClick={handleLogout} className="my-nav-button" disabled={loading}>
-              {loading ? 'Logging out...' : 'Logout'}
-            </button>
-          </>
-        ) : (
-          <>
-            <button onClick={() => navigate('/register')} className="my-nav-button-register">
-              Register
-            </button>
-            <button onClick={() => navigate('/login')} className="my-nav-button">
-              Login
-            </button>
-          </>
-        )}
-      </div>
+<div className="my-nav-right">
+  {isLoggedIn ? (
+    <>
+      <button onClick={() => navigate('/my-books')} className="my-nav-button">
+        My Books
+      </button>
+      
+      <button onClick={() => navigate(`/users/${userData.username}`)} className="my-nav-button">
+        Profile
+      </button>
+
+      {/* Solo staff */}
+      {userData.isStaff && (
+        <>
+          <button onClick={() => navigate('/catalog')} className="my-nav-button">
+            Catalog
+          </button>
+          <button onClick={() => navigate('/all-reservations')} className="my-nav-button">
+            Dashboard
+          </button>
+          <button onClick={() => navigate('/analytics')} className="my-nav-button">
+            Analytics
+          </button>
+        </>
+      )}
+
+      <button onClick={handleLogout} className="my-nav-button" disabled={loading}>
+        {loading ? 'Logging out...' : 'Logout'}
+      </button>
+    </>
+  ) : (
+    <>
+      <button onClick={() => navigate('/register')} className="my-nav-button-register">
+        Register
+      </button>
+      <button onClick={() => navigate('/login')} className="my-nav-button">
+        Login
+      </button>
+    </>
+  )}
+</div>
+
+
     </div>
   );
 };

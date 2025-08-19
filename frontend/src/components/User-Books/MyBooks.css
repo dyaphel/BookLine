@@ -6,8 +6,11 @@
 
 .my-books-container {
   max-width: 1800px;
-  margin: 0 auto;
-  padding: 1rem;
+  padding: 20px;
+  text-align: center;
+  width: 100%;
+  padding-top: 100px;
+  width: 100%;
 }
 
 .my-books-page-title {
@@ -42,6 +45,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 4rem;
+  max-height: 100px;
 }
 
 @media (max-width: 1024px) {

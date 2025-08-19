@@ -67,6 +67,7 @@ def book_availability(request, isbn):
 # Per creare la reservation, the user must be authenticated and have the appropriate permissions. If the user is a regular user, they can only create reservations for themselves. The system checks if there are available copies of the book and creates a reservation accordingly. If all copies are reserved, the user is added to the queue.
 # Insert in the body the "user" and "book" fields, where "user" is the ID of the user making the reservation and "book" is the ISBN of the book being reserved.
 
+#DA CONTROLLARE IL CREATE RESERVATION
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def create_reservation(request):
@@ -82,7 +83,7 @@ def create_reservation(request):
                         status=status.HTTP_403_FORBIDDEN)
 
     book = get_object_or_404(Book, isbn=isbn)
-    active_count = Reservation.objects.filter(book=book, fulfilled=True, returned=False).count()
+    active_count = Reservation.objects.filter(book=book, returned=False).count()
     total = book.available_copies
 
     if active_count < total:
@@ -209,38 +210,30 @@ def cancel_reservation(request, reservation_id):
         book = Book.objects.get(isbn=reservation.book.isbn)
         book.available_copies += 1
         book.save()
+     next_in_line = Reservation.objects.filter(
+        book=reservation.book,
+        fulfilled=False,
+        ready_for_pickup=False,
+        returned=False
+    ).order_by('position').first()
+
         # Update positions for remaining reservations if needed
-        if reservation.position is not None:
-            later_reservations = Reservation.objects.filter(
-                book=reservation.book,
-                cancelled=False,
-                fulfilled=False,
-                position__gt=reservation.position
-            ).order_by('position')
+    if next_in_line:
+        next_in_line.ready_for_pickup = True
+        next_in_line.fulfilled = False
+        next_in_line.position = None
+        next_in_line.save()
 
-            # Use bulk_update for better performance
-            updates = []
-            for r in later_reservations:
-                r.position -= 1
-                updates.append(r)
-            
-            if updates:
-                Reservation.objects.bulk_update(updates, ['position'])
+        others = Reservation.objects.filter(
+            book=reservation.book,
+            fulfilled=False,
+            ready_for_pickup=False,
+            returned=False
+        ).exclude(id=next_in_line.id).order_by('position')
 
-        # Promote next in line if this was the current reservation
-        if reservation.ready_for_pickup:
-            next_in_line = Reservation.objects.filter(
-                book=reservation.book,
-                cancelled=False,
-                fulfilled=False,
-                ready_for_pickup=False
-            ).order_by('position').first()
+        for i, res in enumerate(others, start=1):
+            res.position = i + 1
+            res.save()
 
-            if next_in_line:
-                next_in_line.ready_for_pickup = True
-                next_in_line.save()
+    return Response({'message': 'Book returned and queue updated.'})
 
-    return Response(
-        {"detail": "Reservation cancelled successfully"},
-        status=status.HTTP_200_OK
-    )
