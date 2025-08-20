@@ -1,7 +1,5 @@
 .fulfill-page-container {
     width: 120%;
-    margin-left:5%;
-    margin-right: 5%;
     margin-top: -25px;
     box-sizing: border-box;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -28,9 +26,8 @@
 
 .fulfill-cards-container {
     display: flex;
-    justify-content: center;
     gap: 20px;
-    padding: 20px 0 20px;
+    padding: 20px 0 40px;
     overflow-x: auto;
     scroll-behavior: smooth;
 }
@@ -46,7 +43,7 @@
 }
 
 .fulfill-card {
-    flex: 0 0 calc(22% - 30px);
+    flex: 0 0 calc(2% - 30px);
     min-width: 300px;
     max-height: 500px;
     border-radius: 16px;
@@ -58,7 +55,7 @@
 
 .fulfill-card:hover {
     transform: translateY(-10px);
-    box-shadow: 0 5px 5px rgba(255, 160, 122, 0.3);
+    box-shadow: 0 5px 15px rgba(255, 160, 122, 0.3);
     border-color: rgba(255, 160, 122, 0.4);
 }
 
