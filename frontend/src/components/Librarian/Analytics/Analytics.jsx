@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './Analytics.css';
 
 const ReservationAnalytics = () => {
   const [reservations, setReservations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [timeFilter, setTimeFilter] = useState('all');
+  const [showAll, setShowAll] = useState(false);
 
   useEffect(() => {
     fetchReservations();
@@ -15,14 +17,11 @@ const ReservationAnalytics = () => {
     try {
       setLoading(true);
       const response = await axios.get(
-          'http://localhost:8002/reservations/all',
-          { withCredentials: true }
-        );
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data = await response.json();
-      setReservations(data);
+        'http://localhost:8002/reservations/all',
+        { withCredentials: true }
+      );
+      setReservations(response.data);
+      console.log({response})
       setError(null);
     } catch (err) {
       setError('Failed to fetch reservation data');
@@ -48,7 +47,7 @@ const ReservationAnalytics = () => {
         return reservations;
     }
     
-    return reservations.filter(res => new Date(res.created_at) >= startDate);
+    return reservations.filter(res => new Date(res.timestamp) >= startDate);
   };
 
   // Calculate statistics
@@ -86,7 +85,7 @@ const ReservationAnalytics = () => {
     // Daily data for timeline
     const dailyData = {};
     filteredData.forEach(res => {
-      const date = new Date(res.created_at).toLocaleDateString();
+      const date = new Date(res.timestamp).toLocaleDateString();
       dailyData[date] = (dailyData[date] || 0) + 1;
     });
     
@@ -100,6 +99,7 @@ const ReservationAnalytics = () => {
 
   const stats = calculateStats(reservations);
   const chartData = prepareChartData(reservations);
+  const displayedReservations = showAll ? reservations : reservations.slice(0, 10);
 
   if (loading) {
     return (
@@ -122,7 +122,7 @@ const ReservationAnalytics = () => {
   return (
     <div className="analytics-container">
       <div className="analytics-header">
-        <h1>Reservation Analytics</h1>
+        <h1 className="BookCatalog-title">Library Reservation Analytics</h1>
         <div className="time-filter">
           <button 
             className={timeFilter === 'all' ? 'active' : ''}
@@ -174,7 +174,7 @@ const ReservationAnalytics = () => {
 
       <div className="charts-container">
         <div className="chart-card">
-          <h3>Reservation Status</h3>
+          <h3>Reservation Status Distribution</h3>
           <div className="bar-chart">
             {chartData.statusData.map((item, index) => (
               <div key={index} className="bar-item">
@@ -184,7 +184,7 @@ const ReservationAnalytics = () => {
                     className="bar-fill" 
                     style={{ 
                       width: `${(item.count / Math.max(...chartData.statusData.map(d => d.count)) * 100)}%`,
-                      backgroundColor: `hsl(${index * 70}, 70%, 50%)`
+                      backgroundColor: `hsl(17, 100%, ${70 - index * 12}%)`
                     }}
                   ></div>
                 </div>
@@ -216,46 +216,62 @@ const ReservationAnalytics = () => {
       </div>
 
       <div className="raw-data">
-        <h3>Raw Data ({reservations.length} records)</h3>
+        <h3>All Reservation Details ({reservations.length} records)</h3>
         <div className="table-container">
           <table>
             <thead>
               <tr>
                 <th>ID</th>
-                <th>User</th>
-                <th>Book</th>
+                <th>User ID</th>
+                <th>Book ISBN</th>
                 <th>Status</th>
-                <th>Created At</th>
+                <th>Position</th>
+                <th>Reservation Date</th>
               </tr>
             </thead>
             <tbody>
-              {reservations.slice(0, 10).map(res => (
-                <tr key={res.id}>
-                  <td>{res.id}</td>
-                  <td>{res.user}</td>
-                  <td>{res.book}</td>
-                  <td>
-                    <span className={`status-badge ${
-                      res.fulfilled ? 'fulfilled' : 
-                      res.cancelled ? 'cancelled' : 
-                      res.ready_for_pickup ? 'ready' : 'active'
-                    }`}>
-                      {res.fulfilled ? 'Fulfilled' : 
-                       res.cancelled ? 'Cancelled' : 
-                       res.ready_for_pickup ? 'Ready' : 'Active'}
-                    </span>
-                  </td>
-                  <td>{new Date(res.created_at).toLocaleDateString()}</td>
-                </tr>
-              ))}
+              {displayedReservations.map(res => {
+                console.log("Row data:", res);
+                return (
+                  <tr key={res.id}>
+                    <td>{res.id}</td>
+                    <td>{res.user}</td>
+                    <td>{res.book}</td>
+                    <td>
+                      <span className={`status-badge ${
+                        res.fulfilled ? 'fulfilled' : 
+                        res.cancelled ? 'cancelled' : 
+                        res.ready_for_pickup ? 'ready' : 'active'
+                      }`}>
+                        {res.fulfilled ? 'Fulfilled' : 
+                        res.cancelled ? 'Cancelled' : 
+                        res.ready_for_pickup ? 'Ready' : 'Active'}
+                      </span>
+                    </td>
+                    <td>{res.position || '0'}</td>
+                    <td>{new Date(res.timestamp).toLocaleDateString()}</td>
+                  </tr>
+                );
+              })}
             </tbody>
+
           </table>
         </div>
         {reservations.length > 10 && (
-          <p className="show-more">Showing 10 of {reservations.length} records</p>
-        )}
-      </div>
+        <div 
+          className="show-more" 
+          onClick={() => setShowAll(!showAll)}
+        >
+          <span>
+            {showAll 
+              ? `Showing all ${reservations.length} records` 
+              : `Showing 10 of ${reservations.length} records`}
+          </span>
+          <span className={`arrow ${showAll ? "up" : "down"}`}>▼</span>
+        </div>
+      )}
     </div>
+  </div>
   );
 };
 
