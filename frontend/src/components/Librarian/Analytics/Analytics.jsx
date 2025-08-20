@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Analytics.css';
+import Navbar from "../../Navbar/Navbar";
 
 const ReservationAnalytics = () => {
   const [reservations, setReservations] = useState([]);
@@ -121,6 +122,7 @@ const ReservationAnalytics = () => {
 
   return (
     <div className="analytics-container">
+      <Navbar/>
       <div className="analytics-header">
         <h1 className="BookCatalog-title">Library Reservation Analytics</h1>
         <div className="time-filter">
