@@ -175,8 +175,8 @@ def fulfill_book(request, reservation_id):
                    status=status.HTTP_200_OK)
 
 
+# to check
 
-#TO CHECK THE CANCEL RESERVATIONS
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
 def cancel_reservation(request, reservation_id):
@@ -196,8 +196,7 @@ def cancel_reservation(request, reservation_id):
             status=status.HTTP_400_BAD_REQUEST
         )
 
-    # CHECK THE FULFILLED STATUS IN CREATE RESERVATIONS
-    
+    # Optional: Check fulfilled status
     # if reservation.fulfilled and not reservation.returned:
     #     return Response(
     #         {"detail": "Cannot cancel fulfilled reservation that hasn't been returned"},
@@ -205,35 +204,27 @@ def cancel_reservation(request, reservation_id):
     #     )
 
     with transaction.atomic():
+        # Cancel the reservation
         reservation.cancelled = True
         reservation.save()
+
+        # Increment book's available copies
         book = Book.objects.get(isbn=reservation.book.isbn)
         book.available_copies += 1
         book.save()
-     next_in_line = Reservation.objects.filter(
-        book=reservation.book,
-        fulfilled=False,
-        ready_for_pickup=False,
-        returned=False
-    ).order_by('position').first()
 
-        # Update positions for remaining reservations if needed
-    if next_in_line:
-        next_in_line.ready_for_pickup = True
-        next_in_line.fulfilled = False
-        next_in_line.position = None
-        next_in_line.save()
-
-        others = Reservation.objects.filter(
+        # Get all active reservations for this book, ordered by current position
+        active_reservations = Reservation.objects.filter(
             book=reservation.book,
             fulfilled=False,
-            ready_for_pickup=False,
+            cancelled=False,
             returned=False
-        ).exclude(id=next_in_line.id).order_by('position')
+        ).order_by('position')
 
-        for i, res in enumerate(others, start=1):
-            res.position = i + 1
+        # Reassign positions and mark first as ready_for_pickup
+        for idx, res in enumerate(active_reservations, start=1):
+            res.position = idx
+            res.ready_for_pickup = (idx == 1)
             res.save()
 
-    return Response({'message': 'Book returned and queue updated.'})
-
+    return Response({'message': 'Reservation cancelled and queue updated.'})
