@@ -83,29 +83,61 @@ def create_reservation(request):
                         status=status.HTTP_403_FORBIDDEN)
 
     book = get_object_or_404(Book, isbn=isbn)
-    active_count = Reservation.objects.filter(book=book, returned=False).count()
-    total = book.available_copies
-
-    if active_count < total:
-        reservation = Reservation.objects.create(
-            user_id=user_id,
+    
+    with transaction.atomic():
+        # Get all active reservations for this book
+        active_reservations = Reservation.objects.filter(
             book=book,
-            fulfilled=False, #SHOULD BE FALSE SINCE I HAVE JUST ASKED FOR A RESERVATION BUT I STILL DO NOT HAVE THE BOOKS IN MY HAND THE LIBRARIAN SHOULD SAY IF FULFILLED OR NOT
-            ready_for_pickup=True,
-            position=None
-        )
-    else:
-        position = Reservation.objects.filter(book=book, returned=False).count() + 1
+            fulfilled=False,
+            cancelled=False,
+            returned=False
+        ).order_by('position')
+        
+        active_count = active_reservations.count()
+        
+        # Calculate the new position
+        new_position = active_count + 1
+        
+        # Check if the new reservation can be fulfilled immediately
+        if active_count < book.available_copies:
+            # There are available copies, mark as ready for pickup
+            ready_for_pickup = True
+            # Decrement available copies
+            book.available_copies -= 1
+            book.save()
+        else:
+            ready_for_pickup = False
+        
+        # Create the reservation
         reservation = Reservation.objects.create(
             user_id=user_id,
             book=book,
             fulfilled=False,
-            position=position,
-            ready_for_pickup=False,
-    )
+            position=new_position,
+            ready_for_pickup=ready_for_pickup
+        )
+        
+        # If this reservation is ready for pickup, we need to update the status of other reservations
+        if ready_for_pickup:
+            # The number of ready reservations might now exceed available copies
+            # We need to ensure only the first 'available_copies' reservations are ready
+            ready_reservations = Reservation.objects.filter(
+                book=book,
+                fulfilled=False,
+                cancelled=False,
+                returned=False,
+                ready_for_pickup=True
+            ).order_by('position')
+            
+            # If we have more ready reservations than available copies, mark the extras as not ready
+            if ready_reservations.count() > book.available_copies:
+                for res in ready_reservations[book.available_copies:]:
+                    res.ready_for_pickup = False
+                    res.save()
 
     serializer = ReservationSerializer(reservation)
     return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -196,16 +228,13 @@ def cancel_reservation(request, reservation_id):
             status=status.HTTP_400_BAD_REQUEST
         )
 
-    # Optional: Check fulfilled status
-    # if reservation.fulfilled and not reservation.returned:
-    #     return Response(
-    #         {"detail": "Cannot cancel fulfilled reservation that hasn't been returned"},
-    #         status=status.HTTP_400_BAD_REQUEST
-    #     )
-
     with transaction.atomic():
+        # Store the position before cancelling
+        cancelled_position = reservation.position
+        
         # Cancel the reservation
         reservation.cancelled = True
+        reservation.position = None
         reservation.save()
 
         # Increment book's available copies
@@ -221,10 +250,22 @@ def cancel_reservation(request, reservation_id):
             returned=False
         ).order_by('position')
 
-        # Reassign positions and mark first as ready_for_pickup
+        # Reassign positions sequentially
         for idx, res in enumerate(active_reservations, start=1):
             res.position = idx
-            res.ready_for_pickup = (idx == 1)
+            res.save()
+
+        # Now determine which reservations should be ready for pickup
+        # The first 'available_copies' reservations should be ready
+        ready_reservations = active_reservations[:book.available_copies]
+        for res in ready_reservations:
+            res.ready_for_pickup = True
+            res.save()
+
+        # The rest should not be ready
+        not_ready_reservations = active_reservations[book.available_copies:]
+        for res in not_ready_reservations:
+            res.ready_for_pickup = False
             res.save()
 
     return Response({'message': 'Reservation cancelled and queue updated.'})
