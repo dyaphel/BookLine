@@ -151,7 +151,7 @@ const MyBooks = ({ userId }) => {
     <div className="my-books-page">
       <Navbar />
       <div className="my-books-container">
-        <h1 className="my-books-page-title">Your Reserved Books</h1>
+        <h1 className="BookCatalog-title">Your Reserved Books</h1>
 
         { activeReservations.length === 0 ? ( 
           <div className="empty-state">
@@ -159,39 +159,41 @@ const MyBooks = ({ userId }) => {
           </div>
         ) : (
           <div className="books-grid">
-            {activeReservations.map(reservation => {
-              const book = booksData[reservation.book];
-              if (!book) return null;
+          { activeReservations.map(reservation => {
+          const book = booksData[reservation.book];
+          if (!book) return null;
 
-              return (
-                <div key={reservation.id}>
-                  <BookCard 
-                    cover={normalizeCoverUrl(book.cover || '')} 
-                    title={book.title}
-                    author={book.author}
-                    onClick={() => navigate(`/books/${book.isbn}`)}
-                  />
-                  <p
-                    className="my-books-status-text"
-                    data-status={
-                      reservation.ready_for_pickup ? 'ready' :
-                      reservation.position ? 'waiting' : 'pending'
-                    }
-                  >
-                    {getStatusText(reservation)}
-                  </p>
-                  <div className="my-books-buttons">
-                    <button
-                      className="my-books-cancel-button"
-                      onClick={() => handleCancelReservation(reservation.id)}
-                    >
-                      Cancel
-                    </button>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+    return (
+      <div key={reservation.id} className="book-card">
+        <BookCard
+          cover={normalizeCoverUrl(book.cover)}
+          title={book.title}
+          author={book.author}
+          onClick={() => navigate(`/books/${book.isbn}`)}
+        />
+
+        <p
+          className="my-books-status-text"
+          data-status={
+            reservation.ready_for_pickup ? 'ready' :
+            reservation.position ? 'waiting' : 'pending'
+          }
+        >
+          {getStatusText(reservation)}
+        </p>
+
+        <div className="my-books-buttons">
+          <button
+            className="my-books-cancel-button"
+            onClick={() => handleCancelReservation(reservation.id)}
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    );
+  })}
+</div>
         )}
       </div>
     </div>
