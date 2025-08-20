@@ -12,4 +12,5 @@ urlpatterns = [
     path('whoami/', views.whoami, name='whoami'),
 
     path('fulfill/<int:reservation_id>/', views.fulfill_book, name='fulfill_book'),
+    path('<int:reservation_id>/', views.reservations_by_id, name="reservations_by_id"),
 ]

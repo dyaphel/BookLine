@@ -33,6 +33,16 @@ def all_reservations(request):
     serializer = ReservationSerializer(reservations, many=True)
     return Response(serializer.data)
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def reservations_by_id(request, reservation_id):
+    if request.user.role not in [CustomUser.Roles.LIBRARIAN, CustomUser.Roles.ADMIN]:
+        return Response({'detail': 'Not authorized.'}, status=status.HTTP_403_FORBIDDEN)
+
+    reservations = Reservation.objects.get(id=reservation_id)
+    serializer = ReservationSerializer(reservations)
+    return Response(serializer.data)
+
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])

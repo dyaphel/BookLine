@@ -3,6 +3,7 @@ import axios from 'axios';
 import { normalizeCoverUrl } from "../../../../Utils/urlCoverNormalizer";
 import './ToBeFulfilled.css';
 import { getCsrfToken } from '../../../../Utils/GetToken';
+import {useNavigate} from "react-router-dom";
 
 const ToBeFulfilled = () => {
   const [reservations, setReservations] = useState([]);
@@ -11,7 +12,12 @@ const ToBeFulfilled = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [csrfToken, setCsrfToken] = useState('');
+  const navigate = useNavigate();
+  
 
+  const goToReservationDetails = (reservationId) => {
+  navigate(`/reservations/${reservationId}`); 
+};
 
   useEffect(() => {
     const fetchCsrf = async () => {
@@ -155,7 +161,9 @@ const ToBeFulfilled = () => {
             };
 
             return (
-              <div key={reservation.id} className="fulfill-card">
+              <div key={reservation.id} className="fulfill-card"
+                onClick={() => goToReservationDetails(reservation.id)}>
+                  
                 <div className="fulfill-cover-container">
                   {book.cover ? (
                     <img

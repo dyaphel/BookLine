@@ -11,6 +11,7 @@ import MyBooks from "../components/User-Books/MyBooks";
 import EditCatalog from "../components/Librarian/EditCatalog/EditCatalog";
 import AllReservations from "../components/Librarian/AllReservations/AllReservations";
 import ReservationAnalytics from "../components/Librarian/Analytics/Analytics";
+import ReservationsDetails from "../components/Librarian/AllReservations/ReservationsDetails/ReservationsDetails";
 
 const AppRoutes = () => { 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -65,7 +66,10 @@ const AppRoutes = () => {
                 <Route 
                 path="/all-reservations" 
                 element={ userData.isStaff ?<AllReservations/>:<Login />  } />
-                
+                <Route 
+                path="/reservations/:reservationId" 
+                element={ userData.isStaff ?<ReservationsDetails/>:<Login />  } />
+
                 <Route 
                 path="/catalog" 
                 element={ userData.isStaff ?<EditCatalog/>:<Login />  } />
@@ -73,6 +77,7 @@ const AppRoutes = () => {
                 <Route 
                 path="/analytics" 
                 element={ userData.isStaff ?<ReservationAnalytics/>:<Login />  } />
+
             </Routes>
         </Router>
     );
