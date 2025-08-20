@@ -51,6 +51,40 @@ const ReservationAnalytics = () => {
     return reservations.filter(res => new Date(res.timestamp) >= startDate);
   };
 
+const calculateGrowthRate = (data) => {
+  const now = new Date();
+
+  if (timeFilter === 'week') {
+    const startDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+    const prevStartDate = new Date(now.getTime() - 14 * 24 * 60 * 60 * 1000);
+    const currentWeek = data.filter(r => new Date(r.timestamp) >= startDate).length;
+    const prevWeek = data.filter(r => new Date(r.timestamp) >= prevStartDate && new Date(r.timestamp) < startDate).length;
+    if (prevWeek === 0) return currentWeek > 0 ? 100 : 0;
+    return (((currentWeek - prevWeek) / prevWeek) * 100).toFixed(1);
+
+  } else if (timeFilter === 'month') {
+    const startDate = new Date(now.getFullYear(), now.getMonth(), 1);
+    const prevStartDate = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+    const currentMonth = data.filter(r => new Date(r.timestamp) >= startDate).length;
+    const prevMonth = data.filter(r => new Date(r.timestamp) >= prevStartDate && new Date(r.timestamp) < startDate).length;
+    if (prevMonth === 0) return currentMonth > 0 ? 100 : 0;
+    return (((currentMonth - prevMonth) / prevMonth) * 100).toFixed(1);
+
+  } else if (timeFilter === 'all') {
+    // Trend generale: confronta metà iniziale e metà finale dei dati
+    if (data.length < 2) return 0;
+    const sorted = [...data].sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+    const mid = Math.floor(sorted.length / 2);
+    const firstHalf = sorted.slice(0, mid).length;
+    const secondHalf = sorted.slice(mid).length;
+    if (firstHalf === 0) return secondHalf > 0 ? 100 : 0;
+    return (((secondHalf - firstHalf) / firstHalf) * 100).toFixed(1);
+  }
+
+  return 0;
+};
+
+  
   // Calculate statistics
   const calculateStats = (data) => {
     const filteredData = filterReservationsByTime(data);
@@ -59,17 +93,19 @@ const ReservationAnalytics = () => {
     const cancelled = filteredData.filter(r => r.cancelled).length;
     const ready = filteredData.filter(r => r.ready_for_pickup && !r.fulfilled).length;
     const active = filteredData.filter(r => !r.fulfilled && !r.cancelled).length;
-    
+    const growthRate = calculateGrowthRate(reservations);
+
     return {
       total,
       fulfilled,
       cancelled,
       ready,
       active,
-      fulfillmentRate: total > 0 ? ((fulfilled / total) * 100).toFixed(1) : 0
+      fulfillmentRate: total > 0 ? ((fulfilled / total) * 100).toFixed(1) : 0,
+      growthRate,
     };
   };
-
+  
   // Prepare data for visualizations
   const prepareChartData = (data) => {
     const filteredData = filterReservationsByTime(data);
@@ -171,6 +207,10 @@ const ReservationAnalytics = () => {
         <div className="stat-card">
           <h3>Fulfillment Rate</h3>
           <div className="stat-value">{stats.fulfillmentRate}%</div>
+        </div>
+        <div className="stat-card">
+          <h3>Growth Rate</h3>
+          <div className="stat-value">{stats.growthRate}%</div>
         </div>
       </div>
 

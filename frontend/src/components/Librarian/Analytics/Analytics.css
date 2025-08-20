@@ -7,14 +7,16 @@
 
 .analytics-header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 60px;
-  padding-bottom: 20px;
+  flex-direction: column; /* titolo sopra, pulsanti sotto */
+  align-items: center;    /* centra il titolo e i pulsanti */
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #e1e4e8;
 }
 
 .analytics-header h1 {
-  margin: 0;
+  margin-top: 80px;
+  text-align: center;  /* centra il testo del titolo */
 }
 
 .time-filter {
