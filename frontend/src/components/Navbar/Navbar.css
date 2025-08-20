@@ -100,7 +100,11 @@
   background-color: lightsalmon;
   color: white;
 }
-
+.divider {
+  color: #fff;      /* colore linea */
+  font-weight: bold;
+ /* se vuoi più visibile */
+}
 /* Responsive Adjustments */
 @media (max-width: 992px) {
   .my-navbar {

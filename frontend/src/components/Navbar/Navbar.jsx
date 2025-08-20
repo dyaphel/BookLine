@@ -120,7 +120,8 @@ const NavBar = ({ onFilterClick, onSearch }) => {
       <button onClick={() => navigate(`/users/${userData.username}`)} className="my-nav-button">
         Profile
       </button>
-
+        {/* <span className="divider">|</span> */}
+      
       {/* Solo staff */}
       {userData.isStaff && (
         <>

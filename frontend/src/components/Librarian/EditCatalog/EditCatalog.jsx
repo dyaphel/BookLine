@@ -126,7 +126,7 @@ const EditCatalog = () => {
         <div className="loading">Loading...</div>
       ) : (
         <>
-          <h1 className="BookCatalog-title">Edit Books</h1>
+          <h1 className="EditCatalog-title">Edit Books</h1>
           <div className="catalog-books-grid">
             {books.map((book) => (
               <div key={book.isbn} className="catalog-book-card">
