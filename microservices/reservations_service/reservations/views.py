@@ -193,7 +193,7 @@ def return_book(request, reservation_id):
     return Response({'message': 'Book returned and queue updated.'})
 
 # DA CONTROLLARE 
-
+#non so se va aggaiornata la posizione in coda del successivo con -1 quando fullfilled
 @api_view(['PATCH'])
 @permission_classes([IsAuthenticated])
 def fulfill_book(request, reservation_id):

@@ -193,13 +193,18 @@ const ToBeReturned = () => {
 
                   <div className="fulfill-buttons">
                     <button
-                      onClick={() => handleReturn(reservation.id)}
+                      onClick={(e) => {
+                         e.stopPropagation();
+                          handleReturn(reservation.id)
+                      }}
                       className="btn fulfill"
                     >
                       Return
                     </button>
                     <button
-                      onClick={() => handleCancel(reservation.id)}
+                      onClick={(e) => {
+                        handleCancel(reservation.id)
+                      }}
                       className="btn cancel"
                     >
                       Cancel
