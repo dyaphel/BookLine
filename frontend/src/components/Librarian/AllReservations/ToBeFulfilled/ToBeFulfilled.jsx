@@ -99,7 +99,7 @@ const ToBeFulfilled = () => {
     fetchData();
   }, []);
 
-  const handleFulfill = async (reservationId) => {
+  const handleFulfillTOBE = async (reservationId) => {
     try {
      await axios.patch(
   `http://localhost:8002/reservations/fulfill/${reservationId}/`,
@@ -112,7 +112,6 @@ const ToBeFulfilled = () => {
     withCredentials: true,
   }
 );
-
       setReservations(prev => prev.filter(res => res.id !== reservationId));
     } catch (err) {
       setError(err.response?.data?.detail || 'Fulfillment failed');
@@ -120,7 +119,7 @@ const ToBeFulfilled = () => {
     location.reload()
   };
 
-  const handleCancel = async (reservationId) => {
+  const handleCancelTOBE = async (reservationId) => {
     try {
       await axios.delete(
         `http://localhost:8002/reservations/cancel/${reservationId}/`,
@@ -192,20 +191,28 @@ const ToBeFulfilled = () => {
                   <div className="fulfill-info">
                     <span className="fulfill-label">Reservation:</span> {reservation.id}
                   </div>
+                <div>
+                 <div className="fulfill-buttons">
+                  <button
+                    onClick={(e) => { 
+                      e.stopPropagation(); // prevent card click
+                      handleFulfillTOBE(reservation.id); 
+                    }}
+                    className="btn fulfill"
+                  >
+                    Fulfill
+                  </button>
+                  <button
+                    onClick={(e) => { 
+                      e.stopPropagation(); // prevent card click
+                      handleCancelTOBE(reservation.id); 
+                    }}
+                    className="btn cancel"
+                  >
+                    Cancel
+                  </button>
+                </div>
 
-                  <div className="fulfill-buttons">
-                    <button
-                      onClick={() => handleFulfill(reservation.id)}
-                      className="btn fulfill"
-                    >
-                      Fulfill
-                    </button>
-                    <button
-                      onClick={() => handleCancel(reservation.id)}
-                      className="btn cancel"
-                    >
-                      Cancel
-                    </button>
                   </div>
                 </div>
               </div>

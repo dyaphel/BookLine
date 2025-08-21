@@ -170,12 +170,41 @@ const ReservationsDetails = () => {
     <p><strong>Cancelled:</strong> {reservation.cancelled ? 'Yes' : 'No'}</p>
     <p><strong>Timestamp:</strong> {new Date(reservation.timestamp).toLocaleString()}</p>
 
-    {!reservation.fulfilled && !reservation.cancelled && (
-      <div className="fulfill-buttons">
-        <button onClick={handleFulfill} className="btn fulfill">Fulfill</button>
-        <button onClick={handleCancel} className="btn cancel">Cancel</button>
-      </div>
+{!reservation.cancelled && (
+  <div className="fulfill-buttons">
+    {!reservation.fulfilled ? (
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          handleFulfill(reservation.id);
+        }}
+        className="btn fulfill"
+      >
+        Fulfill
+      </button>
+    ) : (
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          handleReturn(reservation.id);
+        }}
+        className="btn fulfill"
+      >
+        Return
+      </button>
     )}
+    <button
+      onClick={(e) => {
+        e.stopPropagation();
+        handleCancel(reservation.id);
+      }}
+      className="btn cancel"
+    >
+      Cancel
+    </button>
+  </div>
+)}
+
   </div>
 </div>
   );

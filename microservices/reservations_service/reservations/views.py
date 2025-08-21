@@ -106,7 +106,7 @@ def create_reservation(request):
         active_count = active_reservations.count()
         
         # Calculate the new position
-        new_position = active_count + 1
+        new_position = active_count
         
         # Check if the new reservation can be fulfilled immediately
         if active_count < book.available_copies:
@@ -149,6 +149,7 @@ def create_reservation(request):
     return Response(serializer.data, status=status.HTTP_201_CREATED)
     
 
+# DA CONTROLLARE 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def return_book(request, reservation_id):
@@ -191,6 +192,7 @@ def return_book(request, reservation_id):
 
     return Response({'message': 'Book returned and queue updated.'})
 
+# DA CONTROLLARE 
 
 @api_view(['PATCH'])
 @permission_classes([IsAuthenticated])
@@ -218,7 +220,7 @@ def fulfill_book(request, reservation_id):
 
 
 # to check
-
+# DA CONTROLLARE 
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
 def cancel_reservation(request, reservation_id):
