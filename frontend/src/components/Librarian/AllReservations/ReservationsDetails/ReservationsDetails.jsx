@@ -61,6 +61,28 @@ const ReservationsDetails = () => {
     fetchDetails();
   }, [reservationId]);
 
+    const handleReturn = async (reservationId) => {
+    try {
+     await axios.post(
+  `http://localhost:8002/reservations/return/${reservationId}/`,
+  {}, 
+  {
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRFToken': csrfToken,
+    },
+    withCredentials: true,
+  }
+);
+
+      setReservation(prev => prev.filter(res => res.id !== reservationId));
+      navigate('/all-reservations')
+    } catch (err) {
+      setError(err.response?.data?.detail || 'Fulfillment failed');
+    }
+    location.reload()
+  };
+
   const handleFulfill = async () => {
     try {
       await axios.patch(
@@ -78,6 +100,7 @@ const ReservationsDetails = () => {
       setReservation(prev => ({ ...prev, fulfilled: true }));
       setError(null);
       navigate('/all-reservations')
+      
     } catch (err) {
       setError(err.response?.data?.detail || 'Fulfillment failed');
     }

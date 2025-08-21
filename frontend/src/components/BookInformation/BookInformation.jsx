@@ -127,11 +127,13 @@ if (userReservation.ready_for_pickup && reservations.available_copies > 0) {
     );
   }
 
+
   return reservations.available_copies > 0 ? (
     <Reservation isbn={isbn} />
   ) : (
     <GetInQueue isbn={isbn} />
   );
+
 };
 
   if (loading) return <div className="loading">Loading book details...</div>;

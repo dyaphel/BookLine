@@ -50,7 +50,7 @@ const MyBooks = ({ userId }) => {
           }
         );
         console.log({response})
-        setReservations(response.data.filter(res=> !res.cancelled));
+        setReservations(response.data.filter(res=> !res.cancelled && !res.returned));
       } catch (err) {
         console.error('Error fetching reservations:', err);
         setError(err.response?.data?.message || 'Failed to load reservation data');
