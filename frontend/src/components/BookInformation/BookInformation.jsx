@@ -112,10 +112,17 @@ if (userReservation.ready_for_pickup && reservations.available_copies > 0) {
 } else if (userReservation.position) {
   statusMessage = `You're in queue (position ${userReservation.position})`;
   statusClass += ' status-queue';
+} else if(!userReservation.cancelled || userReservation.returned){
+  return reservations.available_copies > 0 ? (
+    <Reservation isbn={isbn} />
+  ) : (
+    <GetInQueue isbn={isbn} />
+  );
 } else {
   statusMessage = 'You have a reservation for this book';
   statusClass += ' status-pending';
 }
+
 
 
     return (

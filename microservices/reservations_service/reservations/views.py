@@ -150,6 +150,7 @@ def create_reservation(request):
     
 
 # DA CONTROLLARE 
+#secondo me dopo il return la reservation va cancellata
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def return_book(request, reservation_id):
