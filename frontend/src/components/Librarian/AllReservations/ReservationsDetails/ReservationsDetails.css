@@ -12,7 +12,7 @@
 }
 
 /* Top row: Book + User */
-.top-row {
+.Reservation-top-row {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
@@ -26,7 +26,7 @@
 }
 
 /* Card style */
-.details-section {
+.Reservation-details-section {
   background-color: rgba(0, 0, 0, 0.25);
   border-radius: 14px;
   padding: 20px;
@@ -40,13 +40,13 @@
   max-width: 420px;
 }
 
-.details-section:hover {
+.Reservation-details-section:hover {
   transform: translateY(-4px);
   box-shadow: 0 12px 25px rgba(0,0,0,0.5);
 }
 
 /* Card heading */
-.details-section h3 {
+.Reservation-details-section h3 {
   color: lightcoral;
   font-size: 1.6rem;
   margin-bottom: 15px;
@@ -55,13 +55,13 @@
 }
 
 /* Book/User image + info layout */
-.book-details, .user-details {
+.Reservation-book-details, .Reservation-user-details {
   display: flex;
   gap: 15px;
   flex-wrap: wrap;
 }
 
-.book-cover, .user-image, .no-cover {
+.Reservation-book-cover, .Reservation-user-image, .Reservation-no-cover {
   width: 120px;
   height: 180px;
   border-radius: 10px;
@@ -78,7 +78,7 @@
 }
 
 /* Info container: 2 per row */
-.book-info, .user-info, .details-info {
+.Reservation-book-info, .Reservation-user-info, .Reservation-details-info {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
@@ -88,9 +88,9 @@
 
 
 
-.info-item strong, 
-.book-info strong, 
-.user-info strong, 
+.Reservation-info-item strong, 
+.Reservation-book-info strong, 
+.Reservation-user-info strong, 
 .reservation-section strong {
   color: lightsalmon;
   min-width: 80px;
@@ -103,41 +103,6 @@
   width: 100%;
 }
 
-/* Buttons */
-.fulfill-buttons {
-  display: flex;
-  gap: 15px;
-  margin-top: 20px;
-}
-
-.btn {
-  padding: 10px 22px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: 0.3s;
-}
-
-.btn.fulfill {
-  background-color: lightsalmon;
-  color: white;
-}
-
-.btn.fulfill:hover {
-  background-color: lightcoral;
-  transform: scale(1.05);
-}
-
-.btn.cancel {
-  background-color: gray;
-  color: white;
-}
-
-.btn.cancel:hover {
-  background-color: darkred;
-  transform: scale(1.05);
-}
 
 /* Loading & error */
 .loading, .error {

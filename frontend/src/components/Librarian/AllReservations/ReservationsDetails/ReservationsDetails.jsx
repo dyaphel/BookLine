@@ -112,24 +112,24 @@ const ReservationsDetails = () => {
   return (
    <div className="reservation-details-container">
   <Navbar />
-  <h2 className="Reservation-title"> Reservation number:{reservation.id}</h2>
+  <h2 className="Reservation-title"> Reservation number: &ensp;{reservation.id}</h2>
 
   {/* Top row: Book + User */}
-  <div className="top-row">
-    <div className="details-section book-section">
+  <div className="Reservation-top-row">
+    <div className="Reservation-details-section book-section">
       <h3>Book Information</h3>
-      <div className="book-details">
+      <div className="Reservation-book-details">
         {book.cover ? (
           <img
             src={`http://localhost:8001${normalizeCoverUrl(book.cover)}`}
             alt={book.title}
-            className="book-cover"
+            className="Reservation-book-cover"
             onError={(e) => { e.target.src = 'https://via.placeholder.com/150x200?text=No+Cover'; }}
           />
         ) : (
-          <div className="no-cover">No Cover Available</div>
+          <div className="Reservation-no-cover">No Cover Available</div>
         )}
-        <div className="book-info">
+        <div className="Reservation-book-info">
           <p><strong>Title:</strong> {book.title}</p>
           <p><strong>Author:</strong> {book.author}</p>
           <p><strong>ISBN:</strong> {book.isbn}</p>
@@ -140,18 +140,18 @@ const ReservationsDetails = () => {
       </div>
     </div>
 
-    <div className="details-section user-section">
+    <div className="Reservation-details-section user-section">
       <h3>Patron Information</h3>
-      <div className="user-details">
+      <div className="Reservation-user-details">
         {user.profile_image && (
           <img
             src={`http://localhost:8003${user.profile_image}`}
             alt={`${user.first_name} ${user.last_name}`}
-            className="user-image"
+            className="Reservation-user-image"
             onError={(e) => { e.target.src = 'https://via.placeholder.com/150x150?text=No+Image'; }}
           />
         )}
-        <div className="user-info">
+        <div className="Reservation-user-info">
           <p><strong>Name:</strong> {user.first_name} {user.last_name}</p>
           <p><strong>Username:</strong> {user.username}</p>
           <p><strong>Email:</strong> {user.email}</p>
@@ -162,7 +162,7 @@ const ReservationsDetails = () => {
   </div>
 
   {/* Reservation card centered */}
-  <div className="details-section reservation-section">
+  <div className="Reservation-details-section reservation-section">
     <h3>Reservation Status</h3>
     <p><strong>Ready for Pickup:</strong> {reservation.ready_for_pickup ? 'Yes' : 'No'}</p>
     <p><strong>Fulfilled:</strong> {reservation.fulfilled ? 'Yes' : 'No'}</p>
