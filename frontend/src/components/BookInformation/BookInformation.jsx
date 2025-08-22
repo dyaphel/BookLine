@@ -39,6 +39,7 @@ const BookInformation = () => {
         setBook(bookResponse.data);
         console.log({bookResponse})
         setReservations(availabilityResponse.data);
+        console.log({availabilityResponse})
 
         // If logged in, check user's reservations
         if (authResponse.data.isAuthenticated) {
@@ -64,11 +65,12 @@ const BookInformation = () => {
             
             // Find if user has reservation for this book
             const reservationForThisBook = userReservations.data.find(
-              reservation => reservation.book === isbn && !reservation.cancelled
+              reservation => reservation.book === isbn && !reservation.cancelled && !reservation.returned
             );
             
             if (reservationForThisBook) {
               setUserReservation(reservationForThisBook);
+              console.log({reservationForThisBook})
             }
           } catch (err) {
             console.error("Error checking user reservations:", err);
