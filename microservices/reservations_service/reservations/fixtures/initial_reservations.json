@@ -9,7 +9,7 @@
       "fulfilled": false,
       "ready_for_pickup": true,
       "returned": false,
-      "position": 1,
+      "position": null,
       "cancelled": false
     }
   },
@@ -23,7 +23,7 @@
       "fulfilled": false,
       "ready_for_pickup": false,
       "returned": false,
-      "position": 2,
+      "position": 1,
       "cancelled": false
     }
   },
@@ -37,7 +37,7 @@
       "fulfilled": false,
       "ready_for_pickup": false,
       "returned": false,
-      "position": 3,
+      "position": 2,
       "cancelled": false
     }
   },
@@ -135,7 +135,7 @@
       "fulfilled": false,
       "ready_for_pickup": true,
       "returned": false,
-      "position": 1,
+      "position": null,
       "cancelled": false
     }
   },
