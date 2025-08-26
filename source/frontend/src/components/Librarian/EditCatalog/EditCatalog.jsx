@@ -17,6 +17,7 @@ const EditCatalog = () => {
     isbn: '',
     description: '',
     abstract: '',
+    published: '',
     genre: '',
     language: '',
     available_copies: 1,
@@ -49,6 +50,7 @@ const EditCatalog = () => {
       description: book.description,
       abstract: book.abstract,
       genre: book.genre,
+      published: book.published,
       language: book.language,
       available_copies: book.available_copies
     });
@@ -89,15 +91,11 @@ const EditCatalog = () => {
   };
 
   const handleDeleteBook = async (isbn) => {
-    if (!window.confirm('Are you sure you want to delete this book?')) {
-      return;
-    }
     
     setLoading(true);
     try {
       await axios.delete(`http://localhost:8001/books/books_delete/${isbn}/`);
       setBooks(prevBooks => prevBooks.filter(book => book.isbn !== isbn));
-      alert('Book deleted successfully!');
     } catch (error) {
       console.error("Error deleting book:", error.response?.data || error.message);
       alert(`Error deleting book: ${error.response?.data?.error || error.message}`);
@@ -200,7 +198,6 @@ const EditCatalog = () => {
         }
       );
       
-      alert('Book created successfully!');
       setShowCreateForm(false);
       setNewBookData({
         title: '',
@@ -210,6 +207,7 @@ const EditCatalog = () => {
         abstract: '',
         genre: '',
         language: '',
+        published: '',
         available_copies: 1,
         cover: null,
         coverPreview: null
@@ -233,6 +231,7 @@ const EditCatalog = () => {
       abstract: '',
       genre: '',
       language: '',
+      published: '',
       available_copies: 1,
       cover: null,
       coverPreview: null
@@ -370,12 +369,24 @@ const EditCatalog = () => {
             </div>
 
             <div className="form-group">
+                <label>Published</label>
+                <input
+                  type="text"
+                  name="published"
+                  value={newBookData.published}
+                  onChange={handleNewBookChange}
+                  required
+                  className="popup-input"
+                />
+              </div>
+
+            <div className="form-group">
               <label>DESCRIPTION</label>
               <textarea
                 name="description"
                 value={newBookData.description}
                 onChange={handleNewBookChange}
-                rows="3"
+                rows="5"
                 className="popup-textarea"
                 placeholder="Enter book description..."
               />
