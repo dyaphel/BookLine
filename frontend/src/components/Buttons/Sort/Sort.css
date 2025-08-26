@@ -1,0 +1,28 @@
+/* Contenitore per il pulsante Filter */
+.sort-container {
+    position: absolute; /* Posiziona il contenitore in modo assoluto */
+    top: 20%; /* Distanza dal bordo superiore */
+    right: 0; /* Allinea a sinistra senza margine */
+    border: 1px solid lightcoral;
+    margin-right: 10%;
+    border-radius: 10px;
+  }
+  
+  /* Stile del pulsante */
+  .button-sort {
+    background-color: transparent;
+    border: none;
+    color: lightsalmon;
+    font-size: 1.5rem;
+    font-weight: 500;
+    padding: 10px 20px;
+    border-radius: 9px; /* Bordi arrotondati */
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .button-sort:hover {
+    background-color: lightsalmon; /* Cambia colore di sfondo al passaggio del mouse */
+    color: white; /* Cambia colore del testo al passaggio del mouse */
+  }
+  

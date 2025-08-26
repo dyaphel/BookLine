@@ -1,0 +1,74 @@
+/* Reuse login styles, optionally override here if needed */
+
+.myregister-container {
+    background-color: #2d2d2d;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    width: 400px;
+    text-align: center;
+}
+
+.myregister-title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    text-align: center;
+    color: lightsalmon;
+}
+
+.myregister-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.myregister-input {
+    padding: 10px;
+    border: 1px solid #444;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #333;
+    color: #fff;
+    outline: none;
+}
+
+.myregister-input::placeholder {
+    color: #aaa;
+}
+
+.myregister-button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: lightsalmon;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.myregister-button:hover {
+    background-color: #ff7f50;
+}
+
+/* Register button */
+.myregister-button-login,
+.myregister-button-home {
+    display: block;
+    margin-top: 10px;
+    padding: 10px;
+    border: none; /* Remove border */
+    border-radius: 5px;
+    background-color: #ff6347; /* Slightly darker than lightsalmon */
+    color: white;
+    font-size: 16px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.myregister-button-home:hover {
+    background-color: #ff4d2e; /* Slightly darker than lightsalmon */
+}   
+.myregister-button-login:hover {
+    background-color: #ff4500; /* Even darker on hover */
+}

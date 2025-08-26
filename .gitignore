@@ -128,5 +128,17 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
-*.pyc
-*.json
+
+# Jetbrains editor config files
+.idea
+
+# Python cache data
+__pycache__/
+microservices/users_service/users/__pycache__
+microservices/users_service/users_project/__pycache__
+*.pyo
+
+#macOS DS_Store files
+*.DS_Store
+*.cache
+/microservices/books_service/books/__pycache__

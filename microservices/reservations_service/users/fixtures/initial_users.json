@@ -1,0 +1,86 @@
+[
+  {
+    "model": "users.customuser",
+    "pk": 2,
+    "fields": {
+      "email": "alice@example.com",
+      "first_name": "Alice",
+      "last_name": "Smith",
+      "username": "alice_smith",
+      "role": "USER",
+      "is_active": true,
+      "is_staff": false,
+      "password": "pbkdf2_sha256$600000$WozUYnB5UwagoobmzAlFxW$BfMpHQ9xkuJEbX6EQqBPGjMHzbWvuhthxQvy0Jopo8k="
+    }
+  },
+  {
+    "model": "users.customuser",
+    "pk": 3,
+    "fields": {
+      "email": "bob@example.com",
+      "first_name": "Bob",
+      "last_name": "Johnson",
+      "username": "bob_johnson",
+      "role": "USER",
+      "is_active": true,
+      "is_staff": false,
+      "password": "pbkdf2_sha256$600000$WozUYnB5UwagoobmzAlFxW$BfMpHQ9xkuJEbX6EQqBPGjMHzbWvuhthxQvy0Jopo8k="
+    }
+  },
+  {
+    "model": "users.customuser",
+    "pk": 4,
+    "fields": {
+      "email": "charlie@example.com",
+      "first_name": "Charlie",
+      "last_name": "Williams",
+      "username": "charlie_williams",
+      "role": "USER",
+      "is_active": true,
+      "is_staff": false,
+      "password": "pbkdf2_sha256$600000$WozUYnB5UwagoobmzAlFxW$BfMpHQ9xkuJEbX6EQqBPGjMHzbWvuhthxQvy0Jopo8k="
+    }
+  },
+  {
+    "model": "users.customuser",
+    "pk": 5,
+    "fields": {
+      "email": "damon@example.com",
+      "first_name": "Damon",
+      "last_name": "Crooks",
+      "username": "damon_crooks",
+      "role": "USER",
+      "is_active": true,
+      "is_staff": false,
+      "password": "pbkdf2_sha256$600000$WozUYnB5UwagoobmzAlFxW$BfMpHQ9xkuJEbX6EQqBPGjMHzbWvuhthxQvy0Jopo8k="
+    }
+  },
+  {
+    "model": "users.customuser",
+    "pk": 6,
+    "fields": {
+      "email": "emmett@example.com",
+      "first_name": "Emmett",
+      "last_name": "Bright",
+      "username": "emmett_bright",
+      "role": "USER",
+      "is_active": true,
+      "is_staff": false,
+      "password": "pbkdf2_sha256$600000$WozUYnB5UwagoobmzAlFxW$BfMpHQ9xkuJEbX6EQqBPGjMHzbWvuhthxQvy0Jopo8k="
+    }
+  },
+  {
+    "model": "users.customuser",
+    "pk": 7,
+    "fields": {
+      "email": "librarian@example.com",
+      "first_name": "Porter",
+      "last_name": "Brown",
+      "username": "porter_brown",
+      "role": "LIBRARIAN",
+      "is_active": true,
+      "is_staff": true,
+      "password": "pbkdf2_sha256$600000$WozUYnB5UwagoobmzAlFxW$BfMpHQ9xkuJEbX6EQqBPGjMHzbWvuhthxQvy0Jopo8k="
+    }
+  }
+]

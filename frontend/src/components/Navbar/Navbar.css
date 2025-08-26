@@ -1,0 +1,207 @@
+/* Navbar.css */
+.my-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 15px 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #1e1e1e;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  z-index: 10000;
+  gap: 15px; /* Space between elements */
+}
+
+/* Title/Logo - Left side */
+.my-nav-left {
+  flex: 0 0 auto;
+
+}
+
+/* Search Container - Center */
+.my-nav-center {
+  flex: 1;
+  min-width: 0; /* Allows shrinking */
+  max-width: 600px;
+  margin: 20px 15px;
+}
+
+.my-search-container {
+  margin-top: -10px;
+  display: flex;
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+
+.my-search {
+  width: 100%;
+  padding: 8px 15px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  background-color: rgb(25, 25, 25);
+  transition: all 0.3s ease;
+}
+
+.my-search:focus {
+  border-color: lightsalmon;
+  box-shadow: 0 0 8px rgba(255, 160, 122, 0.6);
+}
+
+/* Filter Button */
+.my-filter {
+  position: absolute;
+  right: -40px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.my-filter-image {
+  width: 32px;
+  height: 32px;
+  transition: transform 0.2s ease;
+}
+
+/* Navigation Buttons - Right side */
+.my-nav-right {
+  flex: 0 0 auto;
+  display: flex;
+  gap: 2%;
+  margin-right: 5%;
+  margin-left: 2%;
+  margin-top: -1%;
+}
+
+.my-nav-button,
+.my-nav-button-register {
+  background-color: transparent;
+  border: none;
+  color: lightsalmon;
+  font-size: 20px;
+  font-weight: 500;
+  padding: 8px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+}
+
+.my-nav-button:hover,
+.my-nav-button-register:hover {
+  background-color: lightsalmon;
+  color: white;
+}
+.divider {
+  color: #fff;      /* colore linea */
+  font-weight: bold;
+ /* se vuoi più visibile */
+}
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+  .my-navbar {
+    padding: 12px 12px;
+    gap: 10px;
+  }
+  .my-search-container {
+    width: 90%;
+}
+  .my-search {
+    padding: 7px 12px;
+    font-size: 0.9rem;
+  }
+  
+  .my-filter {
+    right: -35px;
+  }
+  
+  .my-filter-image {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .my-nav-button,
+  .my-nav-button-register {
+    padding: 7px 12px;
+    font-size: 1rem;
+    margin-top: -10px;
+    width: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .my-navbar {
+    padding: 10px 12px;
+    gap: 8px;
+  }
+  
+  .my-search-container {
+      width: 90%;
+  }
+
+  .my-search {
+    padding: 6px 10px;
+    font-size: 0.85rem;
+    
+  }
+  
+  .my-filter {
+    right: -30px;
+  }
+  
+  .my-filter-image {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .my-nav-button,
+  .my-nav-button-register {
+    padding: 5px 10px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 550px) {
+  .my-navbar {
+    padding: 8px 10px;
+  }
+  
+  .my-search {
+    padding: 5px 8px;
+    font-size: 0.8rem;
+    width: 100%;
+  }
+  
+  .my-nav-button,
+  .my-nav-button-register {
+    display: none;
+    padding: 5px 8px;
+    font-size: 0.8rem;
+  }
+  
+  /* Hide text on smallest screens, show icons only */
+  .my-nav-button span,
+  .my-nav-button-register span {
+    display: none;
+  }
+  
+  .my-nav-button::before,
+  .my-nav-button-register::before {
+    content: attr(data-icon);
+    font-size: 1.1rem;
+  }
+  .my-filter {
+    display: none;
+  }
+  
+
+}
+

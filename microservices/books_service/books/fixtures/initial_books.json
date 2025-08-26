@@ -1,0 +1,282 @@
+[
+    {
+        "model": "books.book",
+        "pk": "9781250256737",
+        "fields": {
+            "title": "The Mountain in the Sea",
+            "description": "A thought-provoking sci-fi novel exploring AI, consciousness, and cephalopod intelligence.",
+            "abstract": "A gripping exploration of artificial intelligence and deep-sea mysteries.",
+            "author": "Ray Nayler",
+            "published": "2022-10-04",
+            "cover": "media/book_covers/the-mountain-in-the-sea.png",
+            "genre": "Science Fiction",
+            "language": "English"
+        }
+    },
+    {
+        "model": "books.book",
+        "pk": "9780593135204",
+        "fields": {
+            "title": "Sea of Tranquility",
+            "description": "A genre-bending novel about time travel and the nature of reality.",
+            "abstract": "A beautifully written meditation on time and existence.",
+            "author": "Emily St. John Mandel",
+            "published": "2022-04-05",
+            "cover": "media/book_covers/sea-of-tranquility.png",
+            "genre": "Science Fiction",
+            "language": "English"
+        }
+    },
+    {
+        "model": "books.book",
+        "pk": "9781250276735",
+        "fields": {
+            "title": "Dead Silence",
+            "description": "A horror-infused sci-fi thriller set on a ghost spaceship.",
+            "abstract": "A chilling mix of space exploration and psychological horror.",
+            "author": "S.A. Barnes",
+            "published": "2022-02-08",
+            "cover": "media/book_covers/dead-silence.png",
+            "genre": "Science Fiction, Horror",
+            "language": "English"
+        }
+    },
+    {
+        "model": "books.book",
+        "pk": "9780316593017",
+        "fields": {
+            "title": "The Terraformers",
+            "description": "An ambitious story about planetary engineering and ecological preservation.",
+            "abstract": "A visionary novel about the future of terraforming and sustainability.",
+            "author": "Annalee Newitz",
+            "published": "2023-01-31",
+            "cover": "media/book_covers/the-terraformers.png",
+            "genre": "Science Fiction",
+            "language": "English"
+        }
+    },
+    {
+        "model": "books.book",
+        "pk": "9781250267689",
+        "fields": {
+            "title": "The Space Between Worlds",
+            "description": "A multiverse adventure where only certain versions of a person can cross dimensions.",
+            "abstract": "A unique take on parallel universes and identity.",
+            "author": "Micaiah Johnson",
+            "published": "2020-08-04",
+            "cover": "media/book_covers/the-space-between-worlds.png",
+            "genre": "Science Fiction",
+            "language": "English"
+        }
+    },
+    {
+        "model": "books.book",
+        "pk": "9780593157527",
+        "fields": {
+            "title": "A Psalm for the Wild-Built",
+            "description": "A quiet, contemplative sci-fi about a monk and a robot seeking meaning in life.",
+            "abstract": "A heartwarming and philosophical tale about purpose and connection.",
+            "author": "Becky Chambers",
+            "published": "2021-07-13",
+            "cover": "media/book_covers/a-psalm-for-the-wild-built.png",
+            "genre": "Science Fiction",
+            "language": "English"
+        }
+    },
+    {
+        "model": "books.book",
+        "pk": "9781789097259",
+        "fields": {
+            "title": "Shards of Earth",
+            "description": "A space opera featuring an alien war, mysterious artifacts, and interstellar intrigue.",
+            "abstract": "An epic journey through the cosmos filled with action and mystery.",
+            "author": "Adrian Tchaikovsky",
+            "published": "2021-05-27",
+            "cover": "media/book_covers/shards-of-earth.png",
+            "genre": "Science Fiction, Space Opera",
+            "language": "English"
+        }
+    },
+    {
+        "model": "books.book",
+        "pk": "9781250756800",
+        "fields": {
+            "title": "The Ministry for the Future",
+            "description": "A near-future sci-fi novel tackling climate change and global survival strategies.",
+            "abstract": "A thought-provoking exploration of our planet’s future.",
+            "author": "Kim Stanley Robinson",
+            "published": "2020-10-06",
+            "cover": "media/book_covers/the-ministry-for-the-future.png",
+            "genre": "Science Fiction, Climate Fiction",
+            "language": "English"
+        }
+    },
+    {
+        "model": "books.book",
+        "pk": "9781250236234",
+        "fields": {
+            "title": "Project Hail Mary",
+            "description": "A lone astronaut must save Earth from an existential threat in this gripping space adventure.",
+            "abstract": "A thrilling survival story in deep space by the author of The Martian.",
+            "author": "Andy Weir",
+            "published": "2021-05-04",
+            "cover": "media/book_covers/project-hail-mary.png",
+            "genre": "Science Fiction",
+            "language": "English"
+        }
+    },
+    {
+        "model": "books.book",
+        "pk": "9780316703355",
+        "fields": {
+            "title": "The Kaiju Preservation Society",
+            "description": "A fun and thrilling adventure about giant creatures living in an alternate dimension.",
+            "abstract": "A witty and action-packed story filled with humor and monsters.",
+            "author": "John Scalzi",
+            "published": "2022-03-15",
+            "cover": "media/book_covers/the-kaiju-preservation-society.png",
+            "genre": "Science Fiction, Adventure",
+            "language": "English"
+        }
+    },
+    {
+        "model": "books.book",
+        "pk": "9780140449136",
+        "fields": {
+            "title": "The Odyssey",
+            "description": "An epic poem attributed to Homer, detailing Odysseus' journey home.",
+            "abstract": "A classic of Greek literature.",
+            "author": "Homer",
+            "published": "0800-01-01",
+            "cover": "media/book_covers/the-odyssey.png",
+            "genre": "Epic Poetry",
+            "language": "Greek"
+        }
+    },
+    {
+        "model": "books.book",
+        "pk": "9780061120084",
+        "fields": {
+            "title": "To Kill a Mockingbird",
+            "description": "A novel about the serious issues of rape and racial inequality.",
+            "abstract": "A timeless American classic.",
+            "author": "Harper Lee",
+            "published": "1960-07-11",
+            "cover": "media/book_covers/to-kill-a-mockingbird.png",
+            "genre": "Fiction",
+            "language": "English"
+        }
+    },
+    {
+        "model": "books.book",
+        "pk": "9780451524935",
+        "fields": {
+            "title": "1984",
+            "description": "A dystopian social science fiction novel and cautionary tale.",
+            "abstract": "A warning against totalitarianism.",
+            "author": "George Orwell",
+            "published": "1949-06-08",
+            "cover": "media/book_covers/1984.png",
+            "genre": "Dystopian Fiction",
+            "language": "English"
+        }
+    },
+    {
+        "model": "books.book",
+        "pk": "9780743273565",
+        "fields": {
+            "title": "The Great Gatsby",
+            "description": "A novel about the American dream and society in the 1920s.",
+            "abstract": "A critique of the Jazz Age.",
+            "author": "F. Scott Fitzgerald",
+            "published": "1925-04-10",
+            "cover": "media/book_covers/the-great-gatsby.png",
+            "genre": "Tragedy",
+            "language": "English"
+        }
+    },
+    {
+        "model": "books.book",
+        "pk": "9781503290563",
+        "fields": {
+            "title": "Pride and Prejudice",
+            "description": "A romantic novel critiquing the British landed gentry.",
+            "abstract": "One of the most loved romance novels.",
+            "author": "Jane Austen",
+            "published": "1813-01-28",
+            "cover": "media/book_covers/pride-and-prejudice.png",
+            "genre": "Romance",
+            "language": "English"
+        }
+    },
+    {
+        "model": "books.book",
+        "pk": "9780141439518",
+        "fields": {
+            "title": "Jane Eyre",
+            "description": "A coming-of-age story that revolutionized the art of fiction.",
+            "abstract": "A landmark in women's literature.",
+            "author": "Charlotte Brontë",
+            "published": "1847-10-16",
+            "cover": "media/book_covers/jane-eyre.png",
+            "genre": "Gothic Fiction",
+            "language": "English"
+        }
+    },
+    {
+        "model": "books.book",
+        "pk": "9780142437209",
+        "fields": {
+            "title": "Moby-Dick",
+            "description": "A novel about a captain's obsession with a white whale.",
+            "abstract": "A masterpiece of American literature.",
+            "author": "Herman Melville",
+            "published": "1851-11-14",
+            "cover": "media/book_covers/moby-dick.png",
+            "genre": "Adventure",
+            "language": "English"
+        }
+    },
+    {
+        "model": "books.book",
+        "pk": "9780486415864",
+        "fields": {
+            "title": "Frankenstein",
+            "description": "A Gothic novel about a scientist and his monstrous creation.",
+            "abstract": "A pioneering work of science fiction.",
+            "author": "Mary Shelley",
+            "published": "1818-01-01",
+            "cover": "media/book_covers/frankenstein.png",
+            "genre": "Horror",
+            "language": "English"
+        }
+    },
+    {
+        "model": "books.book",
+        "pk": "9780199535569",
+        "fields": {
+            "title": "Dracula",
+            "description": "A novel that introduced the character of Count Dracula.",
+            "abstract": "The classic vampire novel.",
+            "author": "Bram Stoker",
+            "published": "1897-05-26",
+            "cover": "media/book_covers/dracula.png",
+            "genre": "Horror",
+            "language": "English"
+        }
+    },
+    {
+        "model": "books.book",
+        "pk": "9780679783268",
+        "fields": {
+            "title": "Les Misérables",
+            "description": "A novel that examines the nature of law and grace.",
+            "abstract": "One of the greatest novels of the 19th century.",
+            "author": "Victor Hugo",
+            "published": "1862-01-01",
+            "cover": "media/book_covers/les-misérables.png",
+            "genre": "Historical Fiction",
+            "language": "French"
+        }
+    }
+]

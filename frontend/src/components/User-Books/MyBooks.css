@@ -1,0 +1,198 @@
+.my-books-page {
+  min-height: 100vh;
+  color: #f0f0f0;
+  padding-bottom: 2rem;
+}
+
+.my-books-container {
+  max-width: 1800px;
+  padding: 20px;
+  text-align: center;
+  width: 100%;
+  padding-top: 50px;
+  width: 100%;
+}
+
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  text-align: center;
+}
+
+.empty-state img {
+  width: 200px;
+  margin-bottom: 1rem;
+  filter: invert(0.8);
+}
+
+.empty-state p {
+  font-size: 1.2rem;
+  color: #b0b0b0;
+}
+
+.books-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  padding: 1rem 0;
+}
+
+
+.book-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+.book-card .BookCard {
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+.my-books-status-text {
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+  font-weight: 500;
+  text-align: center;
+  width: fit-content;
+  margin-bottom: 0.8rem;
+}
+
+.my-books-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 200px; /* questo spinge i pulsanti in fondo alla card */
+  width: 100%;
+}
+
+
+@media (max-width: 1024px) {
+  .books-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .books-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+
+
+.my-books-status-text {
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 4px;
+  margin: 1rem 0;
+  text-align: center;
+  font-size: 1.2rem;
+}
+
+.my-books-status-text[data-status="ready"] {
+  background-color: lightgreen;
+  color: green;
+}
+
+.my-books-status-text[data-status="waiting"] {
+  background-color: rgba(255, 152, 0, 0.2);
+  color: #ff9800;
+}
+
+.my-books-status-text[data-status="pending"] {
+  background-color: rgba(244, 67, 54, 0.2);
+  color: #f44336;
+}
+
+.my-books-position-badge {
+  display: inline-block;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  padding: 0.2rem 0.5rem;
+  margin-left: 0.5rem;
+  font-size: 0.8rem;
+}
+
+.my-books-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.my-books-cancel-button {
+  background-color: lightcoral;
+  color: #1a1a1a;
+  border: none;
+  padding: 0.6rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.my-books-cancel-button:hover {
+  background-color: #ff7f6e;
+}
+
+.my-books-pickup-button {
+  background-color: lightsalmon;
+  color: #1a1a1a;
+  border: none;
+  padding: 0.6rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.my-books-pickup-button:hover {
+  background-color: #ffa07a;
+}
+
+.my-books-pickup-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.my-books-button-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.my-books-spinner {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid rgba(26, 26, 26, 0.2);
+  border-radius: 50%;
+  border-top-color: #1a1a1a;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.my-books-fulfilled-text {
+  margin-top: 1rem;
+  padding: 0.5rem;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  font-size: 0.85rem;
+  color: #b0b0b0;
+  text-align: center;
+}
+
+.checkmark {
+  color: #4caf50;
+  font-weight: bold;
+  margin-right: 0.3rem;
+}

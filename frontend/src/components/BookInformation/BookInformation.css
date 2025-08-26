@@ -1,0 +1,398 @@
+.book-details-container {
+  display: flex;
+  max-width: 1200px;
+  margin: 100px auto 0;
+  gap: 3rem;
+  padding: 0 2.5rem;
+  
+}
+
+/* Book cover card (left side) */
+.book-cover-container-details {
+  display: flex;
+  justify-content: center;;
+  background-color: transparent;
+}
+
+.book-cover-details {
+  max-width: 100%;
+  max-height: 80vh;
+  width: auto;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  object-fit: contain;
+}
+
+/* Book info card (right side) */
+.book-info-card {
+  flex: 1;
+  background-color: rgba(255, 255, 255, 0.85);
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.book-title-info {
+  font-size: 2.8rem;
+  margin-bottom: 0.5rem;
+  color: salmon;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.book-author-info {
+  font-size: 1rem;
+  margin-bottom: 1px;
+  margin-top: -10px;
+  color: black;
+  font-weight: 500;
+  font-style: italic;
+}
+
+.book-meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  font-size: 1.1rem;
+  color: #444;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid lightsalmon;
+}
+
+.book-meta p {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.book-meta strong {
+  color: #333;
+  margin-bottom: 0.3rem;
+  font-weight: 600;
+}
+
+.book-description, 
+.book-abstract {
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 1.8rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  border-left: 4px solid lightsalmon;
+}
+
+.book-description h3, 
+.book-abstract h3 {
+  margin-top: 0;
+  margin-bottom: 1.2rem;
+  color: #333;
+  font-size: 1.5rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+}
+
+.book-description h3::before,
+.book-abstract h3::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 25px;
+  background: lightsalmon;
+  margin-right: 12px;
+  border-radius: 2px;
+}
+
+.book-description p, 
+.book-abstract p {
+  margin: 0;
+  line-height: 1.8;
+  color: #444;
+  text-align: justify;
+  hyphens: auto;
+  max-height: 300px;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+/* Scrollbar styling for long text */
+.book-description p::-webkit-scrollbar,
+.book-abstract p::-webkit-scrollbar {
+  width: 6px;
+}
+
+.book-description p::-webkit-scrollbar-thumb,
+.book-abstract p::-webkit-scrollbar-thumb {
+  background: lightsalmon;
+  border-radius: 3px;
+}
+
+
+
+/* Container for status and button */
+.status-button-row {
+  display: flex;
+  justify-content: center; /* Changed from center to align with your margin-left */
+  align-items: center;
+  gap: 2rem;
+  margin-top: 2rem;
+  margin-left: 10%;
+  width:auto; /* Adjusted to account for margin-left */
+  flex-wrap: nowrap; /* Changed to nowrap to prevent button text wrapping */
+
+}
+
+.book-status-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  border: 2px solid lightgreen;
+  border-radius: 15px;
+  padding: 0.8rem 1.5rem;
+
+
+}
+
+.bookstatus, 
+.bookstatusresponse {
+  font-size: 1.5rem;
+  font-style: italic;
+  margin: 0;
+  padding: 0;
+  line-height: 1.2;
+}
+
+.book-copies-container {
+  display: flex;
+  width: 410px;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  border: 2px solid lightsalmon;
+  border-radius: 15px;
+  padding: 0.8rem 1.5rem;
+
+}
+
+.bookscopies, 
+.bookscopieresponse {
+  font-size: 1.5rem;
+  font-style: italic;
+  margin: 0;
+  padding: 0;
+  line-height: 1.2;
+}
+
+
+.bookbutton{
+ justify-content: center;
+ display: inline-flex ;
+ white-space: nowrap;
+
+}
+/* Base status style */
+.reservation-status {
+  padding: 12px 20px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.4rem;
+  font-weight: 500;
+  border-left: 4px solid;
+}
+
+/* Status icon */
+.status-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* Reserved status (checked out) */
+.status-reserved {
+  background-color: rgba(46, 125, 50, 0.1);
+  border-color: #2E7D32;
+  color: #ffffff;
+}
+.status-reserved .status-icon {
+  background-color: #2E7D32;
+}
+
+/* Ready for pickup status */
+.status-ready {
+  background-color: rgba(255, 152, 0, 0.1);
+  border-color: #FF9800;
+  color: #ffffff;
+  animation: pulse 2s infinite;
+}
+.status-ready .status-icon {
+  background-color: #FF9800;
+}
+
+/* In queue status */
+.status-queue {
+  background-color: rgba(3, 169, 244, 0.1);
+  border-color: #03A9F4;
+  color: #ffffff;
+}
+.status-queue .status-icon {
+  background-color: #03A9F4;
+}
+
+/* Pending reservation status */
+.status-pending {
+  background-color: rgba(156, 39, 176, 0.1);
+  border-color: #9C27B0;
+  color: #ffffff;
+}
+.status-pending .status-icon {
+  background-color: #9C27B0;
+}
+
+/* Pulsing animation for ready status */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+
+
+@media (max-width: 1200px) {
+  .book-details-container {
+    gap: 2rem;
+    padding: 0 2rem;
+  }
+  
+  .book-cover-details {
+    max-height: 75vh;
+  }
+  
+  .status-button-row {
+    margin-top: 40px;
+  }
+}
+
+@media (max-width: 992px) {
+  .book-details-container {
+    margin-top: 80px;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .book-cover-container-details {
+    width: 80%;
+    margin-bottom: 2rem;
+  }
+  
+  .book-info-card {
+    width: 100%;
+  }
+  
+  .book-meta {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .status-button-row {
+    margin-top: 1rem;
+    justify-content: center;
+    margin-left: 10%;
+  }
+}
+
+@media (max-width: 768px) {
+  .book-details-container {
+    padding: 0 1.5rem;
+  }
+  
+  .book-cover-container-details {
+    width: 90%;
+  }
+  
+  .book-cover-details {
+    max-height: 65vh;
+  }
+  
+  .book-info-card {
+    padding: 1.5rem;
+  }
+  
+  .book-title-info {
+    font-size: 2.2rem;
+  }
+  
+  .status-button-row {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-left: 10%;
+  }
+  
+  .book-status-container {
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .bookbutton {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .book-details-container {
+    margin-top: 70px;
+    padding: 0 1rem;
+  }
+  
+  .book-cover-details {
+    max-height: 55vh;
+  }
+  
+  .book-info-card {
+    padding: 1.2rem;
+  }
+  
+  .book-title-info {
+    font-size: 2rem;
+  }
+  
+  .book-meta {
+    grid-template-columns: 1fr;
+  }
+  
+  .book-description,
+  .book-abstract {
+    padding: 1.2rem;
+  }
+  
+  .book-status-container {
+    padding: 0.6rem 1rem;
+  }
+  
+  .bookstatus,
+  .bookstatusresponse {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .book-cover-details {
+    max-height: 50vh;
+  }
+  
+  .book-title-info {
+    font-size: 1.8rem;
+  }
+  
+  .book-description h3,
+  .book-abstract h3 {
+    font-size: 1.3rem;
+  }
+}

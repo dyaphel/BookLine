@@ -1,0 +1,195 @@
+/* Base Container */
+.reservation-container {
+  position: relative;
+  margin-right: 10%;
+  border-radius: 10px;
+}
+
+/* Success and Error Modal Overlay - Enhanced */
+.reservation-success, .reservation-error {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.85); /* Darker overlay */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000; /* Higher z-index */
+  animation: fadeIn 0.3s ease;
+  cursor: pointer;
+  backdrop-filter: blur(3px); /* Blur effect */
+}
+
+/* Modal Content - Enhanced */
+.success-message, .error-message {
+  cursor: default;
+  padding: 40px;
+  border-radius: 12px;
+  background: white;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  transform: scale(0.95);
+  animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  max-width: 80%;
+  min-width: 300px;
+}
+
+/* Success Message - Enhanced */
+.success-message {
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4f0f5 100%);
+  border-top: 5px solid #4BB543;
+}
+
+.Bookreserved-success {
+  font-size: 2.2rem;
+  color: #2E7D32; /* Darker green */
+  margin: 0 0 15px 0;
+  font-weight: 600;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.Bookreserved-success::before {
+  content: "✓";
+  font-size: 2.5rem;
+}
+
+/* Error Message - Enhanced */
+.error-message {
+  background: linear-gradient(135deg, #f5f7fa 0%, #f5e4e4 100%);
+  border-top: 5px solid #FF3333;
+}
+
+.Bookreserved-error {
+  font-size: 1.8rem;
+  color: #C62828; /* Darker red */
+  margin: 0 0 20px 0;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.Bookreserved-error::before {
+  content: "⚠️";
+}
+
+/* Close Button - Enhanced */
+.close-error {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: rgba(0, 0, 0, 0.1);
+  border: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #666;
+  transition: all 0.2s ease;
+}
+
+.close-error:hover {
+  background: rgba(0, 0, 0, 0.2);
+  color: #333;
+}
+
+/* Confetti Effect - Enhanced */
+.confetti {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  opacity: 0;
+  border-radius: 50%;
+}
+
+.confetti:nth-child(1) {
+  background-color: #4BB543;
+  animation: confetti 2s ease-out 0.5s forwards;
+  left: 15%;
+  top: 10%;
+}
+
+.confetti:nth-child(2) {
+  background-color: #FFD700;
+  animation: confetti 2.2s ease-out 0.7s forwards;
+  left: 50%;
+  top: 15%;
+}
+
+.confetti:nth-child(3) {
+  background-color: #FF6347;
+  animation: confetti 2.1s ease-out 0.6s forwards;
+  left: 75%;
+  top: 10%;
+}
+
+/* Animations - Enhanced */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes popIn {
+  0% { transform: scale(0.95) translateY(20px); opacity: 0; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+@keyframes confetti {
+  0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; }
+  100% { transform: translateY(150px) rotate(720deg) scale(0.5); opacity: 0; }
+}
+
+/* Exit Animations */
+.reservation-success.fade-out, 
+.reservation-error.fade-out {
+  animation: fadeOut 0.5s ease forwards;
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+  }
+}
+
+/* Button Styles - Enhanced */
+.button-reserve {
+  background-color: transparent;
+  border: 2px solid lightsalmon;
+  color: lightsalmon;
+  font-size: 1.5rem;
+  font-weight: 600;
+  padding: 12px 25px;
+  border-radius: 9px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: 0.5px;
+}
+
+
+
+.button-reserve.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  border: 2px dashed lightcoral;
+  transform: none;
+  box-shadow: none;
+}
+
+.button-reserve.disabled:hover {
+  background-color: transparent;
+  color: lightsalmon;
+}

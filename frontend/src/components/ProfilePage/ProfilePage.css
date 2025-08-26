@@ -1,0 +1,211 @@
+
+/* Profile Content Wrapper */
+.profile-content-wrapper {
+  display: flex;
+  gap: 3rem;
+  align-items: flex-start;
+  margin-top: 2rem;
+}
+
+/* Profile Image Section */
+.profile-image-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  top: 2rem;
+}
+
+.profile-avatar {
+  height: 40vh;
+  width: 40vh;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 6px solid #444;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.profile-username {
+  font-size: 2rem;
+  color: #f4f4f4;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Profile Info Card */
+.profile-info-card {
+  flex: 2;
+  background: #4f4e4e;
+  border-radius: 16px;
+  padding: 2.5rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  border: 1px solid #444;
+  width: 100vh;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.info-label {
+  font-weight: bold;
+  color: lightsalmon;
+  font-size: 1.4rem;
+  font-style: italic;
+}
+
+.info-value {
+  color: #f4f4f4;
+  font-size: 1.4rem;
+  padding: 0.8rem;
+  background: #444;
+  border-radius: 8px;
+  border-left: 4px solid lightsalmon;
+}
+
+/* Loading State */
+.loading {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+  color: #aaa;
+}
+
+.error {
+  text-align: center;
+  padding: 2rem;
+  color: #ff6b6b;
+  font-size: 1.2rem;
+}
+
+.profile-actions-container {
+  margin-left: 11%;
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  gap: 2rem; /* Space between buttons */
+  width: 100%;
+  }
+
+.profile-username-input {
+  font-size: 1.5rem;
+  text-align: center;
+  margin-top: 10px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 80%;
+}
+
+.change-image-btn {
+  margin-top: 10%; 
+  background-color: transparent;
+  border: 1px solid cyan;
+  color: cyan; /* Colore del testo */
+  font-size: 1.2rem;
+  font-weight: 500;
+  padding: 10px 20px;
+  border-radius: 9px; /* Bordi arrotondati */
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.change-image-btn:hover {
+  border: none;
+  background-color: cyan;
+  color: #fff; /* Change text color on hover */
+}
+
+.profile-savechange-container {
+  margin-top: -8%;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  gap: 2rem; /* Space between buttons */
+  }
+
+.save-btn {
+  background-color: transparent;
+  border: 1px solid lightgreen;
+  color: lightgreen; /* Colore del testo */
+  font-size: 1.2rem;
+  font-weight: 500;
+  border-radius: 9px; /* Bordi arrotondati */
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.save-btn:hover {
+   border: none;
+  background-color: lightgreen;
+  color: #fff; /* Change text color on hover */
+}
+
+.cancel-btn { 
+  background-color: transparent;
+  border: 1px solid lightcoral ;
+  color: lightcoral; /* Colore del testo */
+  font-size: 1.2rem;
+  font-weight: 500;
+  border-radius: 9px; /* Bordi arrotondati */
+  cursor: pointer;
+  transition: all 0.3s ease; 
+}
+.cancel-btn:hover {
+  border: none;
+  background-color: lightcoral;
+  color: #fff; /* Change text color on hover */
+} 
+
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .profile-content-wrapper {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .profile-image-section {
+    margin-top: 3rem;
+    margin-bottom: -2rem;
+  }
+
+  .profile-username {
+    margin-top:-1rem;
+  }
+  
+  .profile-info-card {
+    width: 100%;
+  }
+  .profile-actions-container {
+    margin-left: 0%;
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    gap: 2rem; /* Space between buttons */
+    width: 100%;
+    margin-top: 5%; /* Remove top margin if previously set */
+  }
+  .profile-savechange-container {
+      margin-top: 1%;
+  }
+}
+
+@media (max-width: 768px) {
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .profile-avatar {
+    width: 220px;
+    height: 220px;
+  }
+  
+  .profile-info-card {
+    padding: 1.5rem;
+  }
+}

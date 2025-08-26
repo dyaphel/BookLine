@@ -1,0 +1,279 @@
+from django.shortcuts import render
+from django.http import HttpResponse
+from django.db import connection
+import json
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.response import Response
+from rest_framework import status
+from django.contrib.auth import logout
+from django.contrib.auth import login as auth_login 
+from django.contrib.auth.hashers import check_password
+from .models import CustomUser
+from django.shortcuts import get_object_or_404
+from .serializers import RegisterSerializer, UserProfileSerializer
+from django.middleware.csrf import get_token
+from django.views.decorators.http import require_POST
+from django.views.decorators.csrf import ensure_csrf_cookie
+from django.contrib.auth import update_session_auth_hash
+import logging
+logger = logging.getLogger(__name__)
+
+def docker_health_check(request):
+    # Controllo del database (opzionale ma utile)
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT 1")
+    except Exception:
+        return HttpResponse("DB ERROR", status=500)
+    
+    return HttpResponse("OK", status=200)
+
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def get_csrf_token(request):
+    token = get_token(request)
+    return Response({'csrfToken': token})
+
+
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def register(request):
+    if not request.data.get('username', '').strip():
+        return Response(
+            {'username': 'This field is required and cannot be empty.'},
+            status=status.HTTP_400_BAD_REQUEST
+        )
+    
+    # Assicurati che lo username sia tutto in minuscolo prima di passarlo al serializer
+    username = request.data.get('username').strip().lower()
+    request.data['username'] = username  # Modifica il dato per includere lo username in minuscolo
+
+    if 'profile_image' in request.data and request.data['profile_image']:
+        # The file will be automatically handled by MultiPartParser
+       pass
+    
+    serializer = RegisterSerializer(data=request.data)
+
+    # Ora passa i dati modificati al serializer
+    serializer = RegisterSerializer(data=request.data)
+    
+    if serializer.is_valid():
+        user = serializer.save()
+        return Response({'message': 'User registered successfully'}, status=status.HTTP_201_CREATED)
+    else:
+        # Log o stampa degli errori per il debug
+        print("Serializer errors:", serializer.errors)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+# @api_view(['POST'])
+@require_POST
+@ensure_csrf_cookie
+def login_view(request):
+    try:
+        data = json.loads(request.body)
+        username_or_email = data.get('username', '').strip().lower() # Strip spaces
+        password = data.get('password')
+
+        if not username_or_email or not password:
+            return JsonResponse({
+                'success': False,
+                'message': 'Both username/email and password are required'
+            }, status=400)
+
+        # Step 1: Try to find user by username
+        user = None
+        try:
+            user = CustomUser.objects.get(username=username_or_email)
+        except CustomUser.DoesNotExist:
+            pass  # Ignore if no user is found by username
+
+        # Step 2: If no user found by username, try to find user by email
+        if user is None and '@' in username_or_email:
+            try:
+                user = CustomUser.objects.get(email=username_or_email)
+            except CustomUser.DoesNotExist:
+                pass  # Ignore if no user is found by email
+
+        # Step 3: If user is found, check the password
+        if user is not None and check_password(password, user.password):
+            # Password matches, log the user in
+            auth_login(request, user)
+            serializer = UserProfileSerializer(user)  # Serialize user data
+            return JsonResponse({
+                'success': True,
+                'message': 'Login successful',
+                'user': serializer.data,
+                })
+        else:
+            return JsonResponse({
+                'success': False,
+                'message': 'Invalid credentials'
+            }, status=401)
+        
+
+    except Exception as e:
+        print("Errore durante il login:", str(e))  # Log per il debug
+        return JsonResponse({
+            'success': False,
+            'message': 'An error occurred during login'
+        }, status=500)
+    
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+@ensure_csrf_cookie
+def get_user_profile(request):
+    user = request.user
+    serializer = UserProfileSerializer(user)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_user_by_id(request, id):
+    user = get_object_or_404(CustomUser, id=id)
+    serializer = UserProfileSerializer(user)
+    return Response(serializer.data)
+
+
+
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def delete_user(request):
+    print(f"Incoming method: {request.method}")  # Debugging
+    
+    if request.method != 'DELETE':
+        return JsonResponse({'error': 'Method not allowed'}, status=405)
+    
+    if not request.user.is_authenticated:
+        return JsonResponse({'error': 'User not authenticated'}, status=401)
+    # Verify password
+    user = request.user
+    user.delete()
+    return JsonResponse({'message': 'User deleted successfully'}, status=204)
+    
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def change_password(request):
+    old_password = request.data.get('oldPassword')
+    new_password = request.data.get('newPassword')
+
+    if not old_password or not new_password:
+        return JsonResponse({'success': False, 'message': 'Both old and new passwords are required'}, status=400)
+
+    if not check_password(old_password, request.user.password):
+        return JsonResponse({'success': False, 'message': 'Old password is incorrect'}, status=400)
+
+    if len(new_password) < 8:
+        return JsonResponse({'success': False, 'message': 'Password must be at least 8 characters long'}, status=400)
+
+    if check_password(new_password, request.user.password):
+        return JsonResponse({'success': False, 'message': 'New password must be different from old password'}, status=400)
+
+    # Change password
+    request.user.set_password(new_password)
+    request.user.save()
+    update_session_auth_hash(request, request.user)
+
+    return JsonResponse({'success': True, 'message': 'Password changed successfully'})
+
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def update_profile(request):
+    try:
+        user = request.user
+        
+        # Handle username update
+        if 'username' in request.data:
+            new_username = request.data['username'].strip()
+            if new_username and new_username != user.username:
+                # Check if username already exists
+                if CustomUser.objects.exclude(pk=user.pk).filter(username=new_username).exists():
+                    return Response({
+                        'success': False,
+                        'message': 'Username already exists'
+                    }, status=400)
+                user.username = new_username
+        
+        # Handle profile image update
+        if 'profile_image' in request.FILES:
+            image = request.FILES['profile_image']
+            # Validate image
+            if image.size > 2 * 1024 * 1024:  # 2MB limit
+                return Response({
+                    'success': False,
+                    'message': 'Image size too large (max 2MB)'
+                }, status=400)
+            if not image.content_type in ['image/jpeg', 'image/png', 'image/jpg']:
+                return Response({
+                    'success': False,
+                    'message': 'Invalid image format (only JPEG, PNG allowed)'
+                }, status=400)
+            user.profile_image = image
+        
+        user.save()
+        
+        return Response({
+            'success': True,
+            'data': {
+                'username': user.username,
+                'profile_image': user.profile_image.url if user.profile_image else None,
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'email': user.email
+            }
+        })
+        
+    except ValidationError as e:
+        return Response({
+            'success': False,
+            'message': str(e)
+        }, status=400)
+    except Exception as e:
+        return Response({
+            'success': False,
+            'message': 'An error occurred while updating profile'
+        }, status=500)
+        
+
+
+@api_view(['GET'])
+@ensure_csrf_cookie
+def check_auth(request):
+    if request.method == 'GET':
+        if request.user.is_authenticated:
+            return JsonResponse({
+                'isAuthenticated': True,
+                'username': request.user.username,
+                'id':request.user.id,
+                'is_staff':request.user.is_staff
+            })
+        return JsonResponse({'isAuthenticated': False})
+    return JsonResponse({'error': 'Invalid method'}, status=405)
+
+
+@api_view(['POST'])
+@ensure_csrf_cookie
+def user_logout(request):
+    if request.user.is_authenticated:
+        logout(request)
+        # Return a new CSRF token for subsequent requests
+        return Response({
+            'success': True,
+            'message': 'Logged out successfully',
+            'csrfToken': get_token(request)  # Return new token
+        })
+    return Response({
+        'success': False,
+        'message': 'User not authenticated'
+    }, status=status.HTTP_401_UNAUTHORIZED)
