@@ -12,19 +12,18 @@ Libraries will have access to a dashboard with statistics on reservations and bo
 3. As a Guest, I want to filter and sort books in the catalog so that I can quickly find the books I’m looking for.
 4. As a Guest, I want to view detailed information about a book so that I can evaluate it before deciding to borrow or reserve it.
 5. As a Guest, I want to create a personal account so that I can register and access additional services.
-6. As a Guest, I want to log in when I already have an account so that I can access user-specific benefits.
-7. As a Registered User, I want to log in using my email and password so that I can access my profile and personalized services.
-8. As a Registered User, I want to browse the entire book catalog so that I can explore all available options.
-9. As a Registered User, I want to reserve available books so that I can visit the library and collect them later.
-10. As a Registered User, I want to receive a confirmation when I successfully reserve a book so that I can confirm my reservation with the library staff.
-11. As a Registered User, I want to join a waitlist when a book is unavailable so that I can be notified when it becomes available.
-12. As a Registered User, I want to know when it’s my turn to collect a reserved book so that I can promptly visit the library.
-13. As a Registered User, I want to view my personal area so that I can track my reservations, favorite books, and reading statistics.
-14. As a Registered User, I want to edit my profile information so that I can keep my preferences and interests up to date.
-15. As a Registered User, I want to receive personalized book recommendations so that I can find books based on my interests and reading habits.
-16. As a Registered User, I want to delete my account from a settings page so that I can permanently remove my data from the system.
-17. As a Librarian, I want to add or delete books from the catalog so that users always have access to the most current collection.
-18. As a Librarian, I want to process and edit book information so that I can ensure the catalog is always accurate and up to date.
-19. As a Librarian, I want to access a reservation management page so that I can track borrowed and returned books.
-20. As a Librarian, I want to scan QR codes to verify book reservations so that I can manage the borrowing process efficiently.
-21. As a Librarian, I want to access the library dashboard so that I can review user trends and improve library services accordingly.
+6. As a Registered User, I want to log in using my email and password so that I can access my profile and personalized services.
+7. As a Registered User, I want to browse the entire book catalog so that I can explore all available options.
+8. As a Registered User, I want to reserve available books so that I can visit the library and collect them later.
+9. As a Registered User, I want to receive a confirmation when I successfully reserve a book so that I can confirm my reservation with the library staff.
+10. As a Registered User, I want to join a waitlist when a book is unavailable so that I can be notified when it becomes available.
+11. As a Registered User, I want to know when it’s my turn to collect a reserved book so that I can promptly visit the library.
+12. As a Registered User, I want to view my personal area so that I can track my reservations, favorite books, and reading statistics.
+13. As a Registered User, I want to edit my profile information so that I can keep my preferences and interests up to date.
+14. As a Registered User, I want to receive personalized book recommendations so that I can find books based on my interests and reading habits.
+15. As a Registered User, I want to delete my account from a settings page so that I can permanently remove my data from the system.
+16. As a Librarian, I want to add or delete books from the catalog so that users always have access to the most current collection.
+17. As a Librarian, I want to process and edit book information so that I can ensure the catalog is always accurate and up to date.
+18. As a Librarian, I want to access a reservation management page so that I can track borrowed and returned books.
+19. As a Librarian, I want to scan QR codes to verify book reservations so that I can manage the borrowing process efficiently.
+20. As a Librarian, I want to access the library dashboard so that I can review user trends and improve library services accordingly.
