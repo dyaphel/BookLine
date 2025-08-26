@@ -133,8 +133,10 @@ No external services.
   | GET | /books/health/ | Health check | - |
   | GET | /books/ | List books with search and filters (q, title, author, published, genre) | 1, 2, 3 |
   | GET | /books/<isbn>/ | Get book details by ISBN | 4 |
-  | PUT/PATCH | /books/changeimage/<isbn>/ | Change book cover image | 16, 17 |
-  | PUT/PATCH | /books/edit/<isbn>/ | Edit book fields (partial update) | 16, 17 |
+  | PUT/PATCH | /books/changeimage/<isbn>/ | Change book cover image | 17 |
+  | PUT/PATCH | /books/edit/<isbn>/ | Edit book fields (partial update) | 17 |
+  | POST | /books/create/ | Create a new book | 16 |
+  | DELETE | /books/delete/<isbn> | Delete a specific book | 17 |
 
 - DB STRUCTURE:
 
