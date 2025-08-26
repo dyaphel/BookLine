@@ -1,6 +1,9 @@
 # BookLine
 Lab. advanced programming - project
 
+## Docs Summary
+[Docs Summary](https://www.notion.so/Distributed-System-for-Library-Book-Management-BookLine-1b89f4cb74a8809ebd68c4b351b7ff7f)
+
 ## 🛠️ Setup and Installation whit docker 🐋
 
 1. **Clone the repository**:
