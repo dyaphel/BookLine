@@ -11,6 +11,6 @@ urlpatterns = [
     path('<str:isbn>/', views.book_detail, name='book-detail'),  # Returns a book by ISBN
     path('changeimage/<str:isbn>/',views.change_book_image, name='change_book_image'),
     path('edit/<str:isbn>/', views.edit_book, name='edit_book'),
-    path('books_delete/<str:isbn>/', views.delete_book, name='delete-book'),
+    path('delete/<str:isbn>/', views.delete_book, name='delete-book'),
    
 ]

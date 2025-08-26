@@ -94,7 +94,7 @@ const EditCatalog = () => {
     
     setLoading(true);
     try {
-      await axios.delete(`http://localhost:8001/books/books_delete/${isbn}/`);
+      await axios.delete(`http://localhost:8001/books/delete/${isbn}/`);
       setBooks(prevBooks => prevBooks.filter(book => book.isbn !== isbn));
     } catch (error) {
       console.error("Error deleting book:", error.response?.data || error.message);
