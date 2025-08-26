@@ -279,6 +279,268 @@
   transform: scale(1.05);
 }
 
+/* ---------------------------------------------------------- */
+/* Overlay scuro */
+.create-book-overlay {
+  position: fixed;
+  top: 12%;
+  left: 0;
+  width: 100%;
+  height: auto;
+  background: rgba(42, 42, 42, 0.6);
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+/* Popup stile moderno - più largo e orizzontale */
+.create-book-popup {
+  background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+  border-radius: 15px;
+  padding: 30px;
+  width: 90%;
+  max-width: 900px; /* Larghezza aumentata */
+  max-height: 85vh;
+  overflow-y: auto;
+  border: 2px solid white;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Grid principale - layout orizzontale */
+.popup-content-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr; /* Due colonne di larghezza simile */
+  gap: 30px;
+  margin-bottom: 20px;
+}
+
+/* Colonna sinistra */
+.left-column {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+/* Colonna destra */
+.right-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Container immagine */
+.image-upload-container {
+  text-align: center;
+}
+
+.image-preview-box {
+  width: 140px;
+  height: 190px;
+  background: #000;
+  border: 3px solid lightcoral;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 0 auto 15px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cover-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.file-input-hidden {
+  display: none;
+}
+
+.upload-button {
+  background:  lightsalmon;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: transform 0.3s ease;
+  display: inline-block;
+  font-size: 14px;
+}
+
+.upload-button:hover {
+  transform: translateY(-2px);
+}
+
+/* Grid per i campi principali */
+.main-fields-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+/* Header del popup */
+.popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid lightsalmon;
+}
+
+.popup-header h3 {
+  color: white;
+  margin: 0;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close-popup {
+  color: white;
+  border: none;
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+.close-popup:hover {
+  background: #e66767;
+  transform: scale(1.1);
+}
+
+.close-popupX {
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: -2px;
+}
+
+/* Form group */
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 8px;
+  font-weight: bold;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Input e textarea */
+.popup-input,
+.popup-textarea {
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid lightcoral;
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: white;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+  width: 100%;
+}
+
+.popup-input::placeholder,
+.popup-textarea::placeholder {
+  color: #ccc;
+}
+
+.popup-input:focus,
+.popup-textarea:focus {
+  outline: none;
+  border-color: lightsalmon;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.popup-textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* Pulsanti di azione */
+.popup-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 2px solid lightsalmon;
+}
+
+.popup-submit-btn {
+  background: linear-gradient(135deg, lightsalmon 0%, lightcoral 100%);
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 8px;
+  width: 120px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.popup-submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 160, 122, 0.4);
+}
+
+.popup-cancel-btn {
+ 
+  padding: 12px 25px;
+
+  border-radius: 8px;
+  width: 120px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.popup-cancel-btn:hover {
+  transform: translateY(-2px);
+}
+
+
+/* Responsive */
+@media (max-width: 768px) {
+  .create-book-popup {
+    padding: 20px;
+    margin: 10px;
+  }
+  
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  
+  .popup-actions {
+    flex-direction: column;
+  }
+  
+  .popup-submit-btn,
+  .popup-cancel-btn {
+    width: 100%;
+  }
+}
+
 /* Responsive Adjustments */
 @media (max-width: 1200px) {
   .catalog-book-cover {

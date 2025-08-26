@@ -10,6 +10,19 @@ const EditCatalog = () => {
   const [loading, setLoading] = useState(false);
   const [editingBook, setEditingBook] = useState(null);
   const [editFormData, setEditFormData] = useState({});
+  const [showCreateForm, setShowCreateForm] = useState(false);
+  const [newBookData, setNewBookData] = useState({
+    title: '',
+    author: '',
+    isbn: '',
+    description: '',
+    abstract: '',
+    genre: '',
+    language: '',
+    available_copies: 1,
+    cover: null,
+    coverPreview: null
+  });
   const navigate = useNavigate();
 
   const fetchBooks = async () => {
@@ -75,6 +88,24 @@ const EditCatalog = () => {
     }
   };
 
+  const handleDeleteBook = async (isbn) => {
+    if (!window.confirm('Are you sure you want to delete this book?')) {
+      return;
+    }
+    
+    setLoading(true);
+    try {
+      await axios.delete(`http://localhost:8001/books/books_delete/${isbn}/`);
+      setBooks(prevBooks => prevBooks.filter(book => book.isbn !== isbn));
+      alert('Book deleted successfully!');
+    } catch (error) {
+      console.error("Error deleting book:", error.response?.data || error.message);
+      alert(`Error deleting book: ${error.response?.data?.error || error.message}`);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleChangeImage = async (isbn) => {
     setLoading(true);
     try {
@@ -118,6 +149,96 @@ const EditCatalog = () => {
     }
   };
 
+  const handleCreateNewBook = () => {
+    setShowCreateForm(true);
+  };
+
+  const handleNewBookChange = (e) => {
+    const { name, value } = e.target;
+    setNewBookData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleCoverUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setNewBookData(prev => ({
+          ...prev,
+          cover: file,
+          coverPreview: e.target.result
+        }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleCreateSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    
+    try {
+      const formData = new FormData();
+      
+      // Aggiungi tutti i campi al formData
+      Object.keys(newBookData).forEach(key => {
+        if (key !== 'coverPreview' && newBookData[key] !== null) {
+          formData.append(key, newBookData[key]);
+        }
+      });
+
+      await axios.post(
+        'http://localhost:8001/books/create/',
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          }
+        }
+      );
+      
+      alert('Book created successfully!');
+      setShowCreateForm(false);
+      setNewBookData({
+        title: '',
+        author: '',
+        isbn: '',
+        description: '',
+        abstract: '',
+        genre: '',
+        language: '',
+        available_copies: 1,
+        cover: null,
+        coverPreview: null
+      });
+      fetchBooks();
+    } catch (error) {
+      console.error("Error creating book:", error.response?.data || error.message);
+      alert(`Error creating book: ${error.response?.data?.error || error.message}`);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleCancelCreate = () => {
+    setShowCreateForm(false);
+    setNewBookData({
+      title: '',
+      author: '',
+      isbn: '',
+      description: '',
+      abstract: '',
+      genre: '',
+      language: '',
+      available_copies: 1,
+      cover: null,
+      coverPreview: null
+    });
+  };
+
   return (
     <div className="catalog-container">
       <NavBar />
@@ -126,45 +247,206 @@ const EditCatalog = () => {
         <div className="loading">Loading...</div>
       ) : (
         <>
-          <h1 className="EditCatalog-title">Edit Books</h1>
+          <div className="edit-catalog-header">
+            <h1 className="EditCatalog-title">Edit Books</h1>
+            <button 
+              className="create-book-btn"
+              onClick={handleCreateNewBook}
+              title="Create new book"
+            >
+              Add new Book
+            </button>
+          </div>
+
+         {showCreateForm && (
+  <div className="create-book-overlay">
+    <div className="create-book-popup">
+      <div className="popup-header">
+        <h3>Create new book</h3>
+        <button className="close-popup" onClick={handleCancelCreate}>
+          <span className="close-popupX">×</span>
+        </button>
+      </div>
+      
+      <form onSubmit={handleCreateSubmit} className="popup-form">
+        <div className="popup-content-grid">
+          {/* Colonna sinistra - Immagine e campi principali */}
+          <div className="left-column">
+            <div className="image-upload-container">
+              <div className="image-preview-box">
+                <img 
+                  src={newBookData.coverPreview || "/placeholder-cover.jpg"} 
+                  alt="Book cover preview" 
+                  className="cover-preview"
+                />
+              </div>
+              <input
+                type="file"
+                id="cover-upload"
+                accept="image/*"
+                onChange={handleCoverUpload}
+                className="file-input-hidden"
+              />
+              <label htmlFor="cover-upload" className="upload-button">
+                Upload Cover
+              </label>
+            </div>
+
+            <div className="main-fields-grid">
+              <div className="form-group">
+                <label>TITLE</label>
+                <input
+                  type="text"
+                  name="title"
+                  value={newBookData.title}
+                  onChange={handleNewBookChange}
+                  required
+                  className="popup-input"
+                />
+              </div>
+
+              <div className="form-group">
+                <label>AUTHOR</label>
+                <input
+                  type="text"
+                  name="author"
+                  value={newBookData.author}
+                  onChange={handleNewBookChange}
+                  required
+                  className="popup-input"
+                />
+              </div>
+
+              <div className="form-group">
+                <label>ISBN</label>
+                <input
+                  type="text"
+                  name="isbn"
+                  value={newBookData.isbn}
+                  onChange={handleNewBookChange}
+                  required
+                  className="popup-input"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Colonna destra - Campi aggiuntivi */}
+          <div className="right-column">
+            <div className="details-grid">
+              <div className="form-group">
+                <label>GENRE</label>
+                <input
+                  type="text"
+                  name="genre"
+                  value={newBookData.genre}
+                  onChange={handleNewBookChange}
+                  className="popup-input"
+                />
+              </div>
+
+              <div className="form-group">
+                <label>LANGUAGE</label>
+                <input
+                  type="text"
+                  name="language"
+                  value={newBookData.language}
+                  onChange={handleNewBookChange}
+                  className="popup-input"
+                />
+              </div>
+
+              <div className="form-group">
+                <label>COPIES</label>
+                <input
+                  type="number"
+                  name="available_copies"
+                  value={newBookData.available_copies}
+                  onChange={handleNewBookChange}
+                  min="1"
+                  className="popup-input"
+                />
+              </div>
+            </div>
+
+            <div className="form-group">
+              <label>DESCRIPTION</label>
+              <textarea
+                name="description"
+                value={newBookData.description}
+                onChange={handleNewBookChange}
+                rows="3"
+                className="popup-textarea"
+                placeholder="Enter book description..."
+              />
+            </div>
+
+            <div className="form-group">
+              <label>ABSTRACT</label>
+              <textarea
+                name="abstract"
+                value={newBookData.abstract}
+                onChange={handleNewBookChange}
+                rows="3"
+                className="popup-textarea"
+                placeholder="Enter book abstract..."
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="popup-actions">
+          <button type="submit" className="popup-submit-btn">
+            Create
+          </button>
+          <button type="button" className="popup-cancel-btn" onClick={handleCancelCreate}>
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+)}
+
           <div className="catalog-books-grid">
             {books.map((book) => (
               <div key={book.isbn} className="catalog-book-card">
-                  <div className="catalog-book-content">
-                    {/* Title and Author */}
-                    {editingBook === book.isbn ? (
-                      <div className="title-author-row">
-                        <div className="edit-field">
-                          <label className="edit-label">Title</label>
-                          <input
-                            type="text"
-                            name="title"
-                            value={editFormData.title || ''}
-                            onChange={handleEditChange}
-                            className="edit-input"
-                          />
-                        </div>
-                        <div className="edit-field">
-                          <label className="edit-label">Author</label>
-                          <input
-                            type="text"
-                            name="author"
-                            value={editFormData.author || ''}
-                            onChange={handleEditChange}
-                            className="edit-input"
-                          />
-                        </div>
+                <div className="catalog-book-content">
+                  {/* Title and Author */}
+                  {editingBook === book.isbn ? (
+                    <div className="title-author-row">
+                      <div className="edit-field">
+                        <label className="edit-label">Title</label>
+                        <input
+                          type="text"
+                          name="title"
+                          value={editFormData.title || ''}
+                          onChange={handleEditChange}
+                          className="edit-input"
+                        />
                       </div>
-                    ) : (
-                      <div className="title-author-center">
-                        <h3 className="book-title">{book.title}</h3>
-                        <p className="book-author">{book.author}</p>
+                      <div className="edit-field">
+                        <label className="edit-label">Author</label>
+                        <input
+                          type="text"
+                          name="author"
+                          value={editFormData.author || ''}
+                          onChange={handleEditChange}
+                          className="edit-input"
+                        />
                       </div>
-                    )}
+                    </div>
+                  ) : (
+                    <div className="title-author-center">
+                      <h3 className="book-title">{book.title}</h3>
+                      <p className="book-author">{book.author}</p>
+                    </div>
+                  )}
+                  
                   <div className="catalog-book-header">
                     <div className="catalog-book-cover">
                       <img src={`http://localhost:8001${normalizeCoverUrl(book.cover)}`} alt={`${book.title} cover`} />
-                  </div>
+                    </div>
                     
                     {/* Description and Abstract */}
                     <div className="description-abstract-row">
@@ -280,6 +562,9 @@ const EditCatalog = () => {
                       </button>
                       <button className="catalog-image-btn" onClick={() => handleChangeImage(book.isbn)}>
                         Change Image
+                      </button>
+                      <button className="catalog-cancel-btn" onClick={() => handleDeleteBook(book.isbn)}>
+                        Delete
                       </button>
                     </>
                   )}

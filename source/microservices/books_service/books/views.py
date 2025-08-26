@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from .models import Book
 from .serializers import BookSerializer
 from django.db.models import Q
+from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny  
@@ -159,3 +160,11 @@ def edit_book(request, isbn):
             {'error': str(e)},
             status=status.HTTP_500_INTERNAL_SERVER_ERROR
         )
+
+
+@api_view(['DELETE'])
+@authentication_classes([]) 
+def delete_book(request, isbn):
+    book = get_object_or_404(Book, isbn=isbn)
+    book.delete()
+    return Response(status=status.HTTP_204_NO_CONTENT)
