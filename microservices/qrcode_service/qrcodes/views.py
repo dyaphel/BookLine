@@ -2,9 +2,11 @@ from django.shortcuts import render
 import qrcode
 from io import BytesIO
 from django.http import HttpResponse
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, authentication_classes
+
 
 @api_view(['GET'])
+@authentication_classes([])
 def generate_qr(request):
     """
     Example: /qrcodes/generate/?data=HelloWorld
