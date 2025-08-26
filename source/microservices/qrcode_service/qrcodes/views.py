@@ -9,10 +9,17 @@ from rest_framework.decorators import api_view, authentication_classes
 @authentication_classes([])
 def generate_qr(request):
     """
-    Example: /qrcodes/generate/?data=HelloWorld
+    Example: /qrcodes/generate/?data=RESERVATION:123
     """
     data = request.GET.get("data", "empty")
-    qr = qrcode.make(data)
+    
+    # Se i dati contengono "RESERVATION:", genera URL per la prenotazione
+    if data.startswith('RESERVATION:'):
+        reservation_id = data.split(':')[1]
+        redirect_url = f"http://localhost:5173/reservations/{reservation_id}"
+        qr = qrcode.make(redirect_url)
+    else:
+        qr = qrcode.make(data)
 
     buffer = BytesIO()
     qr.save(buffer, format="PNG")
