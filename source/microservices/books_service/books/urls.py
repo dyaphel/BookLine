@@ -3,9 +3,9 @@ from . import views
 from .views import docker_health_check
 
 urlpatterns = [
+    #DA LASCIARE COME PRIMA URL
+    path('create/', views.create_book, name='create-book'),
 
-     path('create/', views.create_book, name='create-book'),
-     
     path('health/', docker_health_check, name='docker-health-check'),
     path('',views.book_list, name='book-list'),  # Returns all books
     path('<str:isbn>/', views.book_detail, name='book-detail'),  # Returns a book by ISBN
