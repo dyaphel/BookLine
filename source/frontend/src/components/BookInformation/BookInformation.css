@@ -169,7 +169,7 @@
 
 .book-copies-container {
   display: flex;
-  width: 410px;
+  width: auto;
   align-items: center;
   justify-content: center;
   gap: 1rem;

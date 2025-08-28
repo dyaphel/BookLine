@@ -63,11 +63,10 @@ const AppRoutes = () => {
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/home" element={<Home />} />
+                <Route path="/books/:isbn" element={<BookInformation />} />
 
                 {/* PROTECTED ROUTES */}
-                <Route path="/books/:isbn" element={
-                    <ProtectedRoute><BookInformation/></ProtectedRoute>
-                } />
+
                 <Route path="/users/:username" element={
                     <ProtectedRoute><ProfilePage /></ProtectedRoute>
                 } />
