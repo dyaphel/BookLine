@@ -16,6 +16,12 @@
   font-size: 3.2rem;
 }
 
+.home-no-books {
+  margin-top: 16px !important;
+  color: lightsalmon;
+  font-size: 1.5rem;
+}
+
 .book-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));

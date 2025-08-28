@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Analytics.css';
 import Navbar from "../../Navbar/Navbar";
+import Spinner from "../../Loading/Spinner"
 
 const ReservationAnalytics = () => {
   const [reservations, setReservations] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [dataLoaded, setDataLoaded] = useState(false);
   const [error, setError] = useState(null);
   const [timeFilter, setTimeFilter] = useState('all');
   const [showAll, setShowAll] = useState(false);
@@ -22,6 +24,7 @@ const ReservationAnalytics = () => {
         { withCredentials: true }
       );
       setReservations(response.data);
+      setDataLoaded(true);
       console.log({response})
       setError(null);
     } catch (err) {
@@ -138,12 +141,9 @@ const calculateGrowthRate = (data) => {
   const chartData = prepareChartData(reservations);
   const displayedReservations = showAll ? reservations : reservations.slice(0, 10);
 
-  if (loading) {
+  if (loading || !dataLoaded) {
     return (
-      <div className="analytics-loading">
-        <div className="spinner"></div>
-        <p>Loading reservation data...</p>
-      </div>
+      <Spinner />
     );
   }
 

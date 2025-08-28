@@ -4,12 +4,14 @@ import { normalizeCoverUrl } from "../../../../Utils/urlCoverNormalizer";
 import './ToBeFulfilled.css';
 import { getCsrfToken } from '../../../../Utils/GetToken';
 import {useNavigate} from "react-router-dom";
+import Spinner from "../../../Loading/Spinner"
 
 const ToBeFulfilled = () => {
   const [reservations, setReservations] = useState([]);
   const [books, setBooks] = useState([]);
   const [users, setUsers] = useState({});
   const [loading, setLoading] = useState(true);
+  const [dataLoaded, setDataLoaded] = useState(false);
   const [error, setError] = useState(null);
   const [csrfToken, setCsrfToken] = useState('');
   const navigate = useNavigate();
@@ -88,6 +90,7 @@ const ToBeFulfilled = () => {
         setBooks(booksById);
         setUsers(usersById);
         setReservations(readyReservations);
+        setDataLoaded(true);
         
       } catch (err) {
         setError(err.response?.data?.message || 'Failed to load data');
@@ -138,7 +141,7 @@ const ToBeFulfilled = () => {
     location.reload()
   };
 
-  if (loading) return <div className="loading">Loading reservations...</div>;
+  if (loading || !dataLoaded) return <Spinner />;
   if (error) return <div className="error">Error: {error}</div>;
 
   return (

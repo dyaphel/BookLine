@@ -29,6 +29,8 @@
     gap: 20px;
     padding: 20px 0 40px;
     overflow-x: auto;
+    align-items: center;
+    justify-content: center;
     scroll-behavior: smooth;
 }
 

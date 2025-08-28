@@ -12,20 +12,20 @@ import EditCatalog from "../components/Librarian/EditCatalog/EditCatalog";
 import AllReservations from "../components/Librarian/AllReservations/AllReservations";
 import ReservationAnalytics from "../components/Librarian/Analytics/Analytics";
 import ReservationsDetails from "../components/Librarian/AllReservations/ReservationsDetails/ReservationsDetails";
+import Spinner from "../components/Loading/Spinner";
 
 const AppRoutes = () => { 
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [userData, setUserData] = useState({ username: "", id: null, isStaff:false });
-    const [Loading, setLoading] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(null); // null = unknown
+    const [userData, setUserData] = useState({ username: "", id: null, isStaff: false });
+    const [loading, setLoading] = useState(false);
+
     useEffect(() => {
         const initialize = async () => {
             try {
                 setLoading(true);
                 const token = await getCsrfToken();
                 const authResponse = await axios.get('http://localhost:8003/users/check-auth/', {
-                    headers: {
-                        'X-CSRFToken': token
-                    },
+                    headers: { 'X-CSRFToken': token },
                     withCredentials: true
                 });
                 if (authResponse.data.isAuthenticated) {
@@ -35,15 +35,26 @@ const AppRoutes = () => {
                         id: authResponse.data.id,
                         isStaff: authResponse.data.is_staff
                     });
+                } else {
+                    setIsLoggedIn(false);
                 }
             } catch (error) {
                 console.error("Initialization error:", error);
+                setIsLoggedIn(false);
             } finally {
                 setLoading(false);
             }
         };
         initialize();
     }, []);
+
+    // Wrapper for protected routes
+    const ProtectedRoute = ({ children, staffOnly = false }) => {
+        if (isLoggedIn === null) return <Spinner />; // show spinner while auth unknown
+        if (!isLoggedIn) return <Login />;
+        if (staffOnly && !userData.isStaff) return <Login />;
+        return children;
+    };
 
     return (
         <Router>
@@ -54,30 +65,27 @@ const AppRoutes = () => {
                 <Route path="/home" element={<Home />} />
 
                 {/* PROTECTED ROUTES */}
-                <Route path="/books/:isbn" element={<BookInformation/>}/>
-               <Route 
-                    path="/users/:username" 
-                    element={isLoggedIn ? <ProfilePage /> : <Login /> }  />
-                    
-                <Route 
-                    path="/my-books" 
-                    element={isLoggedIn ? <MyBooks userId={userData.id} /> : <Login /> }  />
-                
-                <Route 
-                path="/all-reservations" 
-                element={ userData.isStaff ?<AllReservations/>:<Login />  } />
-                <Route 
-                path="/reservations/:reservationId" 
-                element={ userData.isStaff ?<ReservationsDetails/>:<Login />  } />
-
-                <Route 
-                path="/catalog" 
-                element={ userData.isStaff ?<EditCatalog/>:<Login />  } />
-
-                <Route 
-                path="/analytics" 
-                element={ userData.isStaff ?<ReservationAnalytics/>:<Login />  } />
-
+                <Route path="/books/:isbn" element={
+                    <ProtectedRoute><BookInformation/></ProtectedRoute>
+                } />
+                <Route path="/users/:username" element={
+                    <ProtectedRoute><ProfilePage /></ProtectedRoute>
+                } />
+                <Route path="/my-books" element={
+                    <ProtectedRoute><MyBooks userId={userData.id} /></ProtectedRoute>
+                } />
+                <Route path="/all-reservations" element={
+                    <ProtectedRoute staffOnly={true}><AllReservations/></ProtectedRoute>
+                } />
+                <Route path="/reservations/:reservationId" element={
+                    <ProtectedRoute staffOnly={true}><ReservationsDetails/></ProtectedRoute>
+                } />
+                <Route path="/catalog" element={
+                    <ProtectedRoute staffOnly={true}><EditCatalog/></ProtectedRoute>
+                } />
+                <Route path="/analytics" element={
+                    <ProtectedRoute staffOnly={true}><ReservationAnalytics/></ProtectedRoute>
+                } />
             </Routes>
         </Router>
     );

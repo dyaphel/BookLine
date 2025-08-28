@@ -11,6 +11,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
 from django.db import transaction
+from django.db.models import Max
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -69,7 +70,13 @@ def reservations_by_user(request, user_id):
 @api_view(['GET'])
 def book_availability(request, isbn):
     book = get_object_or_404(Book, isbn=isbn)
-    active_reservations = Reservation.objects.filter(book=book, returned=False, position=None).count()
+    active_reservations = Reservation.objects.filter(
+            book=book,
+            cancelled=False,
+            returned=False,
+            ready_for_pickup=True,
+            position__isnull=True
+        ).count()
     available = book.available_copies - active_reservations
     return Response({'isbn': isbn, 'available_copies': available})
 
@@ -93,32 +100,35 @@ def create_reservation(request):
                         status=status.HTTP_403_FORBIDDEN)
 
     book = get_object_or_404(Book, isbn=isbn)
-    
+
     with transaction.atomic():
-        # Get all active reservations for this book
-        active_reservations = Reservation.objects.filter(
+        # Count only active reservations (position=None, ready_for_pickup=True)
+        active_count = Reservation.objects.filter(
             book=book,
-            fulfilled=False,
             cancelled=False,
-            returned=False
-        ).order_by('position')
-        
-        active_count = active_reservations.count()
-        
-        # Calculate the new position
-        new_position = active_count
-        
-        # Check if the new reservation can be fulfilled immediately
+            returned=False,
+            ready_for_pickup=True,
+            position__isnull=True
+        ).count()
+
         if active_count < book.available_copies:
-            # There are available copies, mark as ready for pickup
+            # Copies are available -> new active reservation
+            new_position = None
             ready_for_pickup = True
-            # Decrement available copies
-            book.available_copies -= 1
-            book.save()
         else:
+            # No copies available -> place in queue
+            last_position = Reservation.objects.filter(
+                book=book,
+                fulfilled=False,
+                cancelled=False,
+                returned=False,
+                position__isnull=False
+            ).aggregate(Max('position'))['position__max']
+
+            new_position = (last_position or 0) + 1
             ready_for_pickup = False
-        
-        # Create the reservation
+
+        # Create reservation
         reservation = Reservation.objects.create(
             user_id=user_id,
             book=book,
@@ -126,24 +136,6 @@ def create_reservation(request):
             position=new_position,
             ready_for_pickup=ready_for_pickup
         )
-        
-        # If this reservation is ready for pickup, we need to update the status of other reservations
-        if ready_for_pickup:
-            # The number of ready reservations might now exceed available copies
-            # We need to ensure only the first 'available_copies' reservations are ready
-            ready_reservations = Reservation.objects.filter(
-                book=book,
-                fulfilled=False,
-                cancelled=False,
-                returned=False,
-                ready_for_pickup=True
-            ).order_by('position')
-            
-            # If we have more ready reservations than available copies, mark the extras as not ready
-            if ready_reservations.count() > book.available_copies:
-                for res in ready_reservations[book.available_copies:]:
-                    res.ready_for_pickup = False
-                    res.save()
 
     serializer = ReservationSerializer(reservation)
     return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -188,7 +180,7 @@ def return_book(request, reservation_id):
         ).exclude(id=next_in_line.id).order_by('position')
 
         for i, res in enumerate(others, start=1):
-            res.position = i + 1
+            res.position = i #+ 1
             res.save()
 
     return Response({'message': 'Book returned and queue updated.'})
@@ -206,7 +198,7 @@ def fulfill_book(request, reservation_id):
     reservation = get_object_or_404(Reservation, id=reservation_id)
 
 # Check if the reservation CANNOT be marked as fulfilled
-    if reservation.returned or reservation.fulfilled:
+    if reservation.returned or reservation.cancelled or reservation.fulfilled:
         return Response(
             {'error': 'Reservation cannot be fulfilled because it is either already fulfilled, returned'},
             status=status.HTTP_400_BAD_REQUEST
@@ -236,49 +228,53 @@ def cancel_reservation(request, reservation_id):
         )
 
     if reservation.cancelled:
-        return Response(
-            {"detail": "Already cancelled"},
-            status=status.HTTP_400_BAD_REQUEST
-        )
+        return Response({"detail": "Reservation already cancelled."}, status=status.HTTP_400_BAD_REQUEST)
 
     with transaction.atomic():
-        # Store the position before cancelling
-        cancelled_position = reservation.position
-        
-        # Cancel the reservation
         reservation.cancelled = True
-        reservation.position = None
+        reservation.ready_for_pickup = False
         reservation.save()
 
-        # Increment book's available copies
-        book = Book.objects.get(isbn=reservation.book.isbn)
-        book.available_copies += 1
-        book.save()
+        # Case 1: Active reservation (position=None)
+        if reservation.position is None:
+            next_in_line = Reservation.objects.filter(
+                book=reservation.book,
+                cancelled=False,
+                fulfilled=False,
+                position__isnull=False
+            ).order_by('position').first()
 
-        # Get all active reservations for this book, ordered by current position
-        active_reservations = Reservation.objects.filter(
-            book=reservation.book,
-            fulfilled=False,
-            cancelled=False,
-            returned=False
-        ).order_by('position')
+            if next_in_line:
+                # Promote next_in_line to active
+                next_in_line.position = None
+                next_in_line.ready_for_pickup = True
+                next_in_line.save()
 
-        # Reassign positions sequentially
-        for idx, res in enumerate(active_reservations, start=1):
-            res.position = idx
-            res.save()
+                # Shift everyone else down
+                later_reservations = Reservation.objects.filter(
+                    book=reservation.book,
+                    cancelled=False,
+                    fulfilled=False,
+                    position__isnull=False
+                ).order_by('position')
 
-        # Now determine which reservations should be ready for pickup
-        # The first 'available_copies' reservations should be ready
-        ready_reservations = active_reservations[:book.available_copies]
-        for res in ready_reservations:
-            res.ready_for_pickup = True
-            res.save()
+                pos = 1
+                for r in later_reservations:
+                    r.position = pos
+                    r.save()
+                    pos += 1
 
-        # The rest should not be ready
-        not_ready_reservations = active_reservations[book.available_copies:]
-        for res in not_ready_reservations:
-            res.ready_for_pickup = False
-            res.save()
+        # Case 2: Reservation was in queue (position >= 1)
+        else:
+            later_reservations = Reservation.objects.filter(
+                book=reservation.book,
+                cancelled=False,
+                fulfilled=False,
+                position__gt=reservation.position
+            ).order_by('position')
 
-    return Response({'message': 'Reservation cancelled and queue updated.'})
+            for r in later_reservations:
+                r.position -= 1
+                r.save()
+
+    return Response({"detail": "Reservation cancelled and queue updated."}, status=status.HTTP_200_OK)

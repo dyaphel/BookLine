@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Filter from '../../Navbar/Filter/Filter';
 import './EditCatalog.css';
 import { normalizeCoverUrl } from "../../../Utils/urlCoverNormalizer";
 import NavBar from "../../Navbar/Navbar";
+import Spinner from "../../../components/Loading/Spinner"
 
 const EditCatalog = () => {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [dataLoaded, setDataLoaded] = useState(false);
+  const [filters, setFilters] = useState({ author: '', year: '', genre: '' });
+  const [showFilter, setShowFilter] = useState(false);
   const [editingBook, setEditingBook] = useState(null);
   const [editFormData, setEditFormData] = useState({});
   const [showCreateForm, setShowCreateForm] = useState(false);
@@ -26,21 +31,58 @@ const EditCatalog = () => {
   });
   const navigate = useNavigate();
 
-  const fetchBooks = async () => {
-    setLoading(true);
+  const fetchBooks = async (filters) => {
+    setLoading(true); // Set loading to true before fetching
     try {
-      const response = await axios.get('http://localhost:8001/books/');
-      setBooks(response.data);
+      const response = await axios.get('http://localhost:8001/books/', {
+        params: filters, // Pass filters as query parameters
+      });
+      
+      setBooks(response.data); // Update the books state with the fetched data
+      setDataLoaded(true);
     } catch (error) {
       console.error("Error fetching books:", error);
+      // Optionally, set an error state to display a message to the user
     } finally {
-      setLoading(false);
+      setLoading(false); // Set loading to false after fetching
     }
   };
 
   useEffect(() => {
-    fetchBooks();
-  }, []);
+    fetchBooks(filters);
+  }, [filters]);
+
+  // Handle search input changes
+  const handleSearch = (query) => {
+    setFilters((prevFilters) => ({ ...prevFilters, q: query }));
+    debouncedFetchBooks({ ...filters, q: query });
+  };
+
+  // Handle filter button click
+  const handleFilterClick = () => {
+    setShowFilter(!showFilter);
+  };
+
+  // Handle filter overlay click (close overlay when clicking outside)
+  const handleOverlayClick = (e) => {
+    if (e.target.classList.contains("filter-overlay")) {
+      setShowFilter(false);
+    }
+  };
+
+  // Handle filter apply
+  const handleFilterApply = (newFilters) => {
+    // Only apply filters that have values
+    const appliedFilters = {};
+    if (newFilters.author) appliedFilters.author = newFilters.author;
+    if (newFilters.year) appliedFilters.year = newFilters.year;
+    if (newFilters.genre) appliedFilters.genre = newFilters.genre;
+
+    setFilters(appliedFilters); // Update the filters state
+    setShowFilter(false); // Close the filter overlay
+    console.log('Filters applied:', appliedFilters);
+    fetchBooks(appliedFilters); // Fetch books with the new filters
+  };
 
   const handleEdit = (book) => {
     setEditingBook(book.isbn);
@@ -240,11 +282,16 @@ const EditCatalog = () => {
 
   return (
     <div className="catalog-container">
-      <NavBar />
+      {/* Navbar */}
+      <NavBar onFilterClick={handleFilterClick} onSearch={handleSearch}/>
+
+      {/* Filter Modal */}
+      {showFilter && (
+        <div className="filter-overlay" onClick={handleOverlayClick}>
+          <Filter onFilterApply={handleFilterApply} />
+        </div>
+      )}
      
-      {loading ? (
-        <div className="loading">Loading...</div>
-      ) : (
         <>
           <div className="edit-catalog-header">
             <h1 className="EditCatalog-title">Edit Books</h1>
@@ -420,171 +467,165 @@ const EditCatalog = () => {
 )}
 
           <div className="catalog-books-grid">
-            {books.map((book) => (
-              <div key={book.isbn} className="catalog-book-card">
-                <div className="catalog-book-content">
-                  {/* Title and Author */}
-                  {editingBook === book.isbn ? (
-                    <div className="title-author-row">
-                      <div className="edit-field">
-                        <label className="edit-label">Title</label>
-                        <input
-                          type="text"
-                          name="title"
-                          value={editFormData.title || ''}
-                          onChange={handleEditChange}
-                          className="edit-input"
-                        />
+            {loading || !dataLoaded ? (
+              <Spinner />
+            ) : books && books.length > 0 ? (
+              books.map((book) => (
+                <div key={book.isbn} className="catalog-book-card">
+                  <div className="catalog-book-content">
+                    {/* Title and Author */}
+                    {editingBook === book.isbn ? (
+                      <div className="title-author-row">
+                        <div className="edit-field">
+                          <label className="edit-label">Title</label>
+                          <input
+                            type="text"
+                            name="title"
+                            value={editFormData.title || ''}
+                            onChange={handleEditChange}
+                            className="edit-input"
+                          />
+                        </div>
+                        <div className="edit-field">
+                          <label className="edit-label">Author</label>
+                          <input
+                            type="text"
+                            name="author"
+                            value={editFormData.author || ''}
+                            onChange={handleEditChange}
+                            className="edit-input"
+                          />
+                        </div>
                       </div>
-                      <div className="edit-field">
-                        <label className="edit-label">Author</label>
-                        <input
-                          type="text"
-                          name="author"
-                          value={editFormData.author || ''}
-                          onChange={handleEditChange}
-                          className="edit-input"
-                        />
+                    ) : (
+                      <div className="title-author-center">
+                        <h3 className="book-title">{book.title}</h3>
+                        <p className="book-author">{book.author}</p>
+                      </div>
+                    )}
+
+                    <div className="catalog-book-header">
+                      <div className="catalog-book-cover">
+                        <img src={`http://localhost:8001${normalizeCoverUrl(book.cover)}`} alt={`${book.title} cover`} />
+                      </div>
+                      {/* Description and Abstract */}
+                      <div className="description-abstract-row">
+                        {editingBook === book.isbn ? (
+                          <>
+                            <div className="edit-field">
+                              <label className="edit-label">Description</label>
+                              <textarea
+                                name="description"
+                                value={editFormData.description || ''}
+                                onChange={handleEditChange}
+                                className="edit-textarea"
+                              />
+                            </div>
+                            <div className="edit-field">
+                              <label className="edit-label">Abstract</label>
+                              <textarea
+                                name="abstract"
+                                value={editFormData.abstract || ''}
+                                onChange={handleEditChange}
+                                className="edit-textarea"
+                              />
+                            </div>
+                          </>
+                        ) : (
+                          <>
+                            {book.description && (
+                              <div className="view-field">
+                                <h4 className="view-label">Description</h4>
+                                <p>{book.description}</p>
+                              </div>
+                            )}
+                            {book.abstract && (
+                              <div className="view-field">
+                                <h4 className="view-label">Abstract</h4>
+                                <p>{book.abstract}</p>
+                              </div>
+                            )}
+                          </>
+                        )}
                       </div>
                     </div>
-                  ) : (
-                    <div className="title-author-center">
-                      <h3 className="book-title">{book.title}</h3>
-                      <p className="book-author">{book.author}</p>
+
+                    {/* Book Details */}
+                    <div className="book-details-grid">
+                      <div className="detail-item">
+                        <span className="detail-label">Genre:</span>
+                        {editingBook === book.isbn ? (
+                          <input
+                            type="text"
+                            name="genre"
+                            value={editFormData.genre || ''}
+                            onChange={handleEditChange}
+                            className="edit-input detail-input"
+                          />
+                        ) : (
+                          <span className="detail-value">{book.genre}</span>
+                        )}
+                      </div>
+                      <div className="detail-item">
+                        <span className="detail-label">Available:</span>
+                        {editingBook === book.isbn ? (
+                          <input
+                            type="number"
+                            name="available_copies"
+                            value={editFormData.available_copies || ''}
+                            onChange={handleEditChange}
+                            className="edit-input detail-input"
+                            min="0"
+                          />
+                        ) : (
+                          <span className="detail-value">{book.available_copies}</span>
+                        )}
+                      </div>
+                      <div className="detail-item">
+                        <span className="detail-label">ISBN:</span>
+                        <span className="detail-value">{book.isbn}</span>
+                      </div>
+                      <div className="detail-item">
+                        <span className="detail-label">Language:</span>
+                        {editingBook === book.isbn ? (
+                          <input
+                            type="text"
+                            name="language"
+                            value={editFormData.language || ''}
+                            onChange={handleEditChange}
+                            className="edit-input detail-input"
+                          />
+                        ) : (
+                          <span className="detail-value">{book.language}</span>
+                        )}
+                      </div>
                     </div>
-                  )}
-                  
-                  <div className="catalog-book-header">
-                    <div className="catalog-book-cover">
-                      <img src={`http://localhost:8001${normalizeCoverUrl(book.cover)}`} alt={`${book.title} cover`} />
-                    </div>
-                    
-                    {/* Description and Abstract */}
-                    <div className="description-abstract-row">
+
+                    {/* Actions */}
+                    <div className="catalog-book-actions">
                       {editingBook === book.isbn ? (
                         <>
-                          <div className="edit-field">
-                            <label className="edit-label">Description</label>
-                            <textarea
-                              name="description"
-                              value={editFormData.description || ''}
-                              onChange={handleEditChange}
-                              className="edit-textarea"
-                            />
-                          </div>
-                          <div className="edit-field">
-                            <label className="edit-label">Abstract</label>
-                            <textarea
-                              name="abstract"
-                              value={editFormData.abstract || ''}
-                              onChange={handleEditChange}
-                              className="edit-textarea"
-                            />
-                          </div>
+                          <button className="catalog-save-btn" onClick={() => handleSaveEdit(book.isbn)}>Save</button>
+                          <button className="catalog-cancel-btn" onClick={handleCancelEdit}>Cancel</button>
                         </>
                       ) : (
                         <>
-                          {book.description && (
-                            <div className="view-field">
-                              <h4 className="view-label">Description</h4>
-                              <p>{book.description}</p>
-                            </div>
-                          )}
-                          {book.abstract && (
-                            <div className="view-field">
-                              <h4 className="view-label">Abstract</h4>
-                              <p>{book.abstract}</p>
-                            </div>
-                          )}
+                          <button className="catalog-edit-btn" onClick={() => handleEdit(book)}>Edit</button>
+                          <button className="catalog-image-btn" onClick={() => handleChangeImage(book.isbn)}>Change Image</button>
+                          <button className="catalog-cancel-btn" onClick={() => handleDeleteBook(book.isbn)}>Delete</button>
                         </>
                       )}
                     </div>
                   </div>
                 </div>
-                
-                {/* Book Details */}
-                <div className="book-details-grid">
-                  <div className="detail-item">
-                    <span className="detail-label">Genre:</span>
-                    {editingBook === book.isbn ? (
-                      <input
-                        type="text"
-                        name="genre"
-                        value={editFormData.genre || ''}
-                        onChange={handleEditChange}
-                        className="edit-input detail-input"
-                      />
-                    ) : (
-                      <span className="detail-value">{book.genre}</span>
-                    )}
-                  </div>
-                  
-                  <div className="detail-item">
-                    <span className="detail-label">Available:</span>
-                    {editingBook === book.isbn ? (
-                      <input
-                        type="number"
-                        name="available_copies"
-                        value={editFormData.available_copies || ''}
-                        onChange={handleEditChange}
-                        className="edit-input detail-input"
-                        min="0"
-                      />
-                    ) : (
-                      <span className="detail-value">{book.available_copies}</span>
-                    )}
-                  </div>
-                  
-                  <div className="detail-item">
-                    <span className="detail-label">ISBN:</span>
-                    <span className="detail-value">{book.isbn}</span>
-                  </div>
-                  
-                  <div className="detail-item">
-                    <span className="detail-label">Language:</span>
-                    {editingBook === book.isbn ? (
-                      <input
-                        type="text"
-                        name="language"
-                        value={editFormData.language || ''}
-                        onChange={handleEditChange}
-                        className="edit-input detail-input"
-                      />
-                    ) : (
-                      <span className="detail-value">{book.language}</span>
-                    )}
-                  </div>
-                </div>
-                
-                <div className="catalog-book-actions">
-                  {editingBook === book.isbn ? (
-                    <>
-                      <button className="catalog-save-btn" onClick={() => handleSaveEdit(book.isbn)}>
-                        Save
-                      </button>
-                      <button className="catalog-cancel-btn" onClick={handleCancelEdit}>
-                        Cancel
-                      </button>
-                    </>
-                  ) : (
-                    <>
-                      <button className="catalog-edit-btn" onClick={() => handleEdit(book)}>
-                        Edit
-                      </button>
-                      <button className="catalog-image-btn" onClick={() => handleChangeImage(book.isbn)}>
-                        Change Image
-                      </button>
-                      <button className="catalog-cancel-btn" onClick={() => handleDeleteBook(book.isbn)}>
-                        Delete
-                      </button>
-                    </>
-                  )}
-                </div>
+              ))
+            ) : (
+              <div className="catalog-no-books">
+                <p className="text-center">No books found.</p>
               </div>
-            ))}
+            )}
           </div>
         </>
-      )}
     </div>
   );
 };

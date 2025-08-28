@@ -21,6 +21,13 @@
   margin-top: 20px;
 }
 
+.catalog-no-books {
+  grid-column: span 2;
+  margin-top: 16px !important;
+  color: lightsalmon;
+  font-size: 1.5rem;
+}
+
 /* Book Card */
 .catalog-book-card {
   border: 1px solid #e1e1e1;

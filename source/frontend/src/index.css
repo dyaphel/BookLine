@@ -22,12 +22,17 @@ a:hover {
   color: #ffffff;
 }
 
+#root {
+  background-color: #242424;
+}
+
 body {
   margin: 0;
   display: flex;
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background-color: #242424;
 }
 
 h1 {
