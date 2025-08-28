@@ -16,6 +16,7 @@ const BookInformation = () => {
   const [error, setError] = useState(null);
   const [userReservation, setUserReservation] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [qrCodeUrl, setQrCodeUrl] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,9 +38,7 @@ const BookInformation = () => {
         ]);
         
         setBook(bookResponse.data);
-        console.log({bookResponse})
         setReservations(availabilityResponse.data);
-        console.log({availabilityResponse})
 
         // If logged in, check user's reservations
         if (authResponse.data.isAuthenticated) {
@@ -70,7 +69,14 @@ const BookInformation = () => {
             
             if (reservationForThisBook) {
               setUserReservation(reservationForThisBook);
-              console.log({reservationForThisBook})
+              
+              // Genera QR code se la prenotazione è pronta per il ritiro
+              if (reservationForThisBook.ready_for_pickup) {
+                const qrData = `RESERVATION:${reservationForThisBook.id}`;
+                const qrUrl = `http://localhost:8004/qrcodes/generate/?data=${encodeURIComponent(qrData)}`;
+                setQrCodeUrl(qrUrl);
+                console.log("QR Code URL:", qrUrl);
+              }
             }
           } catch (err) {
             console.error("Error checking user reservations:", err);
@@ -90,53 +96,50 @@ const BookInformation = () => {
   const getCoverUrl = () => {
     if (!book?.cover) return '/default-cover.jpg';
     const normalizedPath = normalizeCoverUrl(book.cover);
-    return `http://localhost:8001${normalizedPath}`; //check if the cover URL is valid the port number
+    return `http://localhost:8001${normalizedPath}`;
   };
 
   const renderButtonOrStatus = () => {
-  if (!isLoggedIn) {
+    if (!isLoggedIn) {
+      return reservations.available_copies > 0 ? (
+        <Reservation isbn={isbn} />
+      ) : (
+        <GetInQueue isbn={isbn} />
+      );
+    }
+
+    if (userReservation) {
+      let statusMessage = '';
+      let statusClass = 'reservation-status';
+      
+      if (userReservation.ready_for_pickup) {
+        statusMessage = 'Your reservation is ready for pickup!';
+        statusClass += ' status-ready';
+      } else if (userReservation.fulfilled && !userReservation.returned) {
+        statusMessage = 'You have reserved this book';
+        statusClass += ' status-reserved';
+      } else if (userReservation.position) {
+        statusMessage = `You're in queue (position ${userReservation.position})`;
+        statusClass += ' status-queue';
+      } else {
+        statusMessage = 'You have a reservation for this book';
+        statusClass += ' status-pending';
+      }
+
+      return (
+        <div className={statusClass}>
+          <div className="status-icon"></div>
+          <p>{statusMessage}</p>
+        </div>
+      );
+    }
+
     return reservations.available_copies > 0 ? (
       <Reservation isbn={isbn} />
     ) : (
       <GetInQueue isbn={isbn} />
     );
-  }
-
-if (userReservation) {
-    let statusMessage = '';
-    let statusClass = 'reservation-status';
-if (userReservation.ready_for_pickup && reservations.available_copies > 0) {
-  statusMessage = 'Your reservation is ready for pickup!';
-  statusClass += ' status-ready';
-} else if (userReservation.fulfilled && !userReservation.returned) {
-  statusMessage = 'You have reserved this book';
-  statusClass += ' status-reserved';
-} else if (userReservation.position) {
-  statusMessage = `You're in queue (position ${userReservation.position})`;
-  statusClass += ' status-queue';
-}  else {
-  statusMessage = 'You have a reservation for this book';
-  statusClass += ' status-pending';
-}
-
-
-
-    return (
-      <div className={statusClass}>
-        <div className="status-icon"></div>
-        <p>{statusMessage}</p>
-      </div>
-    );
-  }
-
-
-  return reservations.available_copies > 0 ? (
-    <Reservation isbn={isbn} />
-  ) : (
-    <GetInQueue isbn={isbn} />
-  );
-
-};
+  };
 
   if (loading) return <div className="loading">Loading book details...</div>;
   if (error) return <div className="error">{error}</div>;
@@ -195,16 +198,32 @@ if (userReservation.ready_for_pickup && reservations.available_copies > 0) {
         
         <div className="book-copies-container">
           <h3 className="bookscopies">Number of copies:</h3>
-         <p className="bookscopieresponse">
-          {reservations.available_copies > 0 ? reservations.available_copies : 0}
-        </p>
-
+          <p className="bookscopieresponse">
+            {reservations.available_copies > 0 ? reservations.available_copies : 0}
+          </p>
         </div>
 
         <div className="bookbutton">
           {renderButtonOrStatus()}
         </div>
       </div>
+
+      {/* QR Code Section - Mostrato solo quando ready_for_pickup */}
+      {userReservation?.ready_for_pickup && qrCodeUrl && (
+        <div className="qr-code-section">
+          <h3>QR Code</h3>
+          <div className="qr-code-container">
+            <img 
+              src={qrCodeUrl} 
+              alt="QR Code per ritiro libro" 
+              className="qr-code-image"
+            />
+            <p className="qr-instructions">
+              Show this QR code to the librarian to pick up the book
+            </p>
+          </div>
+        </div>
+      )}
     </>
   );
 };

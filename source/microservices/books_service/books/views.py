@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from .models import Book
 from .serializers import BookSerializer
 from django.db.models import Q
+from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny  
@@ -159,3 +160,104 @@ def edit_book(request, isbn):
             {'error': str(e)},
             status=status.HTTP_500_INTERNAL_SERVER_ERROR
         )
+
+
+@api_view(['DELETE'])
+@authentication_classes([]) 
+def delete_book(request, isbn):
+    book = get_object_or_404(Book, isbn=isbn)
+    book.delete()
+    return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
+from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
+from django.http import JsonResponse
+from datetime import datetime
+from .models import Book
+from .serializers import BookSerializer
+
+@api_view(['POST'])
+@authentication_classes([])
+@permission_classes([AllowAny])
+def create_book(request):
+    try:
+        # Recupera ISBN e controlla che esista
+        isbn = request.data.get('isbn')
+        if not isbn:
+            return JsonResponse({'error': 'ISBN is required'}, status=400)
+        
+        # Validazione lunghezza ISBN
+        if len(isbn) != 13:
+            return JsonResponse({'error': 'ISBN must be 13 characters long'}, status=400)
+
+        if Book.objects.filter(isbn=isbn).exists():
+            return JsonResponse({'error': 'A book with this ISBN already exists'}, status=400)
+
+        # Recupera published e converte in date
+        published_str = request.data.get('published')
+        if not published_str:
+            return JsonResponse({'error': 'Published date is required'}, status=400)
+
+        try:
+            published_date = datetime.strptime(published_str, "%Y-%m-%d").date()
+        except ValueError:
+            return JsonResponse({'error': 'Invalid date format for published. Use YYYY-MM-DD'}, status=400)
+
+        # Validazione campi obbligatori
+        required_fields = ['title', 'author']
+        for field in required_fields:
+            if not request.data.get(field):
+                return JsonResponse({'error': f'{field.capitalize()} is required'}, status=400)
+
+        # Validazione available_copies
+        available_copies = request.data.get('available_copies', 1)
+        try:
+            available_copies = int(available_copies)
+            if available_copies < 0:
+                return JsonResponse({'error': 'Available copies cannot be negative'}, status=400)
+        except (ValueError, TypeError):
+            return JsonResponse({'error': 'Available copies must be a valid number'}, status=400)
+
+        # Prepara i dati per il serializer
+        book_data = {
+            'isbn': isbn,
+            'title': request.data.get('title'),
+            'author': request.data.get('author'),
+            'description': request.data.get('description', ''),
+            'abstract': request.data.get('abstract', ''),
+            'published': published_date,
+            'genre': request.data.get('genre', ''),
+            'language': request.data.get('language', ''),
+            'available_copies': available_copies
+        }
+
+        # Aggiungi cover se presente
+        if 'cover' in request.FILES:
+            # Validazione del file (opzionale)
+            cover_file = request.FILES['cover']
+            if cover_file.size > 5 * 1024 * 1024:  # 5MB limit
+                return JsonResponse({'error': 'Cover image too large. Max size is 5MB'}, status=400)
+            book_data['cover'] = cover_file
+
+        # Serializza e salva
+        serializer = BookSerializer(data=book_data)
+        if serializer.is_valid():
+            book = serializer.save()
+            return JsonResponse({
+                'message': 'Book created successfully', 
+                'book': BookSerializer(book).data
+            }, status=201)
+        else:
+            return JsonResponse({
+                'error': 'Invalid data', 
+                'details': serializer.errors
+            }, status=400)
+
+    except Exception as e:
+        print(f"Error creating book: {e}")
+        return JsonResponse({
+            'error': 'Internal server error', 
+            'details': str(e)
+        }, status=500)

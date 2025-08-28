@@ -135,6 +135,7 @@ const ToBeReturned = () => {
     } catch (err) {
       setError(err.response?.data?.detail || 'Deletion failed');
     }
+    location.reload()
   };
 
   if (loading) return <div className="loading">Loading reservations...</div>;

@@ -144,23 +144,10 @@
   }
   
   .my-search-container {
-      width: 90%;
+    display: none;
   }
 
-  .my-search {
-    padding: 6px 10px;
-    font-size: 0.85rem;
-    
-  }
   
-  .my-filter {
-    right: -30px;
-  }
-  
-  .my-filter-image {
-    width: 24px;
-    height: 24px;
-  }
   
   .my-nav-button,
   .my-nav-button-register {

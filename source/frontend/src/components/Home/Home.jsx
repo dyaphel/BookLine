@@ -6,6 +6,7 @@ import Filter from '../Navbar/Filter/Filter';
 import BookCard from "./BookCards/BookCard";
 import './Home.css'; // Import the CSS file for styling
 import { normalizeCoverUrl } from "../../Utils/urlCoverNormalizer"; // Import the utility function
+import Spinner from "../../components/Loading/Spinner";
 
 
 
@@ -14,6 +15,7 @@ const Home = () => {
   const [filters, setFilters] = useState({ author: '', year: '', genre: '' });
   const [books, setBooks] = useState([]); // State to store books fetched from the API
   const [loading, setLoading] = useState(false); // Loading state
+  const [dataLoaded, setDataLoaded] = useState(false);
   const navigate = useNavigate();
 
   // Function to fetch books from the API
@@ -25,6 +27,7 @@ const Home = () => {
       });
      
       setBooks(response.data); // Update the books state with the fetched data
+      setDataLoaded(true);
     } catch (error) {
       console.error("Error fetching books:", error);
       // Optionally, set an error state to display a message to the user
@@ -87,23 +90,26 @@ const Home = () => {
       {/* Page Content */}
       <div className="page-content">
         <h1 className="BookCatalog-title">Book Catalog</h1>
-        {loading ? (
-          <p>Loading books...</p> // Display loading message
-        ) : (
+        {loading || !dataLoaded ? (
+          <Spinner />
+        ) : books && books.length > 0 ? (
           <div className="book-list">
             {books.map((book, index) => {
               const normalizedCoverUrl = normalizeCoverUrl(book.cover);
-  
               return (
                 <BookCard
                   key={index}
                   cover={normalizedCoverUrl} // Fallback image if cover is invalid
                   title={book.title}
                   author={book.author}
-                  onClick={() => navigate(`/books/${book.isbn}`)} // Pass book ID to the details page
+                  onClick={() => navigate(`/books/${book.isbn}`)}
                 />
               );
             })}
+          </div>
+        ) : (
+          <div className="catalog-no-books">
+            <p className="text-center">No books found.</p>
           </div>
         )}
       </div>
