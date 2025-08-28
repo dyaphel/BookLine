@@ -26,10 +26,6 @@ Altri concetti fondamentali:
 - **DET:** 10 (ogni campo significativo a livello utente).  
 - **RET:** 1 (un solo insieme logico: i libri).  
 
-**Funzioni tipiche:**  
-- **EI:** Aggiungere libro, Modificare libro, Eliminare libro  
-  - FTR = 1 (il file Book stesso)  
-- **EO/EQ:** Consultare lista libri, cercare libro  
 
 📌 Classificazione tabella IFPUG ILF (DET=10, RET=1) → **Bassa complessità → 7 FP**
 
@@ -41,13 +37,8 @@ Altri concetti fondamentali:
 `email, first_name, last_name, username, profile_image, role, is_active, is_staff, password`
 
 - **Tipo:** ILF (il sistema mantiene utenti).  
-- **DET:** ≈ 9 (campi significativi).  
+- **DET:** = 9 (campi significativi).  
 - **RET:** 1 (insieme logico: utenti).  
-
-**Funzioni tipiche:**  
-- **EI:** Registrazione utente, Aggiornamento profilo, Cancellazione utente  
-  - FTR = 1 (CustomUser stesso)  
-- **EQ/EO:** Login, visualizzazione profilo  
 
 📌 Classificazione ILF (DET=9, RET=1) → **Bassa complessità → 7 FP**
 
@@ -85,30 +76,29 @@ Altri concetti fondamentali:
 
 ---
 
-## Sintesi Transazioni (EI, EO, EQ – con FTR)
+# Function Point Analysis – Bookline (User Stories)
 
-| Transazione               | Tipo | DET stimati | FTR | Complessità | FP |
-|---------------------------|------|-------------|-----|-------------|----|
-| Aggiungi Libro            | EI   | 10          | 1   | Media       | 4  |
-| Elimina Libro             | EI   | 1           | 1   | Bassa       | 3  |
-| Lista/Cerca Libri         | EQ   | 5           | 1   | Bassa       | 3  |
-| Registrazione Utente      | EI   | 9           | 1   | Media       | 4  |
-| Modifica/Cancella Utente  | EI   | 3-5         | 1   | Bassa       | 3  |
-| Login                     | EQ   | 2-3         | 1   | Bassa       | 3  |
-| Crea Prenotazione         | EI   | 8           | 3   | Alta        | 6  |
-| Annulla Prenotazione      | EI   | 2-3         | 1   | Bassa       | 3  |
-| Restituzione Libro        | EI   | 2-3         | 2   | Media       | 4  |
-| Lista Prenotazioni / Coda | EQ   | 5           | 2   | Media       | 4  |
+# Function Point Analysis – Bookline (User Stories) – Corretto
 
-📌 FP stimati con tabella standard IFPUG:  
-- **EI → 3 (bassa), 4 (media), 6 (alta)**  
-- **EO → 4 (bassa), 5 (media), 7 (alta)**  
-- **EQ → 3 (bassa), 4 (media), 6 (alta)**  
-
----
-
-# Conclusione
-
-- **Totale ILF:** 21 FP  
-- **Totale Transazioni (EI/EQ):** somma delle singole FP sopra → **37 FP**  
-- **Totale generale del sistema:** **58 Function Point**
+| #  | User Story                                  | ILF FP | EIF FP | EI FP | EO FP | EQ FP | Totale FP |
+|:--:|:--------------------------------------------|:------:|:------:|:-----:|:-----:|:-----:|:---------:|
+| 1  | Browse all books                            | 7      | 0      | 0     | 0     | 3     | 10        |
+| 2  | Search books (author, genre, title, date)   | 7      | 0      | 0     | 0     | 3     | 10        |
+| 3  | Filter & sort catalog                       | 7      | 0      | 0     | 0     | 3     | 10        |
+| 4  | Create personal account                     | 7      | 0      | 4     | 0     | 0     | 11        |
+| 5  | Log in                                      | 7      | 0      | 0     | 0     | 3     | 10        |
+| 6  | Log out                                     | 7      | 0      | 0     | 0     | 3     | 10        |
+| 7  | View detailed book info                     | 7      | 0      | 0     | 0     | 3     | 10        |
+| 8  | Reserve book                                | 7      | 0      | 4     | 0     | 0     | 11        |
+| 9  | Receive reservation confirmation            | 7      | 0      | 0     | 4     | 0     | 11        |
+| 10 | Join waitlist                               | 7      | 0      | 4     | 0     | 0     | 11        |
+| 11 | Notification for turn to collect book       | 7      | 0      | 0     | 4     | 0     | 11        |
+| 12 | View personal area (reservations, stats)    | 7      | 0      | 0     | 0     | 4     | 11        |
+| 13 | Edit profile                                | 7      | 0      | 4     | 0     | 0     | 11        |
+| 14 | Receive book recommendations                | 7      | 0      | 0     | 4     | 0     | 11        |
+| 15 | Delete account                              | 7      | 0      | 4     | 0     | 0     | 11        |
+| 16 | Add/delete books                            | 7      | 0      | 4     | 0     | 0     | 11        |
+| 17 | Process/edit book info                      | 7      | 0      | 4     | 0     | 0     | 11        |
+| 18 | Reservation management page                 | 7      | 0      | 0     | 0     | 3     | 10        |
+| 19 | Scan QR code to verify reservation          | 7      | 0      | 4     | 0     | 0     | 11        |
+| 20 | Access dashboard (trends, stats)            | 7      | 0      | 0     | 4     | 0     | 11        |
