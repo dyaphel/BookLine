@@ -10,10 +10,10 @@ Libraries will have access to a dashboard with statistics on reservations and bo
 1. As a Guest, I want to browse all available books so that I can explore the entire catalog.
 2. As a Guest, I want to search for books by author, genre, title, or publication date so that I can easily find specific books of interest.
 3. As a Guest, I want to filter and sort books in the catalog so that I can quickly find the books I’m looking for.
-4. As a Guest, I want to view detailed information about a book so that I can evaluate it before deciding to borrow or reserve it.
-5. As a Guest, I want to create a personal account so that I can register and access additional services.
-6. As a Registered User, I want to log in using my email and password so that I can access my profile and personalized services.
-7. As a Registered User, I want to browse the entire book catalog so that I can explore all available options.
+4. As a Guest, I want to create a personal account so that I can register and access additional services.
+5. As a Registered User, I want to log in using my email and password so that I can access my profile and personalized services.
+6. As a Registered User, I want to log out from my account so that I can end my session.
+7. As a Registered User, I want to view detailed information about a book so that I can evaluate it before deciding to borrow or reserve it.
 8. As a Registered User, I want to reserve available books so that I can visit the library and collect them later.
 9. As a Registered User, I want to receive a confirmation when I successfully reserve a book so that I can confirm my reservation with the library staff.
 10. As a Registered User, I want to join a waitlist when a book is unavailable so that I can be notified when it becomes available.

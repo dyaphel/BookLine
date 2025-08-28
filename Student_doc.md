@@ -10,10 +10,10 @@ Libraries will have access to a dashboard with statistics on reservations and bo
 1. As a Guest, I want to browse all available books so that I can explore the entire catalog.
 2. As a Guest, I want to search for books by author, genre, title, or publication date so that I can easily find specific books of interest.
 3. As a Guest, I want to filter and sort books in the catalog so that I can quickly find the books I’m looking for.
-4. As a Guest, I want to view detailed information about a book so that I can evaluate it before deciding to borrow or reserve it.
-5. As a Guest, I want to create a personal account so that I can register and access additional services.
-6. As a Registered User, I want to log in using my email and password so that I can access my profile and personalized services.
-7. As a Registered User, I want to browse the entire book catalog so that I can explore all available options.
+4. As a Guest, I want to create a personal account so that I can register and access additional services.
+5. As a Registered User, I want to log in using my email and password so that I can access my profile and personalized services.
+6. As a Registered User, I want to log out from my account so that I can end my session.
+7. As a Registered User, I want to view detailed information about a book so that I can evaluate it before deciding to borrow or reserve it.
 8. As a Registered User, I want to reserve available books so that I can visit the library and collect them later.
 9. As a Registered User, I want to receive a confirmation when I successfully reserve a book so that I can confirm my reservation with the library staff.
 10. As a Registered User, I want to join a waitlist when a book is unavailable so that I can be notified when it becomes available.
@@ -36,8 +36,9 @@ Libraries will have access to a dashboard with statistics on reservations and bo
 Manages user accounts, authentication (session-based), profiles, and roles (User, Librarian, Admin). Handles registration, login/logout, profile retrieval and update, password change, and account deletion. Serves profile images via Django media.
 
 ### USER STORIES:
-5 ) Create a personal account (register)  
-6 ) Log in using email and password  
+4 ) Create a personal account (register)  
+5 ) Log in using email and password  
+6 ) Log out from account  
 12 ) View personal area/profile  
 13 ) Edit profile information  
 15 ) Delete account
@@ -73,10 +74,10 @@ No external services. Frontend interacts directly via HTTP; CSRF/session cookies
   | HTTP METHOD | URL | Description | User Stories |
   | ----------- | --- | ----------- | ------------ |
   | GET | /users/health/ | Health check | - |
-  | POST | /users/register/ | Register new user | 5 |
-  | POST | /users/login/ | Login with username or email + password (session-based) | 6 |
-  | GET | /users/csrf/ | Get CSRF token | 6 |
-  | GET | /users/check-auth/ | Check session authentication | 6, 12 |
+  | POST | /users/register/ | Register new user | 4 |
+  | POST | /users/login/ | Login with username or email + password (session-based) | 5 |
+  | GET | /users/csrf/ | Get CSRF token | 5 |
+  | GET | /users/check-auth/ | Check session authentication | 5, 12 |
   | POST | /users/logout/ | Logout current session | 6 |
   | GET | /users/get_profile/ | Get current user profile | 12 |
   | GET | /users/get_by/<id> | Get user by id (auth required) | 12 |
@@ -99,7 +100,7 @@ Provides catalog management and discovery: list/search/sort books, view details,
 1 ) Browse all available books (guest)  
 2 ) Search by author/genre/title/publication date  
 3 ) Filter and sort books in the catalog  
-4 ) View detailed information about a book  
+7 ) View detailed information about a book  
 16 ) Librarian add/delete books  
 17 ) Librarian process/edit book information
 
@@ -132,7 +133,7 @@ No external services.
   | ----------- | --- | ----------- | ------------ |
   | GET | /books/health/ | Health check | - |
   | GET | /books/ | List books with search and filters (q, title, author, published, genre) | 1, 2, 3 |
-  | GET | /books/<isbn>/ | Get book details by ISBN | 4 |
+  | GET | /books/<isbn>/ | Get book details by ISBN | 7 |
   | POST | /books/create/ | Create a new book | 16 |
   | DELETE | /books/delete/<isbn> | Delete a specific book | 16 |
   | PUT/PATCH | /books/changeimage/<isbn>/ | Change book cover image | 17 |
@@ -188,7 +189,7 @@ No external external services; interacts logically with books and users data thr
   | GET | /reservations/<reservation_id>/ | Get reservation by id (librarian/admin) | 18 |
   | GET | /reservations/book/<isbn>/ | List reservations by book (librarian/admin) | 18 |
   | GET | /reservations/user/<user_id>/ | List reservations by user (self or librarian/admin) | 12, 18 |
-  | GET | /reservations/book/<isbn>/availability/ | Check available copies considering active reservations | 1, 4 |
+  | GET | /reservations/book/<isbn>/availability/ | Check available copies considering active reservations | 1, 7 |
   | POST | /reservations/create/ | Create reservation; handles queue and ready_for_pickup | 8, 9, 10 |
   | PATCH | /reservations/fulfill/<reservation_id>/ | Mark as fulfilled (librarian/admin) | 18 |
   | POST | /reservations/return/<reservation_id>/ | Mark as returned and promote next in queue | 18 |
@@ -265,10 +266,10 @@ No third-party services. Talks to backend services over HTTP at localhost ports 
   | Name | Description | Related Microservice | User Stories |
   | ---- | ----------- | -------------------- | ------------ |
   | Home | Landing/catalog browsing, search, sort | books_service | 1, 2, 3 |
-  | Login | Authentication page | users_service | 6 |
-  | Register | Registration page | users_service | 5 |
+  | Login | Authentication page | users_service | 5 |
+  | Register | Registration page | users_service | 4 |
   | Profile | Personal area (reservations, favorites, stats UI) | users_service, reservations_service | 12, 13, 15 |
-  | Book Details | View details and reserve | books_service, reservations_service | 4, 8, 10, 11 |
+  | Book Details | View details and reserve | books_service, reservations_service | 7, 8, 10, 11 |
   | Librarian Dashboard | Analytics, reservations management, QR scan entry | reservations_service, qrcode_service | 18, 19, 20 |
 
 

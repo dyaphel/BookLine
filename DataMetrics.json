@@ -2,14 +2,14 @@
   {
     "set_id": 1,
     "set_name": "catalog discovery (guest + user)",
-    "user_stories": [1, 2, 3, 4, 7],
+    "user_stories": [1, 2, 3, 7],
     "links": [2, 4],
     "db": "true"
   },
   {
     "set_id": 2,
     "set_name": "authentication and account management",
-    "user_stories": [5, 6, 12, 13, 15],
+    "user_stories": [4, 5, 6, 12, 13, 15],
     "links": [1, 4],
     "db": "true"
   },
