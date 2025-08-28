@@ -16,7 +16,7 @@ const NavBar = ({ onFilterClick, onSearch }) => {
   });
   const [loading, setLoading] = useState(false);
 
-  const hideOnPaths = ['/users/', '/all-reservations', '/books'];
+  const hideOnPaths = ['/users/', '/all-reservations', '/books', '/my-books'];
   const shouldHide = hideOnPaths.some(path => location.pathname.startsWith(path));
 
   useEffect(() => {
