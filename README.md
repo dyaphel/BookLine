@@ -28,9 +28,8 @@ Lab. advanced programming - project
 To ensure smooth collaboration, follow these rules when working on this repository.  
 
 ## 📌 Branching Strategy  
-- **`main` branch** → Stable production-ready version (do not push here directly).  
-- **`development` branch** → The main working branch for integrating new features (do not push directly here).  
-- **`sub-development` branch** → Use this as an intermediate branch to handle merge conflicts before pushing to `development`.  
+- **`main` branch** → Stable production-ready version.  
+- **`development` branch** → The main working branch for integrating new features.  
 
 ## 🛠 Working on a New Feature  
 1. **Create a new branch** from `development`:  
