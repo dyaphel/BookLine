@@ -1,9 +1,9 @@
 # SYSTEM DESCRIPTION:
 
-Bookline is a system that supports libraries in managing book reservations and circulation.
-Users will be able to search for books in the catalog, reserve them, and join a queue when a book is already on loan. The system will notify the next user in line once the book becomes available.
-In case a reserved book is not collected within the given timeframe, the reservation will be automatically reassigned to the next user.
-Libraries will have access to a dashboard with statistics on reservations and borrowing trends, allowing them to identify the most popular books and genres.
+Bookline is a system designed to help libraries manage book reservations and circulation efficiently.
+Users can browse the catalog, search for titles, reserve books, and join a waiting list if a book is already on loan.
+When a borrowed book is returned or a reservation is canceled, the system automatically reassigns the reservation to the next user in line and sends a notification as soon as the book becomes available.
+Libraries benefit from an intuitive dashboard with detailed statistics on reservations and borrowing trends, making it easier to track demand and identify the most popular books.
 
 # USER STORIES:
 
