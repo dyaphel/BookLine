@@ -76,9 +76,7 @@ Responsibilities:
 - Generate QR codes for reservations pick-up.
 - Validate QR code scans to confirm reservation/checkout events.
 Public endpoints (indicative):
-- POST /qrcode/generate (reservationId)
-- POST /qrcode/validate (payload or image/contents)
-- GET /qrcode/health/
+- GET /qrcode/generate (reservationId)
 Data:
 - Lightweight; may store issued codes or use stateless signing.
 
