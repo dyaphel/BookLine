@@ -78,4 +78,4 @@ Push the updated sub-development branch:
 - Never push directly to main or development.
 - Always fetch before starting and during your programming session.
 - Use meaningful commit messages.
-- Resolve conflicts in sub-development before pushing to development.
+
