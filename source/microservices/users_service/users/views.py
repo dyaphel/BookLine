@@ -49,30 +49,24 @@ def register(request):
             status=status.HTTP_400_BAD_REQUEST
         )
     
-    # Ensure the username is lowercase before passing it to the serializer
+    # Ensure the username is lowercase
     username = request.data.get('username').strip().lower()
-    request.data['username'] = username  # Update the data to include the lowercase username
+    request.data['username'] = username
 
     if 'profile_image' in request.data and request.data['profile_image']:
-        # The file will be automatically handled by MultiPartParser
        pass
     
-    serializer = RegisterSerializer(data=request.data)
-
-    # Now pass the modified data to the serializer
     serializer = RegisterSerializer(data=request.data)
     
     if serializer.is_valid():
         user = serializer.save()
         return Response({'message': 'User registered successfully'}, status=status.HTTP_201_CREATED)
     else:
-        # Log or print errors for debugging
         print("Serializer errors:", serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 
-# @api_view(['POST'])
 @require_POST
 @ensure_csrf_cookie
 def login_view(request):
@@ -87,23 +81,23 @@ def login_view(request):
                 'message': 'Both username/email and password are required'
             }, status=400)
 
-        # Step 1: Try to find user by username
+        # Try to find user by username
         user = None
         try:
             user = CustomUser.objects.get(username=username_or_email)
         except CustomUser.DoesNotExist:
-            pass  # Ignore if no user is found by username
+            pass
 
-        # Step 2: If no user found by username, try to find user by email
+        # Try to find user by email
         if user is None and '@' in username_or_email:
             try:
                 user = CustomUser.objects.get(email=username_or_email)
             except CustomUser.DoesNotExist:
-                pass  # Ignore if no user is found by email
+                pass 
 
-        # Step 3: If user is found, check the password
+        # If user is found, check the password
         if user is not None and check_password(password, user.password):
-            # Password matches, log the user in
+            
             auth_login(request, user)
             serializer = UserProfileSerializer(user)  # Serialize user data
             return JsonResponse({
@@ -119,7 +113,7 @@ def login_view(request):
         
 
     except Exception as e:
-        print("Error during login:", str(e))  # Debug log
+        print("Error during login:", str(e))
         return JsonResponse({
             'success': False,
             'message': 'An error occurred during login'
