@@ -136,13 +136,13 @@
 /* Container for status and button */
 .status-button-row {
   display: flex;
-  justify-content: center; /* Changed from center to align with your margin-left */
+  justify-content: center; 
   align-items: center;
   gap: 2rem;
   margin-top: 2rem;
   margin-left: 10%;
-  width:auto; /* Adjusted to account for margin-left */
-  flex-wrap: nowrap; /* Changed to nowrap to prevent button text wrapping */
+  width:auto; 
+  flex-wrap: nowrap; 
 
 }
 

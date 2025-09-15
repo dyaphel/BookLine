@@ -33,7 +33,7 @@
   box-sizing: border-box;
 }
 
-/* Responsive adjustments - only change number of columns */
+/* Responsive adjustments change number of columns */
 @media (max-width: 1200px) {
   .book-list {
     max-width: calc(280px * 3 + 20px * 2); /* 3 columns */

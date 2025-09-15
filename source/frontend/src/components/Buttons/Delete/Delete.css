@@ -8,18 +8,18 @@
   .button-delete {
     background-color: transparent;
     border: none;
-    color: rgb(232, 72, 104); /* Colore del testo */
+    color: rgb(232, 72, 104); 
     font-size: 1.5rem;
     font-weight: 500;
     padding: 10px 20px;
-    border-radius: 9px; /* Bordi arrotondati */
+    border-radius: 9px; 
     cursor: pointer;
     transition: all 0.3s ease;
   }
 
   .button-delete:hover {
-    background-color: rgb(232, 72, 104); ; /* Cambia colore di sfondo al passaggio del mouse */
-    color: white; /* Cambia colore del testo al passaggio del mouse */
+    background-color: rgb(232, 72, 104); ; 
+    color: white; 
   }
 
 

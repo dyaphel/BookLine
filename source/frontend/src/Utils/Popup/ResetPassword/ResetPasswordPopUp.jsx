@@ -33,7 +33,7 @@ const PasswordResetPopup = ({ onClose }) => {
       ...prev,
       [name]: value
     }));
-    // Clear errors when user starts typing
+   
     if (error) setError('');
   };
 

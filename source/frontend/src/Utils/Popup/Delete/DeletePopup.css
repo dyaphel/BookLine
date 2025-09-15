@@ -1,4 +1,4 @@
-/* Fullscreen overlay with blur */
+
 .popup-overlay {
   position: fixed;
   top: 0;
@@ -26,14 +26,14 @@
 
 /* Title */
 .popup-title {
-  color: #dc2626; /* Red-600 */
+  color: #dc2626; 
   margin: 0 0 25px 0;
   font-size: 1.6rem;
   text-align: center;
   font-weight: 600;
 }
 
-/* Text */
+
 .popup-text {
   display: block;
   margin-bottom: 8px;
@@ -42,14 +42,14 @@
   font-weight: 500;
 }
 
-/* Actions container */
+
 .popup-actions {
   display: flex;
   align-items: center;
   gap: 0.75rem;
 }
 
-/* Buttons */
+
 .popup-btn {
   padding: 12px 24px;
   border: none;
@@ -67,28 +67,28 @@
 /* Cancel button */
 .popup-btn.cancel {
   background-color: #edf2f7;
-  color: #374151; /* Gray-700 */
+  color: #374151;
   width: 50%;
   
 }
 
 .popup-btn.cancel:hover {  
-  background-color: #e2e8f0;background-color: #f9fafb; /* Gray-50 */
+  background-color: #e2e8f0;background-color: #f9fafb; 
 }
 
 /* Delete button */
 .popup-btn.delete {
-  background-color: #dc2626; /* Red-600 */
+  background-color: #dc2626; 
   color: white;
   border: none;
   width: 50%;
 }
 
 .popup-btn.delete:hover {
-  background-color: #b91c1c; /* Red-700 */
+  background-color: #b91c1c; 
 }
 
-/* Simple scale animation */
+
 @keyframes popup-scale {
   0% {
     transform: scale(0.95);

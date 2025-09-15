@@ -35,7 +35,7 @@ const ReservationAnalytics = () => {
     }
   };
 
-  // Filter reservations based on selected time period
+ 
   const filterReservationsByTime = (reservations) => {
     const now = new Date();
     let startDate;
@@ -74,7 +74,8 @@ const calculateGrowthRate = (data) => {
     return (((currentMonth - prevMonth) / prevMonth) * 100).toFixed(1);
 
   } else if (timeFilter === 'all') {
-    // Trend generale: confronta metà iniziale e metà finale dei dati
+    
+
     if (data.length < 2) return 0;
     const sorted = [...data].sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
     const mid = Math.floor(sorted.length / 2);
@@ -88,7 +89,7 @@ const calculateGrowthRate = (data) => {
 };
 
   
-  // Calculate statistics
+  
   const calculateStats = (data) => {
     const filteredData = filterReservationsByTime(data);
     const total = filteredData.length;
@@ -109,11 +110,11 @@ const calculateGrowthRate = (data) => {
     };
   };
   
-  // Prepare data for visualizations
+  
   const prepareChartData = (data) => {
     const filteredData = filterReservationsByTime(data);
     
-    // Status data
+   
     const statusData = [
       { name: 'Total', count: filteredData.length },
       { name: 'Fulfilled', count: filteredData.filter(r => r.fulfilled).length },
@@ -122,7 +123,7 @@ const calculateGrowthRate = (data) => {
       { name: 'Active', count: filteredData.filter(r => !r.fulfilled && !r.cancelled).length },
     ];
     
-    // Daily data for timeline
+    
     const dailyData = {};
     filteredData.forEach(res => {
       const date = new Date(res.timestamp).toLocaleDateString();

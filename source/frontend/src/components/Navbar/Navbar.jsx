@@ -12,7 +12,7 @@ const NavBar = ({ onFilterClick, onSearch }) => {
   const [userData, setUserData] = useState({ 
     username: "", 
     id: null,
-    isStaff: false  // Changed to match backend response
+    isStaff: false  
   });
   const [loading, setLoading] = useState(false);
 
@@ -37,7 +37,7 @@ const NavBar = ({ onFilterClick, onSearch }) => {
           setUserData({
             username: authResponse.data.username,
             id: authResponse.data.id,
-            isStaff: authResponse.data.is_staff || false  // Using is_staff from backend
+            isStaff: authResponse.data.is_staff || false  
           });
         }
       } catch (error) {
@@ -120,9 +120,9 @@ const NavBar = ({ onFilterClick, onSearch }) => {
       <button onClick={() => navigate(`/users/${userData.username}`)} className="my-nav-button">
         Profile
       </button>
-        {/* <span className="divider">|</span> */}
+       
       
-      {/* Solo staff */}
+      {/* Staff only */}
       {userData.isStaff && (
         <>
           <button onClick={() => navigate('/catalog')} className="my-nav-button">

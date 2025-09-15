@@ -51,7 +51,7 @@ const ProfilePage = () => {
           username: response.data.username,
           profile_image: null
         });
-        setPreviewImage(`http://localhost:8003${response.data.profile_image}`); // da controllare il percorso dell'immagine
+        setPreviewImage(`http://localhost:8003${response.data.profile_image}`);
       } catch (err) {
         console.error('Error fetching profile:', err);
         setError('Failed to load profile data');

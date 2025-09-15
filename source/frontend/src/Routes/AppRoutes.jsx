@@ -15,7 +15,7 @@ import ReservationsDetails from "../components/Librarian/AllReservations/Reserva
 import Spinner from "../components/Loading/Spinner";
 
 const AppRoutes = () => { 
-    const [isLoggedIn, setIsLoggedIn] = useState(null); // null = unknown
+    const [isLoggedIn, setIsLoggedIn] = useState(null); 
     const [userData, setUserData] = useState({ username: "", id: null, isStaff: false });
     const [loading, setLoading] = useState(false);
 
@@ -50,7 +50,7 @@ const AppRoutes = () => {
 
     // Wrapper for protected routes
     const ProtectedRoute = ({ children, staffOnly = false }) => {
-        if (isLoggedIn === null) return <Spinner />; // show spinner while auth unknown
+        if (isLoggedIn === null) return <Spinner />; 
         if (!isLoggedIn) return <Login />;
         if (staffOnly && !userData.isStaff) return <Login />;
         return children;

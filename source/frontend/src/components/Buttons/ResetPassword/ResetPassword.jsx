@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './ResetPassword.css'; // Import the CSS file for styling
+import './ResetPassword.css'; 
 import { getCsrfToken } from '../../../Utils/GetToken';
 import PasswordResetPopup from '../../../Utils/Popup/ResetPassword/ResetPasswordPopUp';
 const ResetButton = () => {
@@ -33,7 +33,7 @@ const ResetButton = () => {
        Reset Password
       </button>
     </div>
-          {/* Conditionally render the popup */}
+  
       {showPopup && (
         <PasswordResetPopup 
           onClose={() => setShowPopup(false)}

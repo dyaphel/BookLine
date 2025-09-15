@@ -20,7 +20,7 @@ const Login = () => {
         const fetchCsrf = async () => {
             try {
                 const token = await getCsrfToken();
-                setCsrfToken(token); // Set it in state so it can be used later
+                setCsrfToken(token); 
             } catch (err) {
                 console.error('Error fetching CSRF token:', err);
             }
@@ -57,7 +57,7 @@ const Login = () => {
             
             if (response.data.success) {
                 window.location.replace("/home");
-                // navigate('/home');
+
             } else {
                 setAlert({
                     message: response.data.message || 'Login failed',

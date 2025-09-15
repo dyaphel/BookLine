@@ -9,8 +9,8 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  overflow: hidden; /* Ensures nothing spills outside the card */
-  padding-bottom: 15px; /* Padding only at bottom for text */
+  overflow: hidden; 
+  padding-bottom: 15px; 
 }
 
 .book-card:hover {
@@ -38,7 +38,7 @@
   object-fit: contain;
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Changed back to cover for consistent look */
+  object-fit: cover; 
   transition: transform 0.3s ease;
   overflow: hidden;
   border-color: transparent;
@@ -46,7 +46,7 @@
 }
 
 .book-card:hover .book-cover {
-  transform: scale(1.03); /* Slight zoom on hover */
+  transform: scale(1.03); 
 }
 
 .book-details {
@@ -68,7 +68,7 @@
   color: rgba(255, 255, 255, 0.7);
 }
 
-/* Responsive adjustments */
+
 @media (max-width: 900px) {
   .book-cover-container {
     height: 320px;

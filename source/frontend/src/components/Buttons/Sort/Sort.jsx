@@ -1,6 +1,6 @@
 
 import React from 'react';
-import './Sort.css'; // Import the CSS file for styling
+import './Sort.css'; 
 
 const Sort = () => {
 

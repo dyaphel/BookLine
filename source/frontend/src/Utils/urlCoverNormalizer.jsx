@@ -1,5 +1,5 @@
-// utils.js
+
 export const normalizeCoverUrl = (url) => {
-  if (!url) return ''; // or return a placeholder URL
+  if (!url) return ''; 
   return url.replace('/media/media/', '/media/');
 };

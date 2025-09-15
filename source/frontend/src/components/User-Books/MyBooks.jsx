@@ -15,7 +15,7 @@ const MyBooks = ({ userId }) => {
   const [csrfToken, setCsrfToken] = useState('');
   const navigate = useNavigate();
 
-  // Fetch CSRF token on component mount
+
   useEffect(() => {
     const fetchCsrf = async () => {
       try {
@@ -29,7 +29,7 @@ const MyBooks = ({ userId }) => {
     fetchCsrf();
   }, []);
 
-  // Fetch only active (non-cancelled) reservations
+  
   useEffect(() => {
     if (!userId || !csrfToken) return;
     
@@ -41,7 +41,7 @@ const MyBooks = ({ userId }) => {
         const response = await axios.get(
           `http://localhost:8002/reservations/user/${userId}/`,
           {
-            params: { cancelled: false }, // Only fetch non-cancelled reservations
+            params: { cancelled: false }, 
             headers: {
               'Content-Type': 'application/json',
               'X-CSRFToken': csrfToken,
@@ -62,7 +62,7 @@ const MyBooks = ({ userId }) => {
     fetchUserReservations();
   }, [userId, csrfToken]);
 
-  // Fetch book details for reservations
+
   useEffect(() => {
     const fetchBookDetails = async () => {
       if (!reservations.length || !csrfToken) return;
@@ -115,7 +115,7 @@ const MyBooks = ({ userId }) => {
   const handleCancelReservation = async (reservationId) => {
     try {
       const response = await axios.delete(
-        `http://localhost:8002/reservations/cancel/${reservationId}/`, // Changed endpoint
+        `http://localhost:8002/reservations/cancel/${reservationId}/`, 
         {
           headers: {
             'Content-Type': 'application/json',
@@ -129,7 +129,7 @@ const MyBooks = ({ userId }) => {
         throw new Error('Failed to cancel reservation');
       }
 
-      // Optimistic update - remove the cancelled reservation
+
       setReservations(prev => prev.filter(res => res.id !== reservationId));
     } catch (err) {
       setError(err.response?.data?.detail || err.message);

@@ -1,4 +1,4 @@
-/* AnalyticsDashboard.css */
+
 .analytics-container {
   padding: 20px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -7,8 +7,8 @@
 
 .analytics-header {
   display: flex;
-  flex-direction: column; /* titolo sopra, pulsanti sotto */
-  align-items: center;    /* centra il titolo e i pulsanti */
+  flex-direction: column; 
+  align-items: center;    
   margin-bottom: 20px;
   padding-bottom: 15px;
   border-bottom: 1px solid #e1e4e8;
@@ -16,7 +16,7 @@
 
 .analytics-header h1 {
   margin-top: 80px;
-  text-align: center;  /* centra il testo del titolo */
+  text-align: center;  
 }
 
 .time-filter {

@@ -8,17 +8,17 @@
   .button-edit {
     background-color: transparent;
     border: none;
-    color: cyan; /* Colore del testo */
+    color: cyan; 
     font-size: 1.5rem;
     font-weight: 500;
     padding: 10px 20px;
-    border-radius: 9px; /* Bordi arrotondati */
+    border-radius: 9px; 
     cursor: pointer;
     transition: all 0.3s ease;
   }
 
   .button-edit:hover {
-    background-color: cyan ; /* Cambia colore di sfondo al passaggio del mouse */
-    color: white; /* Cambia colore del testo al passaggio del mouse */
+    background-color: cyan ; 
+    color: white; 
   }
 

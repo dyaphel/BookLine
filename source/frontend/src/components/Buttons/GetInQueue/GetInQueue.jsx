@@ -104,7 +104,7 @@ const GetInQueue = ({ isbn }) => {
     setIsClosing(true);
     setTimeout(() => {
       window.location.reload();
-    }, 500); // Match this with fadeOut animation duration
+    }, 500);
   };
   // Auto-close after 5 seconds and reload
   useEffect(() => {

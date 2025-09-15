@@ -32,19 +32,19 @@ const EditCatalog = () => {
   const navigate = useNavigate();
 
   const fetchBooks = async (filters) => {
-    setLoading(true); // Set loading to true before fetching
+    setLoading(true); 
     try {
       const response = await axios.get('http://localhost:8001/books/', {
-        params: filters, // Pass filters as query parameters
+        params: filters, 
       });
       
-      setBooks(response.data); // Update the books state with the fetched data
+      setBooks(response.data);
       setDataLoaded(true);
     } catch (error) {
       console.error("Error fetching books:", error);
-      // Optionally, set an error state to display a message to the user
+      
     } finally {
-      setLoading(false); // Set loading to false after fetching
+      setLoading(false);
     }
   };
 
@@ -52,36 +52,36 @@ const EditCatalog = () => {
     fetchBooks(filters);
   }, [filters]);
 
-  // Handle search input changes
+  
   const handleSearch = (query) => {
     setFilters((prevFilters) => ({ ...prevFilters, q: query }));
     debouncedFetchBooks({ ...filters, q: query });
   };
 
-  // Handle filter button click
+  
   const handleFilterClick = () => {
     setShowFilter(!showFilter);
   };
 
-  // Handle filter overlay click (close overlay when clicking outside)
+
   const handleOverlayClick = (e) => {
     if (e.target.classList.contains("filter-overlay")) {
       setShowFilter(false);
     }
   };
 
-  // Handle filter apply
+
   const handleFilterApply = (newFilters) => {
-    // Only apply filters that have values
+   
     const appliedFilters = {};
     if (newFilters.author) appliedFilters.author = newFilters.author;
     if (newFilters.year) appliedFilters.year = newFilters.year;
     if (newFilters.genre) appliedFilters.genre = newFilters.genre;
 
-    setFilters(appliedFilters); // Update the filters state
-    setShowFilter(false); // Close the filter overlay
+    setFilters(appliedFilters); 
+    setShowFilter(false); 
     console.log('Filters applied:', appliedFilters);
-    fetchBooks(appliedFilters); // Fetch books with the new filters
+    fetchBooks(appliedFilters); 
   };
 
   const handleEdit = (book) => {
@@ -223,7 +223,7 @@ const EditCatalog = () => {
     try {
       const formData = new FormData();
       
-      // Aggiungi tutti i campi al formData
+     
       Object.keys(newBookData).forEach(key => {
         if (key !== 'coverPreview' && newBookData[key] !== null) {
           formData.append(key, newBookData[key]);
@@ -316,7 +316,7 @@ const EditCatalog = () => {
       
       <form onSubmit={handleCreateSubmit} className="popup-form">
         <div className="popup-content-grid">
-          {/* Colonna sinistra - Immagine e campi principali */}
+         
           <div className="left-column">
             <div className="image-upload-container">
               <div className="image-preview-box">
@@ -377,7 +377,6 @@ const EditCatalog = () => {
             </div>
           </div>
 
-          {/* Colonna destra - Campi aggiuntivi */}
           <div className="right-column">
             <div className="details-grid">
               <div className="form-group">

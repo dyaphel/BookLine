@@ -78,7 +78,7 @@
   font-style: italic;
 }
 
-/* Book Header - cover + description/abstract in a row */
+/* Book Header  */
 .catalog-book-header {
   display: flex;
   gap: 25px;
@@ -182,7 +182,7 @@
   font-size: 0.95rem;
 }
 
-/* Book Details Grid - 2x2 layout */
+/* Book Details Grid */
 .book-details-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -287,7 +287,7 @@
 }
 
 /* ---------------------------------------------------------- */
-/* Overlay scuro */
+/* Overlay */
 .create-book-overlay {
   position: fixed;
   top: 12%;
@@ -303,42 +303,41 @@
   padding: 20px;
 }
 
-/* Popup stile moderno - più largo e orizzontale */
+/* Popup styles */
 .create-book-popup {
   background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
   border-radius: 15px;
   padding: 30px;
   width: 90%;
-  max-width: 900px; /* Larghezza aumentata */
+  max-width: 900px; 
   max-height: 85vh;
   overflow-y: auto;
   border: 2px solid white;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
-/* Grid principale - layout orizzontale */
+/* Grid */
 .popup-content-grid {
   display: grid;
-  grid-template-columns: 1fr 1.2fr; /* Due colonne di larghezza simile */
+  grid-template-columns: 1fr 1.2fr;
   gap: 30px;
   margin-bottom: 20px;
 }
 
-/* Colonna sinistra */
+
 .left-column {
   display: flex;
   flex-direction: column;
   gap: 25px;
 }
 
-/* Colonna destra */
+
 .right-column {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-/* Container immagine */
 .image-upload-container {
   text-align: center;
 }
@@ -383,7 +382,7 @@
   transform: translateY(-2px);
 }
 
-/* Grid per i campi principali */
+
 .main-fields-grid {
   display: flex;
   flex-direction: column;
@@ -397,7 +396,7 @@
   margin-bottom: 10px;
 }
 
-/* Header del popup */
+
 .popup-header {
   display: flex;
   justify-content: space-between;
@@ -437,7 +436,7 @@
   margin-top: -2px;
 }
 
-/* Form group */
+
 .form-group {
   display: flex;
   flex-direction: column;
@@ -451,7 +450,7 @@
   letter-spacing: 0.5px;
 }
 
-/* Input e textarea */
+
 .popup-input,
 .popup-textarea {
   background: rgba(255, 255, 255, 0.1);
@@ -481,7 +480,7 @@
   min-height: 80px;
 }
 
-/* Pulsanti di azione */
+
 .popup-actions {
   display: flex;
   gap: 15px;
@@ -526,7 +525,7 @@
 }
 
 
-/* Responsive */
+
 @media (max-width: 768px) {
   .create-book-popup {
     padding: 20px;
@@ -548,7 +547,7 @@
   }
 }
 
-/* Responsive Adjustments */
+
 @media (max-width: 1200px) {
   .catalog-book-cover {
     flex: 0 0 auto;

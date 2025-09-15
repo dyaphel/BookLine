@@ -199,7 +199,7 @@ const ToBeFulfilled = () => {
                  <div className="fulfill-buttons">
                   <button
                     onClick={(e) => { 
-                      e.stopPropagation(); // prevent card click
+                      e.stopPropagation(); 
                       handleFulfillTOBE(reservation.id); 
                     }}
                     className="btn fulfill"
@@ -208,7 +208,7 @@ const ToBeFulfilled = () => {
                   </button>
                   <button
                     onClick={(e) => { 
-                      e.stopPropagation(); // prevent card click
+                      e.stopPropagation(); 
                       handleCancelTOBE(reservation.id); 
                     }}
                     className="btn cancel"

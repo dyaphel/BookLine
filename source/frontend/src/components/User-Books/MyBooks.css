@@ -65,7 +65,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  margin-top: 200px; /* questo spinge i pulsanti in fondo alla card */
+  margin-top: 200px; 
   width: 100%;
 }
 

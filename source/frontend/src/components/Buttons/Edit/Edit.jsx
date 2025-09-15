@@ -1,5 +1,5 @@
 import React from 'react';
-import './Edit.css'; // Import the CSS file for styling
+import './Edit.css'; 
 
 const EditButton = ({onClick}) => {
 

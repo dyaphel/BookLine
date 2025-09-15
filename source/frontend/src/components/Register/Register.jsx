@@ -12,7 +12,7 @@ const RegisterPage = () => {
     last_name: '',
     confirm_password: '',
   });
-  // State to hold alert message and type (error, success, etc.)
+  
   const [alertData, setAlertData] = useState({ message: '', type: '' });
   
   const handleChange = (e) => {
@@ -26,7 +26,7 @@ const RegisterPage = () => {
     e.preventDefault();
     console.log('Registering user:', formData);
     
-    // Frontend validation: password length
+    //  password length
     if (formData.password.length < 8) {
       setAlertData({ message: 'Password must be at least 8 characters.', type: 'error' });
       return;
@@ -55,7 +55,7 @@ const RegisterPage = () => {
   
       if (response.ok) {
         setAlertData({ message: 'Registration successful!', type: 'success' });
-        // Optionally, delay a bit before redirecting so the user sees the alert
+        
         
         window.location.href = '/login';
         
@@ -74,7 +74,7 @@ const RegisterPage = () => {
     
   return (
     <div className="myregister-container">
-      {/* Render Alert at the top */}
+      
       <Alert message={alertData.message} type={alertData.type} onClose={clearAlert} />
       
       <h2 className="myregister-title">Create an Account</h2>

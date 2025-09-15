@@ -191,13 +191,13 @@
   }
 
   .fulfill-card {
-    flex: 0 0 25%; /* 2 card per riga */
+    flex: 0 0 25%; 
     max-width: 500px;
     max-width: 400px;
   }
 }
 
-/* Smartphone grande */
+
 @media (max-width: 768px) {
   .fulfill-page-container {
     width: 100%;
@@ -207,11 +207,11 @@
   .fulfill-cards-container {
     flex-direction: column;
     align-items: center;
-    overflow-x: hidden; /* niente scroll orizzontale */
+    overflow-x: hidden; 
   }
 
   .fulfill-card {
-    flex: 0 0 90%; /* card quasi a tutta larghezza */
+    flex: 0 0 90%; 
     max-width: 500px;
     margin-bottom: 20px;
   }
@@ -231,7 +231,7 @@
   }
 }
 
-/* Smartphone piccolo */
+
 @media (max-width: 480px) {
   .fulfill-card {
     flex: 0 0 10%; 

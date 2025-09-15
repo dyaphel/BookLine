@@ -96,7 +96,7 @@ const ReservationsDetails = () => {
           withCredentials: true,
         }
       );
-      // Update local reservation state
+      
       setReservation(prev => ({ ...prev, fulfilled: true }));
       setError(null);
       navigate('/all-reservations')
@@ -118,7 +118,7 @@ const ReservationsDetails = () => {
           withCredentials: true,
         }
       );
-      // Update local reservation state
+      
       setReservation(prev => ({ ...prev, cancelled: true }));
       setError(null);
       navigate('/all-reservations')
@@ -137,7 +137,7 @@ const ReservationsDetails = () => {
   <Navbar />
   <h2 className="Reservation-title"> Reservation number: &ensp;{reservation.id}</h2>
 
-  {/* Top row: Book + User */}
+ 
   <div className="Reservation-top-row">
     <div className="Reservation-details-section book-section">
       <h3>Book Information</h3>
@@ -184,7 +184,7 @@ const ReservationsDetails = () => {
     </div>
   </div>
 
-  {/* Reservation card centered */}
+
   <div className="Reservation-details-section reservation-section">
     <h3>Reservation Status</h3>
     <p><strong>Ready for Pickup:</strong> {reservation.ready_for_pickup ? 'Yes' : 'No'}</p>

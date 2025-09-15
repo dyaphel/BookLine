@@ -70,7 +70,7 @@ const BookInformation = () => {
             if (reservationForThisBook) {
               setUserReservation(reservationForThisBook);
               
-              // Genera QR code se la prenotazione è pronta per il ritiro
+              // Generate QR code URL if ready for pickup
               if (reservationForThisBook.ready_for_pickup) {
                 const qrData = `RESERVATION:${reservationForThisBook.id}`;
                 const qrUrl = `http://localhost:8004/qrcodes/generate/?data=${encodeURIComponent(qrData)}`;
@@ -208,7 +208,7 @@ const BookInformation = () => {
         </div>
       </div>
 
-      {/* QR Code Section - Mostrato solo quando ready_for_pickup */}
+      {/* QR Code Section - shown only when ready_for_pickup */}
       {userReservation?.ready_for_pickup && qrCodeUrl && (
         <div className="qr-code-section">
           <h3>QR Code</h3>
