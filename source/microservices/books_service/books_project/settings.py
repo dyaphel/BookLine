@@ -89,7 +89,7 @@ DATABASES = {
         'NAME': 'bookline_db',
         'USER': 'bookline_user',
         'PASSWORD': 'password',
-        'HOST': 'db',  # Use this if you're using Docker
+        'HOST': 'db',
         'PORT': 5432,
     }
 }

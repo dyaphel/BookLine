@@ -13,7 +13,7 @@ def generate_qr(request):
     """
     data = request.GET.get("data", "empty")
     
-    # Se i dati contengono "RESERVATION:", genera URL per la prenotazione
+    # If data contains "RESERVATION:" then make reservation URL
     if data.startswith('RESERVATION:'):
         reservation_id = data.split(':')[1]
         redirect_url = f"http://localhost:5173/reservations/{reservation_id}"
