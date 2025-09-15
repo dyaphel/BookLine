@@ -22,7 +22,6 @@ import logging
 logger = logging.getLogger(__name__)
 
 def docker_health_check(request):
-    # Controllo del database (opzionale ma utile)
     try:
         with connection.cursor() as cursor:
             cursor.execute("SELECT 1")
@@ -49,36 +48,31 @@ def register(request):
             status=status.HTTP_400_BAD_REQUEST
         )
     
-    # Assicurati che lo username sia tutto in minuscolo prima di passarlo al serializer
     username = request.data.get('username').strip().lower()
-    request.data['username'] = username  # Modifica il dato per includere lo username in minuscolo
+    request.data['username'] = username
 
     if 'profile_image' in request.data and request.data['profile_image']:
-        # The file will be automatically handled by MultiPartParser
        pass
     
     serializer = RegisterSerializer(data=request.data)
 
-    # Ora passa i dati modificati al serializer
     serializer = RegisterSerializer(data=request.data)
     
     if serializer.is_valid():
         user = serializer.save()
         return Response({'message': 'User registered successfully'}, status=status.HTTP_201_CREATED)
     else:
-        # Log o stampa degli errori per il debug
         print("Serializer errors:", serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 
-# @api_view(['POST'])
 @require_POST
 @ensure_csrf_cookie
 def login_view(request):
     try:
         data = json.loads(request.body)
-        username_or_email = data.get('username', '').strip().lower() # Strip spaces
+        username_or_email = data.get('username', '').strip().lower()
         password = data.get('password')
 
         if not username_or_email or not password:
@@ -87,25 +81,21 @@ def login_view(request):
                 'message': 'Both username/email and password are required'
             }, status=400)
 
-        # Step 1: Try to find user by username
         user = None
         try:
             user = CustomUser.objects.get(username=username_or_email)
         except CustomUser.DoesNotExist:
-            pass  # Ignore if no user is found by username
+            pass 
 
-        # Step 2: If no user found by username, try to find user by email
         if user is None and '@' in username_or_email:
             try:
                 user = CustomUser.objects.get(email=username_or_email)
             except CustomUser.DoesNotExist:
-                pass  # Ignore if no user is found by email
+                pass 
 
-        # Step 3: If user is found, check the password
         if user is not None and check_password(password, user.password):
-            # Password matches, log the user in
             auth_login(request, user)
-            serializer = UserProfileSerializer(user)  # Serialize user data
+            serializer = UserProfileSerializer(user) 
             return JsonResponse({
                 'success': True,
                 'message': 'Login successful',
@@ -119,7 +109,7 @@ def login_view(request):
         
 
     except Exception as e:
-        print("Errore durante il login:", str(e))  # Log per il debug
+        print("Errore durante il login:", str(e)) 
         return JsonResponse({
             'success': False,
             'message': 'An error occurred during login'
@@ -138,14 +128,14 @@ def get_user_profile(request):
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
 def delete_user(request):
-    print(f"Incoming method: {request.method}")  # Debugging
+    print(f"Incoming method: {request.method}") 
     
     if request.method != 'DELETE':
         return JsonResponse({'error': 'Method not allowed'}, status=405)
     
     if not request.user.is_authenticated:
         return JsonResponse({'error': 'User not authenticated'}, status=401)
-    # Verify password
+    
     user = request.user
     user.delete()
     return JsonResponse({'message': 'User deleted successfully'}, status=204)
@@ -173,7 +163,7 @@ def change_password(request):
     if check_password(new_password, request.user.password):
         return JsonResponse({'success': False, 'message': 'New password must be different from old password'}, status=400)
 
-    # Change password
+
     request.user.set_password(new_password)
     request.user.save()
     update_session_auth_hash(request, request.user)
@@ -186,11 +176,11 @@ def update_profile(request):
     try:
         user = request.user
         
-        # Handle username update
+   
         if 'username' in request.data:
             new_username = request.data['username'].strip()
             if new_username and new_username != user.username:
-                # Check if username already exists
+               
                 if CustomUser.objects.exclude(pk=user.pk).filter(username=new_username).exists():
                     return Response({
                         'success': False,
@@ -198,10 +188,10 @@ def update_profile(request):
                     }, status=400)
                 user.username = new_username
         
-        # Handle profile image update
+       
         if 'profile_image' in request.FILES:
             image = request.FILES['profile_image']
-            # Validate image
+            
             if image.size > 2 * 1024 * 1024:  # 2MB limit
                 return Response({
                     'success': False,
@@ -258,11 +248,11 @@ def check_auth(request):
 def user_logout(request):
     if request.user.is_authenticated:
         logout(request)
-        # Return a new CSRF token for subsequent requests
+
         return Response({
             'success': True,
             'message': 'Logged out successfully',
-            'csrfToken': get_token(request)  # Return new token
+            'csrfToken': get_token(request) 
         })
     return Response({
         'success': False,

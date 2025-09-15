@@ -3,9 +3,9 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager, Permission
 import os
 
 def user_profile_image_path(instance, filename):
-    ext = filename.split('.')[-1]  # get file extension
+    ext = filename.split('.')[-1] 
     filename = f"{instance.username}.{ext}"
-    # save inside "profile_images/" folder (can be relative to MEDIA_ROOT)
+   
     return os.path.join('profile_images', filename)
 
 class CustomUserManager(BaseUserManager):
@@ -22,7 +22,7 @@ class CustomUserManager(BaseUserManager):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
         extra_fields.setdefault('role', CustomUser.Roles.ADMIN)
-        extra_fields.setdefault('username', 'admin')  # Default username only here
+        extra_fields.setdefault('username', 'admin')  
 
         return self.create_user(email, password=password, **extra_fields)
 

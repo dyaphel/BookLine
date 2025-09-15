@@ -25,4 +25,4 @@ class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
         fields = ['id','email', 'username', 'profile_image', 'first_name', 'last_name', 'role']
-        read_only_fields = ['id','email','role' ]  # Assuming role should not be changed by the user
+        read_only_fields = ['id','email','role' ]  

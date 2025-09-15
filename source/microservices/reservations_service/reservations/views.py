@@ -81,10 +81,6 @@ def book_availability(request, isbn):
     return Response({'isbn': isbn, 'available_copies': available})
 
 
-# Per creare la reservation, the user must be authenticated and have the appropriate permissions. If the user is a regular user, they can only create reservations for themselves. The system checks if there are available copies of the book and creates a reservation accordingly. If all copies are reserved, the user is added to the queue.
-# Insert in the body the "user" and "book" fields, where "user" is the ID of the user making the reservation and "book" is the ISBN of the book being reserved.
-
-#DA CONTROLLARE IL CREATE RESERVATION
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def create_reservation(request):
@@ -112,11 +108,11 @@ def create_reservation(request):
         ).count()
 
         if active_count < book.available_copies:
-            # Copies are available -> new active reservation
+            # Copies are available
             new_position = None
             ready_for_pickup = True
         else:
-            # No copies available -> place in queue
+            # No copies available
             last_position = Reservation.objects.filter(
                 book=book,
                 fulfilled=False,
@@ -141,7 +137,6 @@ def create_reservation(request):
     return Response(serializer.data, status=status.HTTP_201_CREATED)
     
 
-# DA CONTROLLARE 
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -185,8 +180,8 @@ def return_book(request, reservation_id):
 
     return Response({'message': 'Book returned and queue updated.'})
 
-# DA CONTROLLARE 
-#non so se va aggaiornata la posizione in coda del successivo con -1 quando fullfilled
+
+
 @api_view(['PATCH'])
 @permission_classes([IsAuthenticated])
 def fulfill_book(request, reservation_id):
@@ -197,7 +192,7 @@ def fulfill_book(request, reservation_id):
 
     reservation = get_object_or_404(Reservation, id=reservation_id)
 
-# Check if the reservation CANNOT be marked as fulfilled
+    # Check if the reservation CANNOT be marked as fulfilled
     if reservation.returned or reservation.cancelled or reservation.fulfilled:
         return Response(
             {'error': 'Reservation cannot be fulfilled because it is either already fulfilled, returned'},
@@ -212,8 +207,8 @@ def fulfill_book(request, reservation_id):
                    status=status.HTTP_200_OK)
 
 
-# to check
-# DA CONTROLLARE 
+
+
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
 def cancel_reservation(request, reservation_id):
@@ -235,7 +230,7 @@ def cancel_reservation(request, reservation_id):
         reservation.ready_for_pickup = False
         reservation.save()
 
-        # Case 1: Active reservation (position=None)
+        # Active reservation (position=None)
         if reservation.position is None:
             next_in_line = Reservation.objects.filter(
                 book=reservation.book,
@@ -245,12 +240,12 @@ def cancel_reservation(request, reservation_id):
             ).order_by('position').first()
 
             if next_in_line:
-                # Promote next_in_line to active
+                # Promote next in line
                 next_in_line.position = None
                 next_in_line.ready_for_pickup = True
                 next_in_line.save()
 
-                # Shift everyone else down
+                # Shift everyone else
                 later_reservations = Reservation.objects.filter(
                     book=reservation.book,
                     cancelled=False,
@@ -264,7 +259,7 @@ def cancel_reservation(request, reservation_id):
                     r.save()
                     pos += 1
 
-        # Case 2: Reservation was in queue (position >= 1)
+        # Reservation was in queue (position >= 1)
         else:
             later_reservations = Reservation.objects.filter(
                 book=reservation.book,
