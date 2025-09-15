@@ -22,7 +22,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 def docker_health_check(request):
-    # Controllo del database (opzionale ma utile)
+    # Database health check
     try:
         with connection.cursor() as cursor:
             cursor.execute("SELECT 1")
@@ -49,9 +49,9 @@ def register(request):
             status=status.HTTP_400_BAD_REQUEST
         )
     
-    # Assicurati che lo username sia tutto in minuscolo prima di passarlo al serializer
+    # Ensure the username is lowercase before passing it to the serializer
     username = request.data.get('username').strip().lower()
-    request.data['username'] = username  # Modifica il dato per includere lo username in minuscolo
+    request.data['username'] = username  # Update the data to include the lowercase username
 
     if 'profile_image' in request.data and request.data['profile_image']:
         # The file will be automatically handled by MultiPartParser
@@ -59,14 +59,14 @@ def register(request):
     
     serializer = RegisterSerializer(data=request.data)
 
-    # Ora passa i dati modificati al serializer
+    # Now pass the modified data to the serializer
     serializer = RegisterSerializer(data=request.data)
     
     if serializer.is_valid():
         user = serializer.save()
         return Response({'message': 'User registered successfully'}, status=status.HTTP_201_CREATED)
     else:
-        # Log o stampa degli errori per il debug
+        # Log or print errors for debugging
         print("Serializer errors:", serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -119,7 +119,7 @@ def login_view(request):
         
 
     except Exception as e:
-        print("Errore durante il login:", str(e))  # Log per il debug
+        print("Error during login:", str(e))  # Debug log
         return JsonResponse({
             'success': False,
             'message': 'An error occurred during login'
