@@ -136,12 +136,11 @@ STATIC_URL = 'static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-#CORS headers
-# CORS Settings
+#CORS
 CORS_ALLOWED_ORIGINS = ["http://localhost:5173"]
 CORS_ALLOW_CREDENTIALS = True
 CSRF_TRUSTED_ORIGINS = ["http://localhost:5173"]
-# Add these headers to allowed headers
+
 CORS_ALLOW_HEADERS = [
     'accept',
     'accept-encoding',
@@ -152,23 +151,21 @@ CORS_ALLOW_HEADERS = [
     'user-agent',
     'x-csrftoken',
     'x-requested-with',
-    'withcredentials',  # Add this
+    'withcredentials',
 ]
 
-SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # or 'cache' if using cache
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 SESSION_CACHE_ALIAS = "default"
 SESSION_COOKIE_NAME = 'bookline_sessionid'
 SESSION_COOKIE_AGE = 1209600  # 2 weeks in seconds
 SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SAMESITE = 'Lax'
 # CSRF Settings
-CSRF_COOKIE_HTTPONLY = False  # Allow JavaScript to read the cookie
-CSRF_COOKIE_SAMESITE = 'Lax'   # Or 'None' if using HTTPS
-CSRF_USE_SESSIONS = False      # Store CSRF token in cookie
+CSRF_COOKIE_HTTPONLY = False
+CSRF_COOKIE_SAMESITE = 'Lax'
+CSRF_USE_SESSIONS = False
 CSRF_COOKIE_SECURE = False  # Only for development
 SESSION_COOKIE_SECURE = False  # Only for development
 
 # Default primary key field type
-# https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

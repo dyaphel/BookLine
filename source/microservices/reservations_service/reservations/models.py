@@ -21,7 +21,7 @@ class Reservation(models.Model):
                 name='unique_active_reservation'
             )
         ]
-        ordering = ['timestamp']  # Automatically order by time of request
+        ordering = ['timestamp']
 
     def __str__(self):
         return f"{self.user.email} - {self.book.title} ({'Fulfilled' if self.fulfilled else 'Waiting'})"

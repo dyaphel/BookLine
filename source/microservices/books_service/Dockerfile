@@ -1,19 +1,6 @@
 FROM python:3.10
 
 WORKDIR /app
-
-# Install system dependencies
-# Install lsb-release to determine the Debian release codename
-#----------------------------------------------------
-#DA PROVARE DOPO:
-
-# RUN apt-get update && \
-#     apt-get install -y --no-install-recommends \
-#     wget \
-#     gnupg2 \
-#     postgresql-client && \
-#     rm -rf /var/lib/apt/lists/*
-#----------------------------------------------------
 RUN apt-get update && \
     apt-get install -y wget gnupg2 lsb-release && \
     sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list' && \
@@ -34,5 +21,4 @@ COPY . .
 EXPOSE 8000
 
 # Run migrations and create superuser
-
 CMD bash -c 'python manage.py makemigrations books && python manage.py migrate && python manage.py loaddata initial_books.json && python manage.py runserver 0.0.0.0:8000'
