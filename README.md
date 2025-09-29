@@ -79,3 +79,7 @@ Push the updated sub-development branch:
 - Always fetch before starting and during your programming session.
 - Use meaningful commit messages.
 
+<hr style="border: 0.4px margin: 1em 0;">
+
+### 📖 Courses
+
