@@ -80,6 +80,3 @@ Push the updated sub-development branch:
 - Use meaningful commit messages.
 
 <hr style="border: 0.4px margin: 1em 0;">
-
-### 📖 Courses
-
